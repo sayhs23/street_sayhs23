@@ -5,7 +5,7 @@ var User = require('./user');
 
 module.exports = function(app) {
   var io = require('socket.io').listen(app);
-
+//
 
   io.configure(function(){
     io.set('log level', 2);

@@ -217,7 +217,7 @@ app.get('/myelbem/:name', function(req, res) {
 	res.render('myelbem');
 });
 
-app.listen(8001);
+app.listen(3000);
 
 // Socket.io
 require('./rooms')(app);

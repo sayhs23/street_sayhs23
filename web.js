@@ -7,7 +7,7 @@ var express = require('express')
   , request = require('request')
   , Chat = require('./chat')
   , repo = require('./repository')
-  , Room = require('./room')
+  , Room = require('./Room')
   , Eventy = require('./eventy');
 
 

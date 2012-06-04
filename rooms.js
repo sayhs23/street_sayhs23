@@ -1,6 +1,7 @@
 var Chat = require('./chat');
 var User = require('./User');
 var http = require("http");
+var Game = require("./Game");
 var sys = require("util");
 var tojson = require('./xml2json');
 var sjson = require("xml2json");

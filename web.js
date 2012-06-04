@@ -6,9 +6,7 @@ var express = require('express')
   , url = require('url')
   , request = require('request')
   , Chat = require('./chat')
-  , repo = require('./repository')
-  , Room = require('./Room')
-  , Eventy = require('./eventy');
+  , repo = require('./repository');
 
 
 var app = module.exports = express.createServer();

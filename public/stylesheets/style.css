@@ -58,6 +58,16 @@ border:5x solid #000000;
  background-color: #ff5c00;/* 흰색 배경을 투명도 10%로 깔기 */
 
 }
+.logBt{
+border:5x solid #000000; 
+	font: 14px 굴림;
+	color:#ffffff;
+
+ border-radius:4px;/* 8픽셀정도의 모서리 둥글기효과 */
+
+ background-color: #8ae634;/* 흰색 배경을 투명도 10%로 깔기 */
+
+}
 .container-1{
   background-color: #ff5c00;
 }

@@ -12,26 +12,55 @@
     <fb:login-button autologoutlink="true"></fb:login-button>
     <button class="menuBt" onclick="dial()" style='width:126px; height:20px;'>담벼락에 글쓰기</button>
   #left_1(style='margin-top:10px;')
-    form(action='/login-check', method='POST')
-     label(for='nickname')아이디
-     input(type='text', id='nickname', name='nickname', style='width:140px;') 
-     label(for='password',style=' margin-left:5px') 비밀번호
-     input(type='password', id='password', name='password', style='width:120px;')
-     input(type='submit', value='입장', class='logBt',style='width:80px; float:left; ')
-    input#jo(type='button', value='회원가입', class='logBt', style='width:80px;')
-     a(style='margin-left:50px;')실시간 검색어 
-  #left_2(style='border:2px solid #f5f5f5;')
-     input(type='button', class='menuBt', value='드라마', id='drama', style='width:66px; height:20px;')
-     input(type='button', class='menuBt', value='영화', id='movie', style='width:65px; height:20px')
-     input(type='button', class='menuBt', value='인물', id='man', style='width:65px; height:20px')
-  #left_3(style='border:2px solid #f5f5f5; background-color: #f5f5f5')
-  #left_4(style='border:2px solid #f5f5f5;')
-    input(type='button', class='menuBt', value='공연', id='perfomance', style='width:66px; height:20px')
-    input(type='button', class='menuBt', value='오락', id='tvshow', style='width:65px; height:20px')
-    input(type='button', class='menuBt', value='도서', id='book', style='width:65px; height:20px')
+    #hs 친구 영역
+    div#container.ui-layout-center(style='overflow:auto;')
+     div.ui-layout-north(style='color:red;',style='overflow:auto;')
+      div(style= 'width:700px; height:300px; overflow:auto; border:2px solid #FC0; float:left; margin-bottom:10px; margin-right:1px;')
+       h2 방 목록 리스트 영역
+       div(style='width:500px; height:190px; float:left;',style='overflow:auto;')
+        each room in roomInfo
+          li= room.name+ '-판당 곡수:'+room.musicmaxs+'최대 인원:'+room.usermaxs 
+            input(type='button', value='입장',
+                  onclick='location.href=\'/join/' + room.name + '\'', style='margin-top:10px;'); 
+
+     div(style= 'width:130px; height:300px; overflow:auto;solid #FC0;')
+      input(type='button', value ='방 만들기', id='createRoom', style='width:127px; height: 50px;  ,float:center;, margin-left:2px; margin-top:10px;')
+      input(type='button', value ='새로 고침', style ='width:128px; height: 50px;  ,float:center;,margin-left:2px; margin-top:10px;')
+      #dialog(style='display:none', title='방 만들기')
+       form(id ='makeRoom', action='/makeRoom', method='POST')
+        label(for='roomname') 방     장    
+        input(type='text', id ='nickname', name ='nickname', value='#{nickname}')p
+        label(for='roomname') 방     제    
+        input(type='text', id='roomname', name='roomname')p
+        label(for='musicmax') 게임곡수
+        select(name='musicmax')
+         option(value='10', selected) 10곡
+         option(value='20') 20곡
+         option(value='30') 30곡
+         option(value='40') 40곡
+        p
+        lable(for='usermax') 최대인원 
+        select(name='usermax')
+         option(value='10', selected) 2명
+         option(value='20') 4명
+         option(value='30') 6명
+         option(value='40') 8명
   #left_5(style='margin-left:80px;')
  #main
-    iframe(name="mainfraim", style='width:700px; height:380px; margin-left:68px; margin-top:8px;')
+      h1 사용자 정보 창
+      p #{nickname}님 환영합니다.
+      p 원하는 채팅방이 없으면 채팅방을 만드세요.
+     #chatWindow(style='width:700px; height:190px; overflow:auto; border:1px solid #BF0; float:left; margin-right:10px;')
+      p 대기실 채팅 영역
+     #attentsList(style='height:190px; overflow:auto; border:1px solid #BF0;')
+      p 참여자 목록
+      ul#attendants
+       each wUser in waitUser
+         li(id='wUser.name-'+wUser.name)= wUser.name
+
+     span#myName #{nickname}
+     input(type='text', style='width:540px;')#message
+     input(type='Button', id='chatButton', value='보내기', style='width:60px; height:25px;')
  #bottom
    #bottom_1
      input(type='button',class='menuBt', id='refresh', value='새로고침', style='width:66px; height:20px;')

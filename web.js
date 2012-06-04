@@ -6,7 +6,6 @@ var express = require('express')
   , url = require('url')
   , request = require('request')
   , Chat = require('./chat')
-  , User = require('./user')
   , repo = require('./repository')
   , Room = require('./room')
   , Eventy = require('./eventy');

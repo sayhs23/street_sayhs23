@@ -4,7 +4,6 @@ var http = require("http");
 var sys = require("util");
 var tojson = require('./xml2json');
 var sjson = require("xml2json");
-var Game = require("./Game");
 var fs = require("fs");
 
 var mysql = require('mysql')

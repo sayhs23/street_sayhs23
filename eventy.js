@@ -1,6 +1,4 @@
 var Chat = require('./chat');
-var Music = require('./Music');
-var Game = require('./Game');
 var User = require('./User');
 
 module.exports = function(app) {

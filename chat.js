@@ -1,4 +1,4 @@
-var Room = require('./room');
+var Room = require('./Room');
 
 var Chat = module.exports = {
     users: []

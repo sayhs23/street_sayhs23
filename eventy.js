@@ -1,7 +1,7 @@
 var Chat = require('./chat');
-var Music = require('./music');
-var Game = require('./game');
-var User = require('./user');
+var Music = require('./Music');
+var Game = require('./Game');
+var User = require('./User');
 
 module.exports = function(app) {
   var io = require('socket.io').listen(app);

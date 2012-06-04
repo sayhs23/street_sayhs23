@@ -1,69 +1,49 @@
 #box 
  div#top
-   input(type='button',class='menuBt', id='LOGO', value='LOGO', style='width:150px;')
-   input(type='button',class='menuBt', id='mStreet', value='mStreet', style='width:170px; margin-left:125px; margin-top:55px;')
+   input(type='button',class='menuBt', id='LOGO', value='Street', style='width:200px; margin-left:390px;')p
+   input(type='button',class='menuBt', id='mStreet', value='mStreet', style='width:170px; margin-left:145px; margin-top:1px;')
    input(type='button',class='menuBt', id='cStreet', value='cStreet', style='width:170px;')
    input(type='button',class='menuBt', id='sStreet', value='sStreet', style='width:170px;')
    input(type='button',class='menuBt', id='gStreet', value='gStreet', style='width:170px; margin-right:3px;')
- #left
-  #face_1(style='margin-left:40px;')
-    <fb:profile-pic uid="loggedinuser" size="square"></fb:profile-pic>
-    <fb:name uid="loggedinuser" use-you="no"></fb:name>
-    <fb:login-button autologoutlink="true"></fb:login-button>
-    <button class="menuBt" onclick="dial()" style='width:126px; height:20px;'>담벼락에 글쓰기</button>
-  #left_1(style='margin-top:10px;')
-    form(action='/login-check', method='POST')
-     label(for='nickname')아이디
-     input(type='text', id='nickname', name='nickname', style='width:140px;') 
-     label(for='password',style=' margin-left:5px') 비밀번호
-     input(type='password', id='password', name='password', style='width:120px;')
-     input(type='submit', value='입장', class='logBt',style='width:80px; float:left; ')
-    input#jo(type='button', value='회원가입', class='logBt', style='width:80px;')
-     a(style='margin-left:50px;')실시간 검색어 
-  #left_2(style='border:2px solid #f5f5f5;')
-     input(type='button', class='menuBt', value='드라마', id='drama', style='width:66px; height:20px;')
-     input(type='button', class='menuBt', value='영화', id='movie', style='width:65px; height:20px')
-     input(type='button', class='menuBt', value='인물', id='man', style='width:65px; height:20px')
-  #left_3(style='border:2px solid #f5f5f5; background-color: #f5f5f5')
-  #left_4(style='border:2px solid #f5f5f5;')
-    input(type='button', class='menuBt', value='공연', id='perfomance', style='width:66px; height:20px')
-    input(type='button', class='menuBt', value='오락', id='tvshow', style='width:65px; height:20px')
-    input(type='button', class='menuBt', value='도서', id='book', style='width:65px; height:20px')
-  #left_5(style='margin-left:80px;')
  #main
-    iframe(name="mainfraim", style='width:700px; height:380px; margin-left:68px; margin-top:8px;')
+   #main_1
+       input(type='button',class='menuBt2', id='refresh1', value='새로고침', style='width:66px; height:20px') 
+       script(type='text/javascript')
+        var socialfeed1 = new gfeedfetcher("example1", "example1class", "_new")
+        socialfeed1.addFeed("동아", "http://news.naver.com/rss/rss_presscenter.nhn?office_id=020") 
+        socialfeed1.addFeed("조선", "http://news.naver.com/rss/rss_presscenter.nhn?office_id=023") 
+        socialfeed1.addFeed("중앙", "http://news.naver.com/rss/rss_presscenter.nhn?office_id=025") 
+        socialfeed1.displayoptions("label datetime snippet")
+        socialfeed1.setentrycontainer("div") 
+        socialfeed1.filterfeed(12, "label") 
+        socialfeed1.init()
+   #main_2
+       input(type='button',class='menuBt2', id='refresh2', value='새로고침', style='width:66px; height:20px;') 
+       script(type='text/javascript')
+        var socialfeed2 = new gfeedfetcher("example2", "example2class", "_new")
+        socialfeed2.addFeed("노컷", "http://news.naver.com/rss/rss_presscenter.nhn?office_id=214") 
+        socialfeed2.addFeed("MBN", "http://news.naver.com/rss/rss_presscenter.nhn?office_id=057") 
+        socialfeed2.addFeed("YTN", "http://news.naver.com/rss/rss_presscenter.nhn?office_id=052") 
+        socialfeed2.displayoptions("label datetime snippet")
+        socialfeed2.setentrycontainer("div") 
+        socialfeed2.filterfeed(12, "label") 
+        socialfeed2.init()
+   #main_3
+     #left_1(style='margin-top:1px;')
+       a(style='margin-left:50px;')
+     #left_2(style='border:2px solid #f5f5f5;')
+       input(type='button', class='menuBt1', value='드라마', id='drama', style='width:66px; height:20px;')
+       input(type='button', class='menuBt1', value='영화', id='movie', style='width:65px; height:20px')
+       input(type='button', class='menuBt1', value='인물', id='man', style='width:65px; height:20px')
+     #left_3(style='border:2px solid #f5f5f5; background-color: #f5f5f5')
+     #left_4(style='border:2px solid #f5f5f5;')
+       input(type='button', class='menuBt1', value='공연', id='perfomance', style='width:66px; height:20px')
+       input(type='button', class='menuBt1', value='오락', id='tvshow', style='width:65px; height:20px')
+       input(type='button', class='menuBt1', value='도서', id='book', style='width:65px; height:20px')
+     #left_5
  #bottom
-   #bottom_1
-     input(type='button',class='menuBt', id='refresh', value='새로고침', style='width:66px; height:20px;')
-     script(type='text/javascript')
-       var socialfeed1 = new gfeedfetcher("example1", "example1class", "_new")
-       socialfeed1.addFeed("동아", "http://news.naver.com/rss/rss_presscenter.nhn?office_id=020") 
-       socialfeed1.addFeed("조선", "http://news.naver.com/rss/rss_presscenter.nhn?office_id=023") 
-       socialfeed1.addFeed("중앙", "http://news.naver.com/rss/rss_presscenter.nhn?office_id=025") 
-       socialfeed1.displayoptions("label datetime snippet")
-       socialfeed1.setentrycontainer("div") 
-       socialfeed1.filterfeed(5, "label") 
-       socialfeed1.init()
-   #bottom_2(style='margin-top:20px;')
-     script(type='text/javascript')
-       var socialfeed2 = new gfeedfetcher("example2", "example2class", "_new")
-       socialfeed2.addFeed("노컷", "http://news.naver.com/rss/rss_presscenter.nhn?office_id=214") 
-       socialfeed2.addFeed("MBN", "http://news.naver.com/rss/rss_presscenter.nhn?office_id=057") 
-       socialfeed2.addFeed("YTN", "http://news.naver.com/rss/rss_presscenter.nhn?office_id=052") 
-       socialfeed2.displayoptions("label datetime snippet")
-       socialfeed2.setentrycontainer("div") 
-       socialfeed2.filterfeed(5, "label") 
-       socialfeed2.init()
-   #bottom_3(style='margin-top:20px;')
-     script(type='text/javascript')
-       var socialfeed3 = new gfeedfetcher("example3", "exampl3class", "_new")
-       socialfeed3.addFeed("스포츠서울", "http://news.naver.com/rss/rss_presscenter.nhn?office_id=073") 
-       socialfeed3.addFeed("한겨레", "http://news.naver.com/rss/rss_presscenter.nhn?office_id=028") 
-       socialfeed3.addFeed("문화", "http://news.naver.com/rss/rss_presscenter.nhn?office_id=021") 
-       socialfeed3.displayoptions("label datetime snippet")
-       socialfeed3.setentrycontainer("div") 
-       socialfeed3.filterfeed(5, "label") 
-       socialfeed3.init() 
+       iframe(name="mainfraim", style='width:1000px; height:380px; margin-top:8px;')
+     
 
 script(type='text/javascript', src='http://www.google.com/jsapi?key=ABQIAAAAdV0OihhLfo4ru8N1BXzlWxSJ87f2VNqmObhB7kj4DJwDOGkiiBR3Nh79Pxxmk0DgEb3TTwZHI-Fp1g')
 script(type='text/javascript', src='http://code.jquery.com/jquery-1.7.0.min.js')

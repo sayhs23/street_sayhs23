@@ -1,13 +1,29 @@
 #box 
+ #dialog(style='display:none', title='로그인을 해주세요')
+      form(action='/gStreet', method='POST')
+       label(for='nickname')아이디 
+       input(type='text', id='nickname', name='nickname', style='width:130px;')
+       p
+       label(for='password') 비밀번호
+       input(type='password', id='password', name='password', style='width:130px;')
+       p
+       input(type='submit', value='입장', class='logBt',style='width:80px; float:left; ')
+       input#jo(type='button', value='회원가입', class='logBt', style='width:80px;')
  div#top
-   input(type='button',class='menuBt', id='LOGO', value='Street', style='width:200px; margin-left:390px;')p
-   input(type='button',class='menuBt', id='mStreet', value='mStreet', style='width:170px; margin-left:145px; margin-top:1px;')
-   input(type='button',class='menuBt', id='cStreet', value='cStreet', style='width:170px;')
-   input(type='button',class='menuBt', id='sStreet', value='sStreet', style='width:170px;')
-   input(type='button',class='menuBt', id='gStreet', value='gStreet', style='width:170px; margin-right:3px;')
+   #top_1
+      input(type='button',class='menuBt', id='LOGO', value='Street', style='width:200px; margin-left:390px;')p
+      input(type='button',class='menuBt', id='mStreet', value='mStreet', style='width:170px; margin-left:45px; margin-top:1px;')
+      input(type='button',class='menuBt', id='cStreet', value='cStreet', style='width:170px;')
+      input(type='button',class='menuBt', id='sStreet', value='sStreet', style='width:170px;')
+      input(type='button',class='menuBt', id='gStreet', value='gStreet', style='width:170px;')
+   #top_2
+    <fb:profile-pic uid="loggedinuser" size="square"></fb:profile-pic>
+    <fb:name uid="loggedinuser" use-you="no"></fb:name>
+    <fb:login-button autologoutlink="true"></fb:login-button><p>
+    <button class="menuBt2" onclick="dial()" style='width:130px; height:25px;'>글쓰기</button>
  #main
    #main_1
-       input(type='button',class='menuBt2', id='refresh1', value='새로고침', style='width:66px; height:20px') 
+       input(type='button',class='menuBt2', id='refresh1', value='톱 뉴스 새로고침', style='width:166px; height:20px') 
        script(type='text/javascript')
         var socialfeed1 = new gfeedfetcher("example1", "example1class", "_new")
         socialfeed1.addFeed("동아", "http://news.naver.com/rss/rss_presscenter.nhn?office_id=020") 
@@ -18,16 +34,17 @@
         socialfeed1.filterfeed(12, "label") 
         socialfeed1.init()
    #main_2
-       input(type='button',class='menuBt2', id='refresh2', value='새로고침', style='width:66px; height:20px;') 
+       input(type='button',class='menuBt2', id='refresh2', value='스포츠/연예 새로고침', style='width:166px; height:20px') 
        script(type='text/javascript')
         var socialfeed2 = new gfeedfetcher("example2", "example2class", "_new")
-        socialfeed2.addFeed("노컷", "http://news.naver.com/rss/rss_presscenter.nhn?office_id=214") 
-        socialfeed2.addFeed("MBN", "http://news.naver.com/rss/rss_presscenter.nhn?office_id=057") 
-        socialfeed2.addFeed("YTN", "http://news.naver.com/rss/rss_presscenter.nhn?office_id=052") 
+        socialfeed2.addFeed("서울", "http://news.naver.com/rss/rss_presscenter.nhn?office_id=073") 
+        socialfeed2.addFeed("조선", "http://news.naver.com/rss/rss_presscenter.nhn?office_id=076") 
+        socialfeed2.addFeed("일간", "http://news.naver.com/rss/rss_presscenter.nhn?office_id=241") 
         socialfeed2.displayoptions("label datetime snippet")
         socialfeed2.setentrycontainer("div") 
         socialfeed2.filterfeed(12, "label") 
         socialfeed2.init()
+
    #main_3
      #left_1(style='margin-top:1px;')
        a(style='margin-left:50px;')
@@ -42,11 +59,14 @@
        input(type='button', class='menuBt1', value='도서', id='book', style='width:65px; height:20px')
      #left_5
  #bottom
-       iframe(name="mainfraim", style='width:1000px; height:380px; margin-top:8px;')
+    <script src="http://widgetprovider.daum.net/view?url=http://widgetcfs1.daum.net/xml/5/widget/2008/09/23/10/23/48d844f73a4ab.xml&up_setLocal=108&&width=166&height=80&widgetId=119&scrap=1" type="text/javascript"></script>
+
      
 
 script(type='text/javascript', src='http://www.google.com/jsapi?key=ABQIAAAAdV0OihhLfo4ru8N1BXzlWxSJ87f2VNqmObhB7kj4DJwDOGkiiBR3Nh79Pxxmk0DgEb3TTwZHI-Fp1g')
 script(type='text/javascript', src='http://code.jquery.com/jquery-1.7.0.min.js')
+script(type='text/javascript', src='/javascripts/jquery-ui-1.8.18.custom.min.js')
+
 script(type='text/javascript') 
   $(document).ready(function() {
 
@@ -58,16 +78,16 @@ script(type='text/javascript')
   });
   room.on('dramaed', function(data){
      var output = '';
-     output +="<a>1. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R1").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R1").find("K").text() + "</a><br />";
-     output +="<a>2. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R2").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R2").find("K").text() + "</a><br />";
-     output +="<a>3. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R3").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R3").find("K").text() + "</a><br />";
-     output +="<a>4. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R4").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R4").find("K").text() + "</a><br />";
-     output +="<a>5. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R5").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R5").find("K").text() + "</a><br />";
-     output +="<a>6. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R6").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R6").find("K").text() + "</a><br />";
-     output +="<a>7. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R7").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R7").find("K").text() + "</a><br />";
-     output +="<a>8. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R8").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R8").find("K").text() + "</a><br />";
-     output +="<a>9. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R9").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R9").find("K").text() + "</a><br />";
-     output +="<a>10. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R10").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R10").find("K").text() + "</a><br />";
+     output +="<a>1. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R1").find("K").text()+"'>" + $(data.xData).find("R1").find("K").text() + "</a><br />";
+     output +="<a>2. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R2").find("K").text()+"'>" + $(data.xData).find("R2").find("K").text() + "</a><br />";
+     output +="<a>3. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R3").find("K").text()+"'>" + $(data.xData).find("R3").find("K").text() + "</a><br />";
+     output +="<a>4. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R4").find("K").text()+"'>" + $(data.xData).find("R4").find("K").text() + "</a><br />";
+     output +="<a>5. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R5").find("K").text()+"'>" + $(data.xData).find("R5").find("K").text() + "</a><br />";
+     output +="<a>6. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R6").find("K").text()+"'>" + $(data.xData).find("R6").find("K").text() + "</a><br />";
+     output +="<a>7. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R7").find("K").text()+"'>" + $(data.xData).find("R7").find("K").text() + "</a><br />";
+     output +="<a>8. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R8").find("K").text()+"'>" + $(data.xData).find("R8").find("K").text() + "</a><br />";
+     output +="<a>9. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R9").find("K").text()+"'>" + $(data.xData).find("R9").find("K").text() + "</a><br />";
+     output +="<a>10. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R10").find("K").text()+"'>" + $(data.xData).find("R10").find("K").text() + "</a><br />";
     
      $('#drama').css('background','#09C');
      $('#movie').css('background','#ff5c00');
@@ -89,16 +109,16 @@ script(type='text/javascript')
   });
   room.on('movied', function(data){
      var output = '';
-     output +="<a>1. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R1").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R1").find("K").text() + "</a><br />";
-     output +="<a>2. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R2").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R2").find("K").text() + "</a><br />";
-     output +="<a>3. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R3").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R3").find("K").text() + "</a><br />";
-     output +="<a>4. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R4").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R4").find("K").text() + "</a><br />";
-     output +="<a>5. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R5").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R5").find("K").text() + "</a><br />";
-     output +="<a>6. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R6").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R6").find("K").text() + "</a><br />";
-     output +="<a>7. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R7").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R7").find("K").text() + "</a><br />";
-     output +="<a>8. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R8").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R8").find("K").text() + "</a><br />";
-     output +="<a>9. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R9").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R9").find("K").text() + "</a><br />";
-     output +="<a>10. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R10").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R10").find("K").text() + "</a><br />";
+     output +="<a>1. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R1").find("K").text()+"'>" + $(data.xData).find("R1").find("K").text() + "</a><br />";
+     output +="<a>2. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R2").find("K").text()+"'>" + $(data.xData).find("R2").find("K").text() + "</a><br />";
+     output +="<a>3. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R3").find("K").text()+"'>" + $(data.xData).find("R3").find("K").text() + "</a><br />";
+     output +="<a>4. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R4").find("K").text()+"'>" + $(data.xData).find("R4").find("K").text() + "</a><br />";
+     output +="<a>5. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R5").find("K").text()+"'>" + $(data.xData).find("R5").find("K").text() + "</a><br />";
+     output +="<a>6. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R6").find("K").text()+"'>" + $(data.xData).find("R6").find("K").text() + "</a><br />";
+     output +="<a>7. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R7").find("K").text()+"'>" + $(data.xData).find("R7").find("K").text() + "</a><br />";
+     output +="<a>8. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R8").find("K").text()+"'>" + $(data.xData).find("R8").find("K").text() + "</a><br />";
+     output +="<a>9. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R9").find("K").text()+"'>" + $(data.xData).find("R9").find("K").text() + "</a><br />";
+     output +="<a>10. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R10").find("K").text()+"'>" + $(data.xData).find("R10").find("K").text() + "</a><br />";
 
      $('#drama').css('background','#ff5c00');
      $('#movie').css('background','#09C');
@@ -116,16 +136,16 @@ script(type='text/javascript')
   });
   room.on('maned', function(data){
      var output = '';
-     output +="<a>1. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R1").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R1").find("K").text() + "</a><br />";
-     output +="<a>2. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R2").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R2").find("K").text() + "</a><br />";
-     output +="<a>3. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R3").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R3").find("K").text() + "</a><br />";
-     output +="<a>4. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R4").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R4").find("K").text() + "</a><br />";
-     output +="<a>5. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R5").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R5").find("K").text() + "</a><br />";
-     output +="<a>6. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R6").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R6").find("K").text() + "</a><br />";
-     output +="<a>7. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R7").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R7").find("K").text() + "</a><br />";
-     output +="<a>8. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R8").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R8").find("K").text() + "</a><br />";
-     output +="<a>9. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R9").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R9").find("K").text() + "</a><br />";
-     output +="<a>10. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R10").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R10").find("K").text() + "</a><br />";
+     output +="<a>1. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R1").find("K").text()+"'>" + $(data.xData).find("R1").find("K").text() + "</a><br />";
+     output +="<a>2. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R2").find("K").text()+"'>" + $(data.xData).find("R2").find("K").text() + "</a><br />";
+     output +="<a>3. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R3").find("K").text()+"'>" + $(data.xData).find("R3").find("K").text() + "</a><br />";
+     output +="<a>4. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R4").find("K").text()+"'>" + $(data.xData).find("R4").find("K").text() + "</a><br />";
+     output +="<a>5. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R5").find("K").text()+"'>" + $(data.xData).find("R5").find("K").text() + "</a><br />";
+     output +="<a>6. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R6").find("K").text()+"'>" + $(data.xData).find("R6").find("K").text() + "</a><br />";
+     output +="<a>7. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R7").find("K").text()+"'>" + $(data.xData).find("R7").find("K").text() + "</a><br />";
+     output +="<a>8. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R8").find("K").text()+"'>" + $(data.xData).find("R8").find("K").text() + "</a><br />";
+     output +="<a>9. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R9").find("K").text()+"'>" + $(data.xData).find("R9").find("K").text() + "</a><br />";
+     output +="<a>10. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R10").find("K").text()+"'>" + $(data.xData).find("R10").find("K").text() + "</a><br />";
 
      $('#drama').css('background','#ff5c00');
      $('#movie').css('background','#ff5c00');
@@ -143,16 +163,16 @@ script(type='text/javascript')
   });
   room.on('perfomanced', function(data){
      var output = '';
-     output +="<a>1. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R1").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R1").find("K").text() + "</a><br />";
-     output +="<a>2. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R2").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R2").find("K").text() + "</a><br />";
-     output +="<a>3. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R3").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R3").find("K").text() + "</a><br />";
-     output +="<a>4. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R4").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R4").find("K").text() + "</a><br />";
-     output +="<a>5. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R5").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R5").find("K").text() + "</a><br />";
-     output +="<a>6. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R6").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R6").find("K").text() + "</a><br />";
-     output +="<a>7. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R7").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R7").find("K").text() + "</a><br />";
-     output +="<a>8. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R8").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R8").find("K").text() + "</a><br />";
-     output +="<a>9. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R9").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R9").find("K").text() + "</a><br />";
-     output +="<a>10. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R10").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R10").find("K").text() + "</a><br />";
+     output +="<a>1. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R1").find("K").text()+"'>" + $(data.xData).find("R1").find("K").text() + "</a><br />";
+     output +="<a>2. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R2").find("K").text()+"'>" + $(data.xData).find("R2").find("K").text() + "</a><br />";
+     output +="<a>3. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R3").find("K").text()+"'>" + $(data.xData).find("R3").find("K").text() + "</a><br />";
+     output +="<a>4. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R4").find("K").text()+"'>" + $(data.xData).find("R4").find("K").text() + "</a><br />";
+     output +="<a>5. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R5").find("K").text()+"'>" + $(data.xData).find("R5").find("K").text() + "</a><br />";
+     output +="<a>6. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R6").find("K").text()+"'>" + $(data.xData).find("R6").find("K").text() + "</a><br />";
+     output +="<a>7. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R7").find("K").text()+"'>" + $(data.xData).find("R7").find("K").text() + "</a><br />";
+     output +="<a>8. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R8").find("K").text()+"'>" + $(data.xData).find("R8").find("K").text() + "</a><br />";
+     output +="<a>9. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R9").find("K").text()+"'>" + $(data.xData).find("R9").find("K").text() + "</a><br />";
+     output +="<a>10. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R10").find("K").text()+"'>" + $(data.xData).find("R10").find("K").text() + "</a><br />";
 
      $('#drama').css('background','#ff5c00');
      $('#movie').css('background','#ff5c00');
@@ -170,16 +190,16 @@ script(type='text/javascript')
   });
   room.on('tvshowed', function(data){
      var output = '';
-     output +="<a>1. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R1").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R1").find("K").text() + "</a><br />";
-     output +="<a>2. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R2").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R2").find("K").text() + "</a><br />";
-     output +="<a>3. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R3").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R3").find("K").text() + "</a><br />";
-     output +="<a>4. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R4").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R4").find("K").text() + "</a><br />";
-     output +="<a>5. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R5").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R5").find("K").text() + "</a><br />";
-     output +="<a>6. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R6").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R6").find("K").text() + "</a><br />";
-     output +="<a>7. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R7").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R7").find("K").text() + "</a><br />";
-     output +="<a>8. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R8").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R8").find("K").text() + "</a><br />";
-     output +="<a>9. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R9").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R9").find("K").text() + "</a><br />";
-     output +="<a>10. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R10").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R10").find("K").text() + "</a><br />";
+     output +="<a>1. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R1").find("K").text()+"'>" + $(data.xData).find("R1").find("K").text() + "</a><br />";
+     output +="<a>2. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R2").find("K").text()+"'>" + $(data.xData).find("R2").find("K").text() + "</a><br />";
+     output +="<a>3. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R3").find("K").text()+"'>" + $(data.xData).find("R3").find("K").text() + "</a><br />";
+     output +="<a>4. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R4").find("K").text()+"'>" + $(data.xData).find("R4").find("K").text() + "</a><br />";
+     output +="<a>5. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R5").find("K").text()+"'>" + $(data.xData).find("R5").find("K").text() + "</a><br />";
+     output +="<a>6. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R6").find("K").text()+"'>" + $(data.xData).find("R6").find("K").text() + "</a><br />";
+     output +="<a>7. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R7").find("K").text()+"'>" + $(data.xData).find("R7").find("K").text() + "</a><br />";
+     output +="<a>8. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R8").find("K").text()+"'>" + $(data.xData).find("R8").find("K").text() + "</a><br />";
+     output +="<a>9. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R9").find("K").text()+"'>" + $(data.xData).find("R9").find("K").text() + "</a><br />";
+     output +="<a>10. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R10").find("K").text()+"'>" + $(data.xData).find("R10").find("K").text() + "</a><br />";
 
      $('#drama').css('background','#ff5c00');
      $('#movie').css('background','#ff5c00');
@@ -197,16 +217,16 @@ script(type='text/javascript')
 
   room.on('booked', function(data){
      var output = '';
-     output +="<a>1. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R1").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R1").find("K").text() + "</a><br />";
-     output +="<a>2. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R2").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R2").find("K").text() + "</a><br />";
-     output +="<a>3. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R3").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R3").find("K").text() + "</a><br />";
-     output +="<a>4. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R4").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R4").find("K").text() + "</a><br />";
-     output +="<a>5. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R5").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R5").find("K").text() + "</a><br />";
-     output +="<a>6. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R6").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R6").find("K").text() + "</a><br />";
-     output +="<a>7. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R7").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R7").find("K").text() + "</a><br />";
-     output +="<a>8. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R8").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R8").find("K").text() + "</a><br />";
-     output +="<a>9. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R9").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R9").find("K").text() + "</a><br />";
-     output +="<a>10. "+"<a href ='http://m.search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R10").find("K").text()+"', target='mainfraim'>" + $(data.xData).find("R10").find("K").text() + "</a><br />";
+     output +="<a>1. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R1").find("K").text()+"'>" + $(data.xData).find("R1").find("K").text() + "</a><br />";
+     output +="<a>2. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R2").find("K").text()+"'>" + $(data.xData).find("R2").find("K").text() + "</a><br />";
+     output +="<a>3. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R3").find("K").text()+"'>" + $(data.xData).find("R3").find("K").text() + "</a><br />";
+     output +="<a>4. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R4").find("K").text()+"'>" + $(data.xData).find("R4").find("K").text() + "</a><br />";
+     output +="<a>5. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R5").find("K").text()+"'>" + $(data.xData).find("R5").find("K").text() + "</a><br />";
+     output +="<a>6. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R6").find("K").text()+"'>" + $(data.xData).find("R6").find("K").text() + "</a><br />";
+     output +="<a>7. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R7").find("K").text()+"'>" + $(data.xData).find("R7").find("K").text() + "</a><br />";
+     output +="<a>8. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R8").find("K").text()+"'>" + $(data.xData).find("R8").find("K").text() + "</a><br />";
+     output +="<a>9. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R9").find("K").text()+"'>" + $(data.xData).find("R9").find("K").text() + "</a><br />";
+     output +="<a>10. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R10").find("K").text()+"'>" + $(data.xData).find("R10").find("K").text() + "</a><br />";
 
      $('#drama').css('background','#ff5c00');
      $('#movie').css('background','#ff5c00');
@@ -222,7 +242,7 @@ script(type='text/javascript')
      location.href = '/mStreet';
   });
   $('#gStreet').click(function(e) {
-     location.href = '/gStreet';
+      $('#dialog').dialog();
   });
   $('#sStreet').click(function(e) { 
      location.href = '/sStreet';
@@ -232,6 +252,12 @@ script(type='text/javascript')
   });
   $('#LOGO').click(function(e) {
      location.href = '/';
+  });
+  $('#refresh1').click(function(e) {
+     socialfeed1.init();
+  });
+  $('#refresh2').click(function(e) {
+     socialfeed2.init();
   });
   var getTime = function(){
      var now = new Date();

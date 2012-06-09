@@ -10,26 +10,6 @@
   SCROLLBAR-TRACK-COLOR: #ffffff; 
   SCROLLBAR-DARKSHADOW-COLOR: #ffffff ;
 }*/
-div.ui-layout-north
-{
-	background: #ffffff;
-	font: 20px "bold";
-}
-div.ui-layout-west
-{
-	background: #DCFFDC;
-}
-div.ui-layout-center
-{
-	background: #DCDCDC;
-}
-div.ui-layout-east
-{
-	background: #ffDCDC;
-}
-.p1{
-	font:12px 굴림;
-}
 .videos2{
 	background-color: #f5f5f5;
 	font:12px 굴림;
@@ -64,7 +44,6 @@ border:5x solid #000000;
 	color:#ffffff;
 
  border-radius:4px;/* 8픽셀정도의 모서리 둥글기효과 */
-
  background-color: #8ae634;/* 흰색 배경을 투명도 10%로 깔기 */
 
 }
@@ -87,10 +66,18 @@ border:5x solid #000000;
 	color:#ffffff;
 	background-color: #09C;
 }
+.menuBt3{
+	height: 30px;
+	width:  50px;
+	font: 8px;
+	border-radius:4px;
+	color:#ffffff;
+	background-color: #ff6347;
+}
 .menuBt{
-	height: 40px;
-	width:  73px;
-	font: 18px bold;
+	height: 45px;
+	width:  60px;
+	font: 15px bold;
 	border-radius:4px;
 	color:#ff5c00;
 	background-color: #b4e5ff;
@@ -105,11 +92,12 @@ body {
             height: auto;
             width: 1000px;
             margin: auto; 
+			margin-top:30px;
             background-color: #000;
 }
 #top {
            background-color: #fff;
-           height: 110px;
+           height: 150px;
            width: 1000px;
            position: relative;          
         }
@@ -145,7 +133,7 @@ body {
 #bottom {
 		   background-color: #fff;
            height: 100px;
-           width: 1500px;
+           width: 1000px;
            position: relative;
            clear: both;
 }
@@ -155,35 +143,57 @@ body {
 }
 #bottom_2 {
            position: relative;
-
 		   float: left;
 		  
+}
+#top_1{
+		   position: relative;
+		   float: left;
+}
+#top_2 {
+           position: relative;
+		   margin-left: 65px;
+		   float: left;
 }
 #main_1 {
 		   background-color: #fff;
            position: relative;
 		   height: 220px;
 		   font-size: 13px;
-           width: 330px;
+           width: 320px;
+		   margin-left: 50px;
 		   float: left;
 }
 #main_2 {
            background-color: #fff;
            position: relative;
 		   height: 220px;
-           width: 330px;
+           width: 300px;
 		   font-size: 13px;
 		   float: left;
-		  
 }
 #main_3 {
            background-color: #fff;
            position: relative;
 		   height: 220px;
            width: 200px;
-		   margin-left: 110px;
-		   float: left;
-		  
+		   margin-left:30px;
+		   float: left;		  
+}
+#g_main_1 {
+           background-color: #f00;
+           position: relative;
+		   height: 450px;
+           width: 700px;
+		   float: left;		  
+}
+#g_main_2 {
+           background-color: #0f0;
+           position: relative;
+		   height: 450px;
+           width: 270px;
+		   margin-left:30px;
+		   float: left;	  
 }
 #bottom_3 {
            position: relative;

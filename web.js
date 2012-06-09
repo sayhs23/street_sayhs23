@@ -41,56 +41,9 @@ app.get('/', function(req, res){
   res.header("Access-Control-Allow-Headers", "X-Requested-With"); 
   res.render('index');
 });
-app.get('/gStreet', function(req, res){
-  res.header("Access-Control-Allow-Headers","X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept");
-  res.header("Access-Control-Max-Age",'86400');
-  res.header("Access-Control-Allow-Credentials",false);
-  res.header("Access-Control-Allow-Methods","POST, GET, PUT, DELETE, OPTIONS");
-
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With"); 
-  res.render('gStreet');
-});
-
-app.post('/login-check', function(req, res) {
+app.post('/gStreet', function(req, res) {
 	repo.checkNickName(req, res);
 });
-
-
-app.get('/myelbem/:id', function(req, res) {                         //마이앨범 누르기  GET방식으로 하기.
-	var isSuccess = true;
-	var name = req.params.id;
-	console.log(name);
-    var level = 0;
-	var totalscore = 0;
-	res.render('myelbem', {
-					    isSuccess: isSuccess 
-					  , nickname: name
-					  , level: level
-				   	  , totalscore: totalscore
-					  , waitUser: Chat.getWaitUserList()
-					  ,title: 'Express'
-
-				 });
-});
-
-app.get('/community/:id', function(req, res) {                         //커뮤니티  GET방식으로 하기.
-	var isSuccess = true;
-	var name = req.params.id;
-	console.log(name);
-    var level = 0;
-	var totalscore = 0;
-	res.render('community', {
-					    isSuccess: isSuccess 
-					  , nickname: name
-					  , level: level
-				   	  , totalscore: totalscore
-					  , waitUser: Chat.getWaitUserList()
-					  ,title: 'Express'
-
-				 });
-});
-
 
 app.get('/add/:id', function(req, res) {                         //추가기능 누르기  GET방식으로 하기.
 	var isSuccess = true;
@@ -220,10 +173,6 @@ app.get('/logout/:name', function(req, res) {
  res.render('index'); //하고서 index.로 이동하기.
 });
 
-app.get('/myelbem/:name', function(req, res) {
-	var nickname = req.params.name;
-	res.render('myelbem');
-});
 
 app.listen(8001);
 

@@ -18,19 +18,21 @@ var Music = module.exports = {
 		
 
 		client.query('USE node_test');
-		client.query('SELECT * FROM test2', function (error, result, fields) {
-		
+		client.query('SELECT * FROM test', function (error, result, fields) {
+		result.charset ='utf-8';
 
 		if (error) {
 				console.log('쿼리 중 오류 발생');
 		} else {
 
+            
 
-			i = Math.ceil(Math.random()*25);
+			i = Math.ceil(Math.random()*4);
 
-			name = result[i].name;
 			id = result[i].id;
+			name = result[i].name;
 			hint = result[i].hint;
+			console.log('Music.js에서 셋팅 게임 음악 정보 셋팅'+ id + name + hint );
 		 }
 	});
 

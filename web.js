@@ -142,18 +142,18 @@ app.post('/makeRoom', function(req, res) {
 });
 
 app.get('/join/:id', function(req, res) {
-  res.charset = 'utf-8';
   var isSuccess = false
     , roomName = req.params.id;
 
   var user = Chat.getUser(req.session.nickname);
-
   var level = user.level;
   
   if (Chat.hasRoom(roomName)) {
     isSuccess = true; 
   }
 
+  console.log('/join/:id 페이지 호출 get 방식: , '+isSuccess+ roomName, level, Chat.getAttendantsList(roomName));
+   
   res.render('room', {
       isSuccess: isSuccess
     , roomName: roomName
@@ -174,7 +174,7 @@ app.get('/logout/:name', function(req, res) {
 });
 
 
-app.listen(8001);
+app.listen(8002);
 
 // Socket.io
 require('./rooms')(app);

@@ -195,6 +195,21 @@ body {
 		   margin-left:30px;
 		   float: left;	  
 }
+#j_main_1 {
+           background-color: #f00;
+           position: relative;
+		   height: 450px;
+           width: 600px;
+		   float: left;		  
+}
+#j_main_2 {
+           background-color: #0f0;
+           position: relative;
+		   height: 450px;
+           width: 170px;
+		   margin-left:30px;
+		   float: left;	  
+}
 #bottom_3 {
            position: relative;
 		   float: left;

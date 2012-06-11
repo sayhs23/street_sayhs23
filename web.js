@@ -32,13 +32,13 @@ app.configure('production', function(){
 
 // Routes
 app.get('/', function(req, res){
-  res.header("Access-Control-Allow-Headers","X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept");
+ /* res.header("Access-Control-Allow-Headers","X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept");
   res.header("Access-Control-Max-Age",'86400');
   res.header("Access-Control-Allow-Credentials",false);
   res.header("Access-Control-Allow-Methods","POST, GET, PUT, DELETE, OPTIONS");
 
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With"); 
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");*/ 
   res.render('index');
 });
 app.post('/gStreet', function(req, res) {
@@ -176,7 +176,7 @@ app.get('/logout/:name', function(req, res) {
 
 app.listen(8001);
 
-// Socket.io
+// Socket.iod
 require('./rooms')(app);
 
 

@@ -43,20 +43,20 @@ module.exports = function(app) {
       var joinedRoom = null;
       Game.setCnt();
       console.log('접속함');
-      socket.on('join', function(data) {
+      socket.on('join', function(data) {   // 유저가 접속을 하면 방이름을 챗.js의 방 배열에 추가한다.
         if (Chat.hasRoom(data.roomName)) {
           joinedRoom = data.roomName;
-          socket.join(joinedRoom);
+          socket.join(joinedRoom); // socket.io의 join 함수를 이용하여 추가를 시킨다.
         
-            var name = data.nickName;
+          var name = data.nickName;
 
-          socket.emit('joined', {
+          socket.emit('joined', { // 방 확인 후 조인드 이벤트를 시킨다. 
             isSuccess:true, nickname:name
           });
           socket.broadcast.to(joinedRoom).emit('joined', {
             isSuccess:true, nickname:name
           });
-          Chat.joinRoom(joinedRoom, data.nickName, data.level);
+          Chat.joinRoom(joinedRoom, data.nickName);
         } else {
           socket.emit('joined', {isSuccess:false});
         }
@@ -176,14 +176,7 @@ module.exports = function(app) {
 				 socket.emit('perfomanced', {xData: body});  
             });}).on('error', function(e) {console.log("Got error: " + e.message);});
 	  });
-
-
-
-	  socket.on('s', function() {
-		  var msg = '서버 사이드 메시지';
-			socket.emit('sed', {msg: msg});
-	  });
-
+// socket.io를 이용한 채팅 관련 부분 메시지 이벤트//////////////////////////////////////////
       socket.on('message', function(data) {
         if (joinedRoom) {
           socket.broadcast.to(joinedRoom).json.send(data);
@@ -207,17 +200,17 @@ module.exports = function(app) {
                 Game.increaseCnt();
                 var cnt = Game.getCnt();
 
-                                var Name = data.nickName;
-                                var Score = data.usrScore;   
-                                var Once = data.oneUserScore;
+                var Name = data.nickName;
+                var Score = data.usrScore;   
+                var Once = data.oneUserScore;
 
-                                console.log(' in Room.js < onceUserScore: > '+Once);
+                console.log(' in Room.js < onceUserScore: > '+Once);
 
         if (joinedRoom) {
                                         // DB에서 빼오는 부분임
-                                        console.log('Consol long : readied event in Room!');
-                                        socket.emit('readied', { usName: Name, usScore:Score, msId: id, msName: name, msHint: hint, msCnt: cnt, OneScore: Once   });
-                    socket.broadcast.to(joinedRoom).emit('readied', {
+             console.log('Consol long : readied event in Room!');
+             socket.emit('readied', { usName: Name, usScore:Score, msId: id, msName: name, msHint: hint, msCnt: cnt, OneScore: Once   });
+             socket.broadcast.to(joinedRoom).emit('readied', {
              usName: Name, usScore:Score, msId: id, msName: name, msHint: hint, msCnt: cnt, OneScore: Once   
           });
           

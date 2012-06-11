@@ -118,10 +118,10 @@ script(type='text/javascript')
 
       room.on('joined', function(data) {
         if(data.isSuccess) {
-          showMessage(data.nickName + '님이 입장하셨습니다.');
+          showMessage(data.nickname + '님이 입장하셨습니다.');
           attendants.append($('<li>')
-            .attr('id', 'attendant-'+data.nickName)
-            .text(data.nickName)); 
+            .attr('id', 'attendant-'+data.nickname)
+            .text(data.nickname)); 
         }
       });
 

@@ -27,7 +27,7 @@ var Music = module.exports = {
 
             
 
-			i = Math.ceil(Math.random()*4);
+			i = Math.ceil(Math.random()*3);
 
 			id = result[i].id;
 			name = result[i].name;

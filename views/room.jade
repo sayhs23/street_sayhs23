@@ -8,25 +8,19 @@
       input(type='button',class='menuBt', id='gStreet', value='gStreet', style='width:170px; margin-right:60px;')
    #top_2
      span#roomName= roomName 
-     input#ready(type='button', value='준비')
-     input#leave(type='button', value='나가기')
-     input#game(type='button', value='게임 시작')
-     input#gameset(type='button', value='게임 정보 세팅')
-     #cnt
  #main
    
    #j_main_1
      #g_main_1_1
-        #videoDiv
-        #resultWindow((style= 'width:350px; height:50px; overflow:auto; border:2px solid #FC0; margin-bottom:10px; margin-right:10px;')
         p 힌트창
-        #hintWindow(style='width:575px; height:130px; overflow:auto; border:1px solid #000; float:left; margin-left:10px; margin-right:10px;')
+        #hintWindow(style='width:575px; height:50px; overflow:auto; border:1px solid #000; float:left; margin-left:10px; margin-right:10px;')
      #g_main_1_2
         p 채팅창
         #chatWindow(style='width:575px; height:180px; overflow:auto; border:1px solid #000; float:left; margin-left:10px; margin-right:10px;')
-        span#myName #{nickname}님:
-        input(type='text', style='width:450px; margin-left:10px; margin-top:10px;')#message
-        input(type='Button', id='chatButton', value='보내기', style='width:60px; height:25px;')
+        span#myName #{nickname}
+        form
+           input(type='text', style='width:450px; margin-left:10px; margin-top:10px;')#message
+           input(type='Button', id='chatButton', value='보내기', style='width:60px; height:25px;')
         
    #j_main_2
      p 참여자 목록
@@ -34,11 +28,9 @@
         ul#attendants
           each attendant in attendants
             li(id='attendant-'+attendant)= attendant 
-     input(type='button',class='menuBt', id='gStreet', value='친구 추가', style='width:170px; margin-left:5px; margin-top:35px;')
-     input(type='button',class='menuBt', id='gStreet', value='친구 초대', style='width:170px; margin-left:5px; margin-top:5px;')
-     input(type='button',class='menuBt', id='gStreet', value='노래 담기', style='width:170px; margin-left:5px; margin-top:5px;')
-     input(type='button',class='menuBt', id='gStreet', value='게임 끝내기', style='width:170px; margin-left:5px; margin-top:5px;')
-
+     input(type='button',class='menuBt2', id='game', value='노래 시작', style='height:40px; width:150px; margin-left:5px; margin-top:35px;')
+     input(type='button',class='menuBt3', id='leave', value='게임 끝내기', style='height:40px; width:150px; margin-left:5px; margin-top:5px;')
+   #videoDiv
      
 
 script(type='text/javascript', src='http://www.google.com/jsapi?key=ABQIAAAAdV0OihhLfo4ru8N1BXzlWxSJ87f2VNqmObhB7kj4DJwDOGkiiBR3Nh79Pxxmk0DgEb3TTwZHI-Fp1g')
@@ -49,38 +41,37 @@ script(type='text/javascript')
   google.load("swfobject", "2.1");
 script(type='text/javascript')
    
-   var onPlayerError = function(errorCode) { alert("An error occured of type:" + errorCode);
-      };
+   var onPlayerError = function(errorCode) { 
+      alert("An error occured of type:" + errorCode);
+   };
 
-      var onYouTubePlayerReady = function(playerId) {
-            ytplayer = document.getElementById("ytPlayer");
-            ytplayer.addEventListener("onError", "onPlayerError");
-      };
+   var onYouTubePlayerReady = function(playerId) {
+      ytplayer = document.getElementById("ytPlayer");
+      ytplayer.addEventListener("onError", "onPlayerError");
+   };
 
-      var loadPlayer = function() {
-            alert('a');
-            var videoID = "ylLzyHk54Z0"
-            var params = { allowScriptAccess: "always" };
-            var atts = { id: "ytPlayer" };
+   var loadPlayer = function() {
+      var videoID = "ylLzyHk54Z0"
+      var params = { allowScriptAccess: "always" };
+      var atts = { id: "ytPlayer" };
 
-            swfobject.embedSWF("http://www.youtube.com/v/" + videoID+ "&enablejsapi=1&playerapiid=ytplayer", "videoDiv", "100","100", "8", false, false, { allowScriptAccess: 'always', allowfullscreen: 'true' }, atts);
-        };
+      swfobject.embedSWF("http://www.youtube.com/v/" + videoID+ "&enablejsapi=1&playerapiid=ytplayer", "videoDiv", "0","0", "8", false, false, { allowScriptAccess: 'always'}, atts);
+   };
 
-      var reloadPlayer = function(s) {
-          var videoID = s
-            swfobject.embedSWF("http://www.youtube.com/v/" + videoID + "&autoplay=1??version=3&enablejsapi=1&playerapiid=ytplayer&fs=1", 'ytPlayer', '0', '0', '9.0.0', false, false, { allowScriptAccess: 'always', allowfullscreen: 'true' });};
+   var reloadPlayer = function(s) {
+      var videoID = s;
+      swfobject.embedSWF("http://www.youtube.com/v/" + videoID + "&autoplay=1??version=`3&enablejsapi=1&playerapiid=ytplayer&fs=1", 'ytPlayer', '220', '220', '9.0.0', false, false, { allowScriptAccess: 'always'});};
      
-      var playVideo = function() {
-            if (ytplayer) {
-                ytplayer.playVideo();
-            } 
-        };
+   var playVideo = function() {
+      if (ytplayer) {
+             ytplayer.playVideo();
+      } 
+    };
 
   script(type='text/javascript')
     $(document).ready(function() {
       loadPlayer();
-     
-     
+    
       var room = io.connect('/room'); 
       var chatWindow = $('#chatWindow');
       var hintWindow = $('#hintWindow');
@@ -89,31 +80,30 @@ script(type='text/javascript')
       var myName = $('#myName').text();
       var attendants = $('#attendants');
       var resultWindow = $('#resultWindow');
-      var wjatn = 0;
+      var result = 0;
+      var name = '';
     
       var showMessage = function(msg) {
-      var pos = $("#chatWindow").position().top;
+        var pos = $("#chatWindow").position().top;
         chatWindow.append($('<p>').text(msg)).animate({ scrollTop: pos }, 'slow');   
         chatWindow.scrollTop(chatWindow.height());
 
       };
-
       var resultMessage = function(msg) {
-      var sos = $("#resultWindow").position().top;
+         var sos = $("#resultWindow").position().top;
          resultWindow.append($('<p>').text(msg)).animate({ scrollTop: sos }, 'slow');   
        };
 
        var countMessage = function(msg) {
-       var ros = $("#countWindow").position().top;
+         var ros = $("#countWindow").position().top;
          countWindow.append($('<p>').text(msg)).animate({ scrollTop: ros }, 'slow');   
        };
        var hintMessage = function(msg) {
-       var hos = $("#countWindow").position().top;
-       hintWindow.append($('<p>').text(msg)).animate({ scrollTop: hos }, 'slow');   
+         var hos = $("#hintWindow").position().top;
+         hintWindow.append($('<p>').text(msg)).animate({ scrollTop: hos }, 'slow');   
        };
-
       room.on('connect', function() {
-        room.emit('join', {roomName:$('#roomName').text(), nickName:myName}); 
+         room.emit('join', {roomName:$('#roomName').text(), nickName:myName}); 
       });
 
       room.on('joined', function(data) {
@@ -141,36 +131,28 @@ script(type='text/javascript')
           showMessage(myName + ' : ' + msg);
           room.json.send({nickName:myName, msg:msg});
           messageBox.val('');
-        }if ($.trim(msg) === a ) { wjatn++; room.emit('ready',{nickName:myName, usrScore:wjatn} ); }
+        }
       });
 
+
       room.on('gamed', function(data) {
-      a = data.msCnt; alert(a);
-        playVideo(); 
-      });
-       $('#ready').click(function(e) {
-        room.emit('ready',{nickName:myName, usrScore:wjatn} );
+        name = data.msName;
+        hintMessage(data.msHint + ' 힌트입니다.');
+        reloadPlayer(data.msId);
       });
 
       room.on('readied', function(data) {
          resultWindow.val('');
          resultMessage(data.usName+'님은'+data.usScore+'점이당');
          a = data.msName; if(data.msCnt === 5) {  alert('끝');  }  
-         hintMessage(data.msHint + ' 힌트입니다.');  countMessage(data.msCnt+'곡');
-         reloadPlayer(data.msId);
+         hintMessage(data.msHint + ' 힌트입니다.');  
+         
       });
 
       $('#game').click(function(e) {
-        room.emit('game', {nickName:myName});
+        room.emit('game', {nickName:myName, result:result});
       });
 
-     $('h1').click(function(e) {
-        $(this).hide('slow');
-      });
-
-      $('#gameset').click(function(e) {
-         hintMessage(b);
-      });
       $('#leave').click(function(e) {
         room.emit('leave', {nickName:myName});
         location.href='/enter';

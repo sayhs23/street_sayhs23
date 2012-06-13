@@ -183,14 +183,37 @@ module.exports = function(app) {
 			socket.broadcast.json.send(data);
 			console.log('대기실에서 채팅/내용: '+data);
       });
+
+
 	  socket.on('end', function(data) {
-		  var roomName = data.roomName;
+		 var roomName = data.roomName;
 		 socket.emit('ended', {roomName:roomName});
 		 socket.broadcast.to(joinedRoom).emit('ended', {roomName:roomName});
 	  });
 
+	  /// 게임 시작 하기를 했을 시.
+
+	  socket.on('game', function(data) { ////////////////////////////////////// ready.on
+		        
+				console.log('game 이벤트 발생!');
+
+				Music.setMusic();  // Music.js 는 디비로 부터 음악을 가져오는 역할을 하는 것이다.
+                var id = Music.getId();
+                var name = Music.getName();
+                var hint = Music.getHint();
+				var result = data.result;
+        //아이디, 이름, 힌트 정보 방에 뿌려 주기.
+
+        if (joinedRoom) {
+             socket.emit('gamed', {msId: id, msName: name, msHint: hint, result: result});
+             socket.broadcast.to(joinedRoom).emit('gamed', {msId: id, msName: name, msHint: hint, result: result});
+        }
+      });
+
+
+// 게임 정부 셋팅 하는 부분 
       socket.on('ready', function(data) { ////////////////////////////////////// ready.on
-        Music.setMusic();
+				Music.setMusic();  // Music.js 는 디비로 부터 음악을 가져오는 역할을 하는 것이다.
                 console.log('Consol long : DB-> Music(hint, videoId, Name) created!!');
                 var id = Music.getId();
                 var name = Music.getName();
@@ -207,6 +230,8 @@ module.exports = function(app) {
         if (joinedRoom) {
                                         // DB에서 빼오는 부분임
              console.log('Consol long : readied event in Room!');
+
+			 // 사용자 이름, 현재 맞춘 곡수, 비디오 아이디, 비디오 이름, 힌트, 
              socket.emit('readied', { usName: Name, usScore:Score, msId: id, msName: name, msHint: hint, msCnt: cnt, OneScore: Once   });
              socket.broadcast.to(joinedRoom).emit('readied', {
              usName: Name, usScore:Score, msId: id, msName: name, msHint: hint, msCnt: cnt, OneScore: Once   

@@ -52,14 +52,13 @@ app.get('/add/:id', function(req, res) {                         //추가기능 
     var level = 0;
 	var totalscore = 0;
 	res.render('add', {
-					    isSuccess: isSuccess 
-					  , nickname: name
-					  , level: level
-				   	  , totalscore: totalscore
-					  , waitUser: Chat.getWaitUserList()
-					  ,title: 'Express'
-
-				 });
+		isSuccess: isSuccess 
+		, nickname: name
+		, level: level
+		, totalscore: totalscore
+		, waitUser: Chat.getWaitUserList()
+		,title: 'Express'
+		});
 });
 
 app.get('/mStreet', function(req, res) { //회원 가입 창 렌더링......!
@@ -91,7 +90,7 @@ app.get('/enter/:id', function(req, res) {
     });
 });
 */
-app.get('/enter/', function(req, res) {
+app.get('/enter', function(req, res) {
   var user = Chat.getUser(req.session.nickname);
   console.log('유저 이름 값: '+ user.nickname);
   console.log('유저 레벨 값: '+ user.level);
@@ -175,9 +174,6 @@ app.get('/logout/:name', function(req, res) {
 
 
 app.listen(8001);
-
 // Socket.iod
 require('./rooms')(app);
-
-
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);

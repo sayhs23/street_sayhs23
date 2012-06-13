@@ -85,7 +85,7 @@ border:5x solid #000000;
 body {
             margin: 0px;
             font-size: 14px;
-            color: #FFF;   
+            color: #000;   
         }
 #box {
             position: relative;
@@ -181,14 +181,14 @@ body {
 		   float: left;		  
 }
 #g_main_1 {
-           background-color: #f00;
+           background-color: #fff;
            position: relative;
 		   height: 450px;
            width: 700px;
 		   float: left;		  
 }
 #g_main_2 {
-           background-color: #0f0;
+           background-color: #fff;
            position: relative;
 		   height: 450px;
            width: 270px;

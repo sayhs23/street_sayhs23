@@ -1,29 +1,40 @@
 script(type='text/javascript')
- var loadVideo = function(playerUrl, autoplay) {
-        swfobject.embedSWF(playerUrl + '&rel=1&border=0&fs=1&autoplay=' +(autoplay ? 1 : 0), 'player', '100', '150', '8', false,false, { allowfullscreen: 'true' });
-  };
- var showMyVideos2=function(data) {
+ var currentUrl ='http://www.youtube.com/v/_XVIFSM1tEQ?version=3&f=videos&app=youtube_gdata';
+ var currentTitle = 'e';
+ var currentThumbnailurl = 'e';
+
+ var loadVideo = function(title, thumbnailUrl, playerUrl, autoplay) {
+      currentUrl = playerUrl;
+      currentTitle = title;
+      currentThumbnailurl = thumbnailUrl;
+
+      swfobject.embedSWF(
+      playerUrl + '&rel=1&border=0&fs=1&autoplay=' + 
+      (autoplay?1:0), 'player', '510', '325', '9.0.0', false, 
+      false, {allowfullscreen: 'true'});
+ };
+ var showMyVideos2 = function(data) {
         var feed = data.feed;
         var entries = feed.entry || [];
-        var html = ['<ul class="videoss">'];
+        var html = ['<div id="videoss">'];
         for (var i = 0; i < entries.length; i++) {
             var entry = entries[i];
-            var title = entry.title.$t.substr(0, 80);
+            var title = entry.title.$t.substr(0, 180);
             var thumbnailUrl = entries[i].media$group.media$thumbnail[0].url;
             var playerUrl = entries[i].media$group.media$content[0].url;
-            html.push('<li onclick="loadVideo(playerUrl, true)">', '<span class="titlec">', title, '...</span><br /><img src="',thumbnailUrl, '" width="120" height="90"/>', '</span></li>');
+            html.push('<li onclick="loadVideo(\\'',title,'\\',\\'',thumbnailUrl,'\\',\\'',playerUrl,'\\', true)">','<span class="titlec">', title, '...</span><br /><img src="',thumbnailUrl, '" width="130" height="97"/>', '</span></li>');
         }
-        html.push('</ul><br style="clear: left;"/>');
+        html.push('</div><br style="clear: left;"/>');
         document.getElementById('videos2').innerHTML = html.join('');
         if (entries.length > 0) {
-            loadVideo(entries[0].media$group.media$content[0].url, false);
+            loadVideo(currentTitle, thumbnailUrl, entries[0].media$group.media$content[0].url, false);
         }
-    };
+        if(entries.length == 0) {
+            alert('검색 결과가 없습니다.');
+        }
+  };
   var loadPlayer = function() {
-            var videoID = "X6XXia5B2Wg"
-            var params = { allowScriptAccess: "always" };
-            var atts = { id: "ytPlayer" };
-            swfobject.embedSWF("http://www.youtube.com/v/" + videoID+ "&enablejsapi=1&playerapiid=ytplayer", "player", "500","250", "8", false, false, { allowScriptAccess: 'always', allowfullscreen: 'true' }, atts);
+        swfobject.embedSWF("http://www.youtube.com/v/_XVIFSM1tEQ?version=3&f=videos&app=youtube_gdata"+ '&rel=1&border=0&fs=1&autoplay=' + (0?1:0), 'player', '510', '325', '9.0.0', false, false, {allowfullscreen: 'true'});
   };
   var search = function(selectValue) {
         var number = selectValue;
@@ -38,14 +49,29 @@ script(type='text/javascript')
         script.src = a + name + b +number+ c;
         head.appendChild(script);
   };
-#box 
- div#top
+  var selectEmit = function(elbemName) {
+        alert(elbemName+'선택!');
+        var room = io.connect('/room');
+        room.emit('addMusicEmit',{name:elbemName, title:currentTitle, thumbnailurl:currentThumbnailurl, playerUrl:currentUrl});
+  };
+  var likeEmit = function(elbemName){
+        alert(elbemName+'좋아요!');
+        var room = io.connect('/room');
+        room.emit('likeElbem',{name:elbemName});
+  };
+  var addElbemCall = function(){
+     var name = $('#elbemname').val();
+     var room = io.connect('/room');
+     room.emit('addElbems',{name:name});
+  };
+#m_box
+ div#m_top
    input(type='button',class='menuBt', id='LOGO', value='LOGO', style='width:150px;')
    input(type='button',class='menuBt', id='mStreet', value='mStreet', style='width:170px; margin-left:125px; margin-top:55px;')
    input(type='button',class='menuBt', id='cStreet', value='cStreet', style='width:170px;')
    input(type='button',class='menuBt', id='sStreet', value='sStreet', style='width:170px;')
    input(type='button',class='menuBt', id='gStreet', value='gStreet', style='width:170px; margin-right:3px;')
- #left
+ #m_left
   #face_1(style='margin-left:40px;')
     <fb:profile-pic uid="loggedinuser" size="square"></fb:profile-pic>
     <fb:name uid="loggedinuser" use-you="no"></fb:name>
@@ -55,13 +81,12 @@ script(type='text/javascript')
     div#videos2(class='videos2', style='width:200px;  height:400px; float:left; overflow:auto;')
 
   #left_5(style='margin-left:80px;')
-     div#playerContainer(style='margin-top:15px; margin-bottom:200px; margin-left:370px;')
-     
- #main(style='width:700px; height:380px; margin-left:68px; margin-top:8px;')
+     div#playerContainer(style='margin-top:15px; margin-bottom:200px; margin-left:370px;')    
+ #m_main(style='margin-left:20px; margin-top:3px;')
     input(type='text', id ='name', style='width:295px;  height:20px; margin-left:80px;')
     input(type='button',class='faceBt', id='searchBt1', value='검색', style='margin-left:5px;')
 
-    label#musicmax(for='musicmax', style='margin-right:10px; ') 검색 곡수
+    label#musicmax(for='musicmax', style='margin-right:10px; ') 곡수
        select(class='musicmax',name='musicmax')
         option(value='10', selected) 10곡
         option(value='20') 20곡
@@ -69,44 +94,108 @@ script(type='text/javascript')
         option(value='40') 40곡
     p
     object#player
-    #playerdown(style='margin-top:140px;')
-    <fb:comments width="480" height="300" LEFTMARGIN="100" title="댓글달기" canpost="true" candelete="false" publish_feed="false">
-    </fb:comments>
- #bottom3
-    
-  
+    input(type='button', value='이 노래 담기', id='addMusicBt')
+    #panel
+       #panel_1
+          a 앨범을 선택해주세요
+       #panel_2
+       
 
-script(type='text/javascript', src ='http://swfobject.googlecode.com/svn/trunk/swfobject/swfobject.js')
-script(type='text/javascript', src = 'http://www.google.com/jsapi')
-script(type='text/javascript', src='http://www.google.com/jsapi?key=ABQIAAAAdV0OihhLfo4ru8N1BXzlWxSJ87f2VNqmObhB7kj4DJwDOGkiiBR3Nh79Pxxmk0DgEb3TTwZHI-Fp1g')
+ #m_right
+  a 공개 앨범 목록
+  input(type='button', id='addElbem',class='faceBt', value='+ 앨범 추가')
+  p
+  #m_right_1
+  #m_right_2
+ #m_right2
+  #sidebar(class='grid_4')
+   a(style='margin-top:10px;') 사이드
+
 script(type='text/javascript', src='http://code.jquery.com/jquery-1.7.0.min.js')
+script(type='text/javascript', src ='http://www.jisungedu.co.kr/include/jquery-contained-sticky-scroll.js')
+script(type='text/javascript', src='/javascripts/jquery-ui-1.8.18.custom.min.js') 
 script(type='text/javascript') 
   $(document).ready(function() {
-   loadPlayer();
-   var room = io.connect('/room');
+    jQuery('#sidebar').containedStickyScroll(); 
 
-  room.on('connect', function() {  
-     room.emit('drama', {nickName:'text'}); 
-  });
-
-  $('#mStreet').click(function(e) {
-     location.href = '/mStreet';
-  });
-  $('#gStreet').click(function(e) {
-     location.href = '/gStreet';
-  });
-  $('#sStreet').click(function(e) { 
-     location.href = '/sStreet';
-  });
-  $('#cStreet').click(function(e) { 
-     location.href = '/cStreet';
-  });
-  $('#LOGO').click(function(e) {
-     location.href = '/';
-  });
-  $('#searchBt1').click(function(e) {
-    var selectValue = $(".musicmax option:selected").val(); search(selectValue);
+    $("#name").keydown(function (evt) {
+            if ((evt.keyCode) && (evt.keyCode == 13)) {
+                var selectValue = $(".musicmax option:selected").val(); search(selectValue);
+            }
     });
+
+    var room = io.connect('/room');
+    loadPlayer();
+        
+    room.emit('getElbemlist',{name:name});
+
+    room.on('getElbemlisted', function(data) {
+      var html = ['<div id ="elbemdiv">'];
+      html.push('<p>공개 앨범 목록');
+      $.each(data.result, function(index, item){
+         html.push('<p>'+item.name+" ("+item.likes+") "+ '<input type="button", class="likeBt", onclick="likeEmit(\\'',item.name,'\\')", value="추천", style="float:right">', '<input type="button", onclick="location.href=\\'/elbem/' + item.name + '\\'", class="likeBt", value="보기", style="float:right">');
+      });
+      html.push('</div>');
+      document.getElementById('m_right_2').innerHTML = html.join('');
+    });
+    room.on('getElbemList2', function(data) {
+      var html = ['<div id ="elbemdiv">'];
+      $.each(data.result, function(index, item){
+         html.push('<p>'+item.name+" ("+item.likes+") "+ '<input type="button", class="likeBt", onclick="selectEmit(\\'',item.name,'\\')", value="선택", style="float:right">');
+      });
+      html.push('</div>');
+      document.getElementById('panel_2').innerHTML = html.join('');
+    });
+
+    room.on('addElbemsed', function(data) {
+        alert(data.result+'앨범이 정상으로 생성되었습니다');
+        $('#elbemname').val('');
+        room.emit('getElbemlist',{name:name});
+    });
+    room.on('addElbemsed-fail', function(data) {
+        alert('이미 사용중인 이름입니다.');
+        $('#m_right_1').html('');
+    });
+
+    $('#addElbem').click(function(e) {
+       var output = '';
+       output += "<a>앨범명</a>";
+       output += "<input type='text' id ='elbemname' style='width: 150px; height: 15px'>";
+       output += "<input type='button' id ='addElbemEmit' value='앨범 추가 하기' class='faceBt' onclick='addElbemCall()' style='margin-left:50px;'>";
+      
+       $('#m_right_1').html(output);
+    }); 
+    
+    $('#addMusicBt').click(function(e) {
+       room.emit('getElbemList2',{name:name});
+       $("#panel").slideToggle("slow");
+       $(this).toggleClass("active"); return false;
+    });
+    $('#mStreet').click(function(e) {
+      location.href = '/mStreet';
+    });
+    
+    $('#gStreet').click(function(e) {
+      location.href = '/gStreet';
+    });
+  
+    $('#sStreet').click(function(e) { 
+      location.href = '/sStreet';
+    });
+  
+    $('#cStreet').click(function(e) { 
+      location.href = '/cStreet';
+    });
+  
+    $('#LOGO').click(function(e) {
+      location.href = '/';
+    });
+
+   
+    $('#searchBt1').click(function(e) {
+      var selectValue = $(".musicmax option:selected").val(); search(selectValue);
+    });
+
 
 
   });

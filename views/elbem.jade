@@ -1,0 +1,219 @@
+script(type='text/javascript')
+ var currentUrl ='http://www.youtube.com/v/_XVIFSM1tEQ?version=3&f=videos&app=youtube_gdata';
+ var loadVideo = function(playerUrl, autoplay) {
+      currentUrl = playerUrl;
+      swfobject.embedSWF(
+      playerUrl + '&rel=1&border=0&fs=1&autoplay=' + 
+      (autoplay?1:0), 'player', '580', '340', '9.0.0', false, 
+      false, {allowfullscreen: 'true'});
+ };
+ var showMyVideos2 = function(data) {
+        var feed = data.feed;
+        var entries = feed.entry || [];
+        var html = ['<div id="videoss">'];
+        for (var i = 0; i < entries.length; i++) {
+            var entry = entries[i];
+            var title = entry.title.$t.substr(0, 100);
+            var thumbnailUrl = entries[i].media$group.media$thumbnail[0].url;
+            var playerUrl = entries[i].media$group.media$content[0].url;
+            html.push('<li onclick="loadVideo(\\'',playerUrl,'\\', true)">','<p>','<span class="titlec">', title, '...</span><br /><img src="',thumbnailUrl, '" width="130" height="97"/>', '</span></li>','<input type="button", class="faceBt", value="이 영상 담기">');
+        }
+        html.push('</div><br style="clear: left;"/>');
+        document.getElementById('videos2').innerHTML = html.join('');
+        if (entries.length > 0) {
+            loadVideo(entries[0].media$group.media$content[0].url, false);
+        }
+  };
+  var search = function(selectValue) {
+      var number = selectValue;
+      var name = $('#name').val();
+      var head = $('head')[0];
+      var script = document.createElement('script');
+
+      var a = 'http://gdata.youtube.com/feeds/api/videos?q=';
+      var b = '&alt=json-in-script&callback=showMyVideos2&max-results=';
+      var c = '&format=5';
+      script.type = 'text/javascript';
+      script.src = a + name + b +number+ c;
+      head.appendChild(script);
+  };
+  var loadPlayer = function() {
+        swfobject.embedSWF("http://www.youtube.com/v/_XVIFSM1tEQ?version=3&f=videos&app=youtube_gdata"+ '&rel=1&border=0&fs=1&autoplay=' + (0?1:0), 'player', '580', '340', '9.0.0', false, false, {allowfullscreen: 'true'});
+  };
+  var likeEmit = function(elbemName){
+        alert(elbemName+'좋아요!');
+        var room = io.connect('/room');
+        room.emit('likeElbem',{name:elbemName});
+        room.emit('thisLikesEmit', { name: elbemName });
+  };
+
+#e_left
+ #e_left_top
+   img(id='LOGO',style='width:210px; height:50px;',src='http://localhost:8001/images/logo.jpg') 
+ #e_left_1
+   span(style='display:none')#elbemName=  elbemName
+   img(style='width:40px; height:40px; margin-left:10px; float:left',src='http://localhost:8001/images/elbem.jpg') 
+   a(class='e_font', style='float:left, margin-left:10px;') 공개앨범 
+   #e_left_1_1(style='margin-left:10px; margin-top:10px;')
+   #e_left_1_2(style='margin-left:10px; margin-top:10px;')
+   input(type='button', id='thisLikesBt', class='menuBt3',style='width:200px; height:30px;', value='이 앨범 추천')
+ #m_right_2
+#e_main
+ #e_main_1
+  #e_main_1_1
+    object#player
+  #e_main_1_2
+ #e_main_2
+ #e_main_3
+    <fb:comments width="800" height="300" LEFTMARGIN="100" title="댓글달기" canpost="true" candelete="false" publish_feed="false">
+    </fb:comments>
+#e_right
+ input(type='text', id ='name', style='margin-top:5px; margin-left:3px; width:102px;  height:20px; ')
+ input(type='button',class='faceBt', id='searchBt1', value='검색', style='margin-left:5px;')
+ p
+ label#musicmax(for='musicmax') 곡수 
+    select(class='musicmax',name='musicmax')
+       option(value='10', selected) 10곡
+       option(value='20') 20곡
+       option(value='30') 30곡
+       option(value='40') 40곡
+ div#videos2(class='videos2', style='width:150px;  height:633px; float:left; overflow:auto;')
+script(type='text/javascript', src='http://code.jquery.com/jquery-1.7.0.min.js')
+script(type='text/javascript', src ='http://www.jisungedu.co.kr/include/jquery-contained-sticky-scroll.js')
+script(type='text/javascript', src='/javascripts/jquery-ui-1.8.18.custom.min.js') 
+script(type='text/javascript') 
+  $(document).ready(function() {
+   
+   $("#name").keydown(function (evt) {
+            if ((evt.keyCode) && (evt.keyCode == 13)) {
+                var selectValue = $(".musicmax option:selected").val(); search(selectValue);
+            }
+    });
+
+    $.fn.infiniteCarousel = function () {
+
+        function repeat(str, num) {
+            return new Array(num + 1).join(str);
+        }
+
+        return this.each(function () {
+            var $wrapper = $('> div', this).css('overflow', 'hidden'),
+            $slider = $wrapper.find('> ul'),
+            $items = $slider.find('> li'),
+            $single = $items.filter(':first'),
+
+            singleWidth = $single.outerWidth(),
+            visible = Math.ceil($wrapper.innerWidth() / singleWidth), // note: doesn't include padding or border
+            currentPage = 1,
+            pages = Math.ceil($items.length / visible);
+
+
+            // 1. Pad so that 'visible' number will always be seen, otherwise create empty items
+            if (($items.length % visible) != 0) {
+                $slider.append(repeat('<li class="empty" />', visible - ($items.length % visible)));
+                $items = $slider.find('> li');
+            }
+
+            // 2. Top and tail the list with 'visible' number of items, top has the last section, and tail has the first
+            $items.filter(':first').before($items.slice(-visible).clone().addClass('cloned'));
+            $items.filter(':last').after($items.slice(0, visible).clone().addClass('cloned'));
+            $items = $slider.find('> li'); // reselect
+
+            // 3. Set the left position to the first 'real' item
+            $wrapper.scrollLeft(singleWidth * visible);
+
+            // 4. paging function
+            function gotoPage(page) {
+                var dir = page < currentPage ? -1 : 1,
+                n = Math.abs(currentPage - page),
+                left = singleWidth * dir * visible * n;
+
+                $wrapper.filter(':not(:animated)').animate({
+                    scrollLeft: '+=' + left
+                }, 500, function () {
+                    if (page == 0) {
+                        $wrapper.scrollLeft(singleWidth * visible * pages);
+                        page = pages;
+                    } else if (page > pages) {
+                        $wrapper.scrollLeft(singleWidth * visible);
+                        // reset back to start position
+                        page = 1;
+                    }
+
+                    currentPage = page;
+                });
+
+                return false;
+            }
+
+            $wrapper.after('<a class="arrow back">&lt;</a><a class="arrow forward">&gt;</a>');
+
+            // 5. Bind to the forward and back buttons
+            $('a.back', this).click(function () {
+                return gotoPage(currentPage - 1);
+            });
+
+            $('a.forward', this).click(function () {
+                return gotoPage(currentPage + 1);
+            });
+
+            // create a public interface to move to a specific page
+            $(this).bind('goto', function (event, page) {
+                gotoPage(page);
+            });
+        });
+    };
+
+    loadPlayer();
+    var elbemName = $('#elbemName').text();
+    $('#e_left_1_1').html('앨범 명 : ' +elbemName);
+    var room = io.connect('/room');
+    room.emit('getLikes', { name: elbemName });
+    room.emit('getElbemlist',{name:name});
+    room.emit('getMusics', {name:elbemName });
+
+
+
+    room.on('getMusicsed', function(data) {
+      var html = ['<div class="infiniteCarousel">'];
+      html.push('<div class="wrapper">');
+      html.push('<ul>');
+      $.each(data.result, function(index, item){
+         html.push('<li onclick="loadVideo(\\'',item.url,'\\', true)">','<img src="',item.thumbnailurl,'" height="170" width="170"/><br><span class="titlec">', item.title, '...</span></li>');
+      });
+      html.push('</ul>');
+      html.push('</div>');
+      html.push('</div>');
+      document.getElementById('e_main_2').innerHTML = html.join('');
+      $('.infiniteCarousel').infiniteCarousel();
+    });
+
+    room.on('getLikesed', function(data) {
+      $('#e_left_1_2').html('추천 수 : ' +data.result);
+    });
+
+    $('#thisLikesBt').click(function(e) {
+       room.emit('thisLikesEmit', { name: elbemName });
+       alert(elbemName+'이 앨범 추천!');
+    });
+
+    room.on('getElbemlisted', function(data) {
+      var html = ['<div id ="elbemdiv">'];
+      html.push('<p>공개 앨범 목록');
+      $.each(data.result, function(index, item){
+         html.push('<p>'+item.name+" ("+item.likes+") "+ '<input type="button", class="likeBt", onclick="likeEmit(\\'',item.name,'\\')", value="추천", style="float:right">', '<input type="button", onclick="location.href=\\'/elbem/' + item.name + '\\'", class="likeBt", value="보기", style="float:right">');
+      });
+      html.push('</div>');
+      document.getElementById('m_right_2').innerHTML = html.join('');
+    });
+    room.on('thisLikesEmited', function(data) {
+      $('#e_left_1_2').html('추천 수 : ' +data.result);
+      room.emit('getElbemlist',{name:name});
+    });
+    $('#searchBt1').click(function(e) {
+      var selectValue = $(".musicmax option:selected").val(); search(selectValue);
+    });
+    $('#LOGO').click(function(e) {
+     location.href = '/';
+  });
+  });

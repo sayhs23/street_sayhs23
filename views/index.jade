@@ -1,14 +1,15 @@
 #box 
  #dialog(style='display:none', title='로그인을 해주세요')
-      form(action='/gStreet', method='POST')
+      form(name='form1',method='POST')
        label(for='nickname')아이디 
        input(type='text', id='nickname', name='nickname', style='width:130px;')
        p
        label(for='password') 비밀번호
        input(type='password', id='password', name='password', style='width:130px;')
        p
-       input(type='submit', value='입장', class='logBt',style='width:80px; float:left; ')
-       input#jo(type='button', value='회원가입', class='logBt', style='width:80px;')
+       input#login(type='submit', value='입장', class='logBt',style='width:80px; float:left; ')
+       input#join(type='button', value='회원가입', class='logBt', style='width:80px;')
+      div#newDiv
  div#top
    #top_1
       img(id='LOGO', style='margin-left:300px; float:left',src='images/logo.jpg') 
@@ -62,7 +63,6 @@
      
      #left_5
  #bottom
-     
 
 script(type='text/javascript', src='http://www.google.com/jsapi?key=ABQIAAAAdV0OihhLfo4ru8N1BXzlWxSJ87f2VNqmObhB7kj4DJwDOGkiiBR3Nh79Pxxmk0DgEb3TTwZHI-Fp1g')
 script(type='text/javascript', src='http://code.jquery.com/jquery-1.7.0.min.js')
@@ -70,7 +70,6 @@ script(type='text/javascript', src='/javascripts/jquery-ui-1.8.18.custom.min.js'
 
 script(type='text/javascript') 
   $(document).ready(function() {
-
 
    var room = io.connect('/room');
 
@@ -260,6 +259,32 @@ script(type='text/javascript')
   $('#refresh2').click(function(e) {
      socialfeed2.init();
   });
+  $('#join').click(function(e) {
+     var output ='';
+     output+="<form name='form2' method='POST'>";
+     output+=" <lable for ='nickname1'> 아이디: ";
+     output+=" <input type='text' name='nickname1' id='nickname1'>";
+     output+=" <P>";
+     output+=" <lable for ='password1'> 비번: ";
+     output+=" <input type='password' name='password1' id='password1'>";
+     output+=" <P>";
+     output+=" <lable for ='repassword1'>비번 확인: ";
+     output+=" <input type='password' name='repassword1' id='repassword1'>";
+     output+=" <P>";
+     output+=" <input type='submit' name='joins' id='joins' value='완료' class='logBt'>";
+     output+="</form>";
+     $('#newDiv').html(output);
+  });
+  $('#login').click(function(e) {
+     document.form1.action ='/gStreet';
+     document.form1.submit;
+  });
+
+  $('#joins').click(function(e) {
+     document.form2.action ='/joins';
+     document.form2.submit;
+  });
+  
   var getTime = function(){
      var now = new Date();
      var year = now.getFullYear();

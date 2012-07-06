@@ -116,8 +116,7 @@ app.get('/enter', function(req, res) {
 });
 app.post('/makeRoom', function(req, res) {
   var isSuccess = false
-    , roomName = req.body.roomname; // 방제
-
+  , roomName = req.body.roomname; // 방제
   var musicmax = req.body.musicmax; // 최대 곡수
   var captin = req.body.nickname; // 방장 -> 방장에게 시작 권한을 주기 위해서.
   var usermax = req.body.usermax; // 최대 인원 수 갑 받음.
@@ -162,6 +161,15 @@ app.get('/join/:id', function(req, res) {
     , attendants: Chat.getAttendantsList(roomName)
   });
 });
+
+app.get('/elbem/:id', function(req, res) {
+  var elbemName = req.params.id;
+  console.log('/elbem/:id 페이지 호출 get 방식 -> 앨범 이름은?: '+elbemName); 
+  res.render('elbem',{
+	  elbemName: elbemName
+  });
+});
+
 
 app.get('/logout/:name', function(req, res) {
 

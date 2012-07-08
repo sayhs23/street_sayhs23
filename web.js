@@ -64,7 +64,7 @@ app.get('/add/:id', function(req, res) {                         //추가기능 
 
 app.get('/search/:id', function(req, res) {
   var searchName = req.params.id;
-  console.log('/search/:id 페이지 호출 get 방식 -> 검색어 이름은?: '+searchName); 
+  console.log('/search/:id  '+searchName); 
   res.render('search',{
 	  searchName: searchName
   });
@@ -101,9 +101,6 @@ app.get('/enter/:id', function(req, res) {
 */
 app.get('/enter', function(req, res) {
   var user = Chat.getUser(req.session.nickname);
-  console.log('유저 이름 값: '+ user.nickname);
-  console.log('유저 레벨 값: '+ user.level);
-  console.log('유저 총 점수 값: '+ user.totalscore);
 
   if (req.session.nickname) {
     res.render('enter', {
@@ -131,7 +128,7 @@ app.post('/makeRoom', function(req, res) {
   var usermax = req.body.usermax; // 최대 인원 수 갑 받음.
 
 
- console.log('/makeRoom 에서는 musicmax, captin, usermax 값 검사 : '+musicmax + captin + usermax);
+ console.log('/makeRoom musicmax, captin, usermax: '+musicmax + captin + usermax);
 
 
   if(roomName && roomName.trim() != '') {
@@ -159,7 +156,7 @@ app.get('/join/:id', function(req, res) {
     isSuccess = true; 
   }
 
-  console.log('/join/:id 페이지 호출 get 방식: , '+isSuccess+ roomName, level, Chat.getAttendantsList(roomName));
+  console.log('/join/:id  , '+isSuccess+ roomName, level, Chat.getAttendantsList(roomName));
    
   res.render('room', {
       isSuccess: isSuccess
@@ -173,7 +170,7 @@ app.get('/join/:id', function(req, res) {
 
 app.get('/elbem/:id', function(req, res) {
   var elbemName = req.params.id;
-  console.log('/elbem/:id 페이지 호출 get 방식 -> 앨범 이름은?: '+elbemName); 
+  console.log('/elbem/:id : '+elbemName); 
   res.render('elbem',{
 	  elbemName: elbemName
   });
@@ -182,7 +179,6 @@ app.get('/elbem/:id', function(req, res) {
 
 app.get('/logout/:name', function(req, res) {
 
- console.log('로그 아웃 이벤트 발생');
  var nickname = req.params.name; //로그아웃한놈 저장해서
 
  Chat.deleteNickName(nickname);

@@ -41,7 +41,7 @@ module.exports = function(app) {
     .on('connection', function(socket) { 
       var joinedRoom = null;
       Game.setCnt();
-      console.log('접속함');
+   //   console.log('접속함');
       socket.on('join', function(data) {   // 유저가 접속을 하면 방이름을 챗.js의 방 배열에 추가한다.
         if (Chat.hasRoom(data.roomName)) {
           joinedRoom = data.roomName;
@@ -64,21 +64,21 @@ module.exports = function(app) {
 
 
       socket.on('addElbems', function(data) {
-		    console.log('addElbem 이벤트 실행');
-			console.log('addElbem시 서버 측에서 받은 값' +data.name);
+		//    console.log('addElbem 이벤트 실행');
+		//	console.log('addElbem시 서버 측에서 받은 값' +data.name);
 			
 			client.query('CREATE TABLE ' + data.name + ' (title varchar(300), thumbnailurl varchar(50), url varchar(100), likes int(5));', function(err) {
 			 if (err) {
-				    console.log('테이블 생성 에러 발생');
-					socket.emit('addElbemsed-fail', {result: data.name});
+				//    console.log('테이블 생성 에러 발생');
+				//	socket.emit('addElbemsed-fail', {result: data.name});
              }else{
-					console.log('테이블 생성');
+				//	console.log('테이블 생성');
 					client.query('INSERT INTO elbems SET name=?, likes =0',[data.name], function(err) {
 					
 					if (err) {
-						console.log('에러 발생');
+				//		console.log('에러 발생');
 					}else{
-						console.log('인서트 성공');
+					//	console.log('인서트 성공');
 						socket.emit('addElbemsed', {result: data.name});
 					}
 			}
@@ -90,15 +90,15 @@ module.exports = function(app) {
 	  });
 	  /////////////////   mStreet  에서 노래 담기 부분 ////////////////////////////////////////////////////////////////
 	  socket.on('addMusicEmit', function(data) {
-		  console.log('addMusicEmit 이벤트 실행');
-		  console.log('addMusicEmit시 서버 측에서 받은 값' + data.name + data.title + data.thumbnailurl + data.playerUrl);
+		//  console.log('addMusicEmit 이벤트 실행');
+		//  console.log('addMusicEmit시 서버 측에서 받은 값' + data.name + data.title + data.thumbnailurl + data.playerUrl);
 
 		  client.query('INSERT INTO '+data.name+' SET title=?, thumbnailurl=?, url=?, likes=0',[ data.title, data.thumbnailurl, data.playerUrl], function(err){
 			  if(err) {
-				  console.log('노래 인서트 에러 발생');
+				 // console.log('노래 인서트 에러 발생');
 			  }else{
-				  console.log('노래 인서트 성공');
-				  console.log('선택 DB는 '+data.name);
+				//  console.log('노래 인서트 성공');
+			//	  console.log('선택 DB는 '+data.name);
 				  socket.emit('addMusicEmited');
 			  }
 		  }
@@ -106,16 +106,16 @@ module.exports = function(app) {
 	  });
 
 	  socket.on('SelectEmit', function(data) {
-		  console.log('SelectEmit 이벤트 실행');
+	//	  console.log('SelectEmit 이벤트 실행');
 
 
 	  });
 /////////////////   mStreet  앨범 목록 불러오는 부분 ////////////////////////////////////////////////////////////////
 	  socket.on('getElbemlist', function(data) {
-		    console.log('getElbemlist 이벤트 실행');
+		//    console.log('getElbemlist 이벤트 실행');
 			client.query('SELECT * FROM elbems ORDER BY likes DESC;', function(err, results, fields) {
 			 if (err) {
-				    console.log('앨범 찾기 실패');
+			//	    console.log('앨범 찾기 실패');
              }else{
 
 					//var data = JSON.stringify(results);
@@ -131,7 +131,7 @@ module.exports = function(app) {
 		    console.log('getElbemList2 이벤트 실행');
 			client.query('SELECT * FROM elbems ORDER BY likes DESC;', function(err, results, fields) {
 			 if (err) {
-				    console.log('앨범 찾기 실패');
+				//    console.log('앨범 찾기 실패');
              }else{
 
 					//var data = JSON.stringify(results);
@@ -144,7 +144,7 @@ module.exports = function(app) {
 	  });
 /////////////////   elbem 에서 추천 수 구하는 부분 ////////////////////////////////////////////////////////////////
 	  socket.on('getLikes', function(data) {
-		  console.log('getLikes 이벤트 실행');
+	//	  console.log('getLikes 이벤트 실행');
 		  client.query('SELECT likes FROM elbems WHERE name=?',[data.name], function(err, results, fields) {
 			  if( err) {
 				   console.log('likes 찾기 실패');
@@ -158,7 +158,7 @@ module.exports = function(app) {
 	  });
 /////////////////   elbem 에서 노래 목록 리스트 가져 오는 부분////////////////////////////////////////////////////////////////
 	  socket.on('getMusics', function(data) {
-		  console.log('getMusics 이벤트 실행');
+		//  console.log('getMusics 이벤트 실행');
 		  client.query('SELECT * FROM '+data.name,function(err, results, fields) {
 			  if( err) {
 				   console.log('Music 찾기 실패');
@@ -173,21 +173,21 @@ module.exports = function(app) {
 socket.on('thisLikesEmit', function(data) {
 		  client.query('SELECT likes FROM elbems WHERE name=?',[data.name], function(err, results, fields) {
 					if (err) {
-						console.log('에러 발생');
+					//	console.log('에러 발생');
 					}else{
-						console.log('현재 likes 값은'+results[0].likes);
+					//	console.log('현재 likes 값은'+results[0].likes);
 						var currentLikes = results[0].likes;
 						currentLikes++;
-						console.log('증가된 likes 값은'+currentLikes);
+						//console.log('증가된 likes 값은'+currentLikes);
 
 						client.query('UPDATE elbems SET likes=? WHERE name=?',[currentLikes, data.name], function(err, results, fields) {
 							if (err) {
-								console.log('에러 발생');
+							//	console.log('에러 발생');
 							}else{
-								console.log('like 값 바꾸기 성공');
+								//console.log('like 값 바꾸기 성공');
 								client.query('SELECT likes FROM elbems WHERE name=?',[data.name], function(err, results, fields) {
 								 if (err) {
-										 console.log('앨범 찾기 실패');
+								//		 console.log('앨범 찾기 실패');
 							    }else{
 										socket.emit('thisLikesEmited', {result: results[0].likes});
 								 }
@@ -205,21 +205,21 @@ socket.on('thisLikesEmit', function(data) {
 	  socket.on('likeElbem', function(data) {
 		  client.query('SELECT likes FROM elbems WHERE name=?',[data.name], function(err, results, fields) {
 					if (err) {
-						console.log('에러 발생');
+					//	console.log('에러 발생');
 					}else{
-						console.log('현재 likes 값은'+results[0].likes);
+					//	console.log('현재 likes 값은'+results[0].likes);
 						var currentLikes = results[0].likes;
 						currentLikes++;
-						console.log('증가된 likes 값은'+currentLikes);
+					//	console.log('증가된 likes 값은'+currentLikes);
 
 						client.query('UPDATE elbems SET likes=? WHERE name=?',[currentLikes, data.name], function(err, results, fields) {
 							if (err) {
-								console.log('에러 발생');
+							//	console.log('에러 발생');
 							}else{
-								console.log('like 값 바꾸기 성공');
+							//	console.log('like 값 바꾸기 성공');
 								client.query('SELECT * FROM elbems  ORDER BY likes DESC;', function(err, results, fields) {
 								 if (err) {
-										 console.log('앨범 찾기 실패');
+							//			 console.log('앨범 찾기 실패');
 							    }else{
 										socket.emit('getElbemlisted', {result: results});
 								 }
@@ -354,7 +354,7 @@ socket.on('thisLikesEmit', function(data) {
         }
 		else
 			socket.broadcast.json.send(data);
-			console.log('대기실에서 채팅/내용: '+data);
+	//		console.log('대기실에서 채팅/내용: '+data);
       });
 
 
@@ -368,7 +368,7 @@ socket.on('thisLikesEmit', function(data) {
 
 	  socket.on('game', function(data) { ////////////////////////////////////// ready.on
 		        
-				console.log('game 이벤트 발생!');
+			//	console.log('game 이벤트 발생!');
 
 				Music.setMusic();  // Music.js 는 디비로 부터 음악을 가져오는 역할을 하는 것이다.
                 var id = Music.getId();
@@ -387,7 +387,7 @@ socket.on('thisLikesEmit', function(data) {
 // 게임 정부 셋팅 하는 부분 
       socket.on('ready', function(data) { ////////////////////////////////////// ready.on
 				Music.setMusic();  // Music.js 는 디비로 부터 음악을 가져오는 역할을 하는 것이다.
-                console.log('Consol long : DB-> Music(hint, videoId, Name) created!!');
+             //   console.log('Consol long : DB-> Music(hint, videoId, Name) created!!');
                 var id = Music.getId();
                 var name = Music.getName();
                 var hint = Music.getHint();
@@ -398,11 +398,11 @@ socket.on('thisLikesEmit', function(data) {
                 var Score = data.usrScore;   
                 var Once = data.oneUserScore;
 
-                console.log(' in Room.js < onceUserScore: > '+Once);
+         //       console.log(' in Room.js < onceUserScore: > '+Once);
 
         if (joinedRoom) {
                                         // DB에서 빼오는 부분임
-             console.log('Consol long : readied event in Room!');
+        //     console.log('Consol long : readied event in Room!');
 
 			 // 사용자 이름, 현재 맞춘 곡수, 비디오 아이디, 비디오 이름, 힌트, 
              socket.emit('readied', { usName: Name, usScore:Score, msId: id, msName: name, msHint: hint, msCnt: cnt, OneScore: Once   });
@@ -414,8 +414,8 @@ socket.on('thisLikesEmit', function(data) {
       });
 
 	  socket.on('friendlist', function(data) {
-		  console.log('이벤트 발생자:' + data.nickNmae);
-		  console.log('친구 목록 요청 이벤트 발생 (서버에서 받음)');
+		//  console.log('이벤트 발생자:' + data.nickNmae);
+		//  console.log('친구 목록 요청 이벤트 발생 (서버에서 받음)');
            var name ='';
 
 		    client.query( 'SELECT friend FROM ' + TABLE + ' WHERE nickname = ?' , [data.nickNmae], function(err, results, fields) {
@@ -430,7 +430,7 @@ socket.on('thisLikesEmit', function(data) {
 	  });
 
 	  socket.on('s', function(){
-			console.log('받음');
+	//		console.log('받음');
 	  });
 
       socket.on('leave', function(data) {

@@ -193,4 +193,5 @@ app.get('/logout/:name', function(req, res) {
 app.listen(8001);
 // Socket.iod
 require('./rooms')(app);
+console.log("runnig");
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);

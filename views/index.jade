@@ -1,32 +1,41 @@
-#box 
- #dialog(style='display:none', title='로그인을 해주세요')
-      form(name='form1',method='POST')
-       label(for='nickname')아이디 
-       input(type='text', id='nickname', name='nickname', style='width:130px;')
-       p
-       label(for='password') 비밀번호
-       input(type='password', id='password', name='password', style='width:130px;')
-       p
-       input#login(type='submit', value='입장', class='logBt',style='width:80px; float:left; ')
-       input#join(type='button', value='회원가입', class='logBt', style='width:80px;')
-      div#newDiv
- div#top
+#i_main_1
+   img(id='LOGO', style='margin-left:30px; margin-top:10px; float:left',src='images/logo.jpg', title='로고다시') 
    #top_1
-      img(id='LOGO', style='margin-left:300px; float:left',src='images/logo.jpg') 
-      #top_1_1(style='margin-left:100px;')
-      script(type='text/javascript', src="http://widgetprovider.daum.net/view?url=http://widgetcfs1.daum.net/xml/5/widget/2008/09/23/10/23/48d844f73a4ab.xml&up_setLocal=108&&width=160&height=70&widgetId=119&scrap=1")
-      input(type='button',class='menuBt', id='mStreet', value='mStreet', style='width:170px; margin-left:45px; margin-top:1px;')
-      input(type='button',class='menuBt', id='cStreet', value='cStreet', style='width:170px;')
-      input(type='button',class='menuBt', id='sStreet', value='sStreet', style='width:170px;')
-      input(type='button',class='menuBt', id='gStreet', value='gStreet', style='width:170px;')
-   #top_2
-    <fb:profile-pic uid="loggedinuser" size="square"></fb:profile-pic>
-    <fb:name uid="loggedinuser" use-you="no"></fb:name>
-    <fb:login-button autologoutlink="true"></fb:login-button><p>
-    <button class="menuBt2" onclick="dial()" style='width:130px; height:25px;'>글쓰기</button>
- #main
-   #main_1
-       input(type='button',class='menuBt2', id='refresh1', value='톱 뉴스 새로고침', style='width:166px; height:20px') 
+     #top_1_1
+       <fb:profile-pic uid="loggedinuser" size="square"></fb:profile-pic>
+       <fb:name uid="loggedinuser" use-you="no"></fb:name>
+     #top_1_2
+       <fb:login-button autologoutlink="true"></fb:login-button><p>
+       <button class="menuBt2" onclick="dial()" style='width:80px; height:30px;'>글쓰기</button>
+    
+#i_main_2
+#i_main_3
+  #i_mian_2_1(style='margin-left:140px; height:70px; width: 1250px;  margin-left:50px;')
+     img(class='menuBt',src='images/Text_main.jpg', id='info', style='width:150px; height:60px;')
+     img(class='menuBt',src='images/Button_Home_Black.jpg', id='home', value='Home', style='width:150px; height:50px; margin-left:280px;')
+     img(class='menuBt',src='images/Button_Mstreet_Black.jpg', id='mStreet', value='mStreet', style='width:150px; margin-left:10px; height:50px;')
+     img(class='menuBt',src='images/Button_Cstreet_Black.jpg', id='cStreet', value='cStreet', style='width:150px; margin-left:10px; height:50px;')
+     img(class='menuBt',src='images/Button_Sstreet_Black.jpg', id='sStreet', value='sStreet', style='width:150px; margin-left:10px; height:50px;')
+     img(class='menuBt',src='images/Button_Gstreet_Black.jpg', id='gStreet', value='gStreet', style='width:150px; margin-left:10px; height:50px;')
+#i_main_4
+#i_main_5
+     input(type='text', class='txtbox', id='search', value='검색어를 입력하세요', style='float:left; margin-top:30px; margin-left:370px;')
+     img(src='images/Button_Search.jpg', id='shBt', value='검색', style='float:left; width:60px; margin-top:30px; height:30px; margin-left:20px; margin-right:3px;')
+     script(type='text/javascript', src="http://widgetprovider.daum.net/view?url=http://widgetcfs1.daum.net/xml/5/widget/2008/09/23/10/23/48d844f73a4ab.xml&up_setLocal=108&&width=160&height=70&widgetId=119&scrap=1")
+#i_main_6
+   #i_main_6_1(style='margin-left:200px;')
+      img(src='images/Text_Topnew.jpg', style='width:320px; height:50px;')
+   #i_main_6_2(style='margin-left:30px;')
+      img(src='images/Text_Sports.jpg', style='width:320px; height:50px;')
+   #i_main_6_3(style='margin-left:30px;')
+       img(class='menuBt',src='images/Button_Drama_Black.jpg', value='드라마', id='drama', style='width:90px; height:25px; margin-left:10px;')
+       img(class='menuBt',src='images/Button_Movie_Black.jpg', value='영화', id='movie', style='width:90px; height:25px; margin-left:10px;')
+       img(class='menuBt',src='images/Button_People_Black.jpg', value='인물', id='man', style='width:90px; height:25px; margin-left:10px;')
+       img(class='menuBt',src='images/Button_Performance_Black.jpg', value='공연', id='perfomance', style='width:90px; height:25px; margin-left:10px;')
+       img(class='menuBt',src='images/Button_Rec_Black.jpg', value='오락', id='tvshow', style='width:90px; height:25px; margin-left:10px;')
+       img(class='menuBt',src='images/Button_Books_Black.jpg', value='도서', id='book', style='width:90px; height:25px; margin-left:10px;')
+#i_main_7  
+    #i_main_7_1(style='margin-left:200px;')
        script(type='text/javascript')
         var socialfeed1 = new gfeedfetcher("example1", "example1class", "_new")
         socialfeed1.addFeed("동아", "http://news.naver.com/rss/rss_presscenter.nhn?office_id=020") 
@@ -34,10 +43,10 @@
         socialfeed1.addFeed("중앙", "http://news.naver.com/rss/rss_presscenter.nhn?office_id=025") 
         socialfeed1.displayoptions("label datetime snippet")
         socialfeed1.setentrycontainer("div") 
-        socialfeed1.filterfeed(12, "label") 
+        socialfeed1.filterfeed(12, "label")
         socialfeed1.init()
-   #main_2
-       input(type='button',class='menuBt2', id='refresh2', value='스포츠/연예 새로고침', style='width:166px; height:20px') 
+       input(type='button',class='menuBt2', id='refresh1', value='톱 뉴스 새로고침 이미지', style='width:166px; height:20px') 
+    #i_main_7_2(style='margin-left:30px;')
        script(type='text/javascript')
         var socialfeed2 = new gfeedfetcher("example2", "example2class", "_new")
         socialfeed2.addFeed("서울", "http://news.naver.com/rss/rss_presscenter.nhn?office_id=073") 
@@ -47,31 +56,28 @@
         socialfeed2.setentrycontainer("div") 
         socialfeed2.filterfeed(12, "label") 
         socialfeed2.init()
-
-   #main_3
-     #left_1(style='margin-top:1px;')
-       a(style='margin-left:50px;')
-     #left_2(style='border:0px solid #f5f5f5;')
-       input(type='button', class='menuBt1', value='드라마', id='drama', style='width:66px; height:20px;')
-       input(type='button', class='menuBt1', value='영화', id='movie', style='width:65px; height:20px')
-       input(type='button', class='menuBt1', value='인물', id='man', style='width:65px; height:20px')
-     #left_4(style='border:0px solid #f5f5f5;')
-       input(type='button', class='menuBt1', value='공연', id='perfomance', style='width:66px; height:20px')
-       input(type='button', class='menuBt1', value='오락', id='tvshow', style='width:65px; height:20px')
-       input(type='button', class='menuBt1', value='도서', id='book', style='width:65px; height:20px')
-     #left_3(style='border:0px solid #f5f5f5; background-color: #f5f5f5')
-     
-     #left_5
- #bottom
-
+       input(type='button',class='menuBt2', id='refresh2', value='스포츠/연예 새로고침 이미지', style='width:166px; height:20px') 
+    #i_main_7_3(style='margin-left:30px;')
+      #left_3(style='margin-top:30px; border:0px solid #f5f5f5; background-color: #f5f5f5')
+      #left_5(style='margin-left:200px;')
+ul#ticker01(style='width:1350px;')
+   li<span>소속</span><a>상명대학교 디지털 미디어 전공</a></li>
+   li<span>팀</span><a>VERITATS</a></li>
+   li<span>street</span><a>너와 내가 있는 이곳은 Street!</a></li>
+   
 script(type='text/javascript', src='http://www.google.com/jsapi?key=ABQIAAAAdV0OihhLfo4ru8N1BXzlWxSJ87f2VNqmObhB7kj4DJwDOGkiiBR3Nh79Pxxmk0DgEb3TTwZHI-Fp1g')
 script(type='text/javascript', src='http://code.jquery.com/jquery-1.7.0.min.js')
 script(type='text/javascript', src='/javascripts/jquery-ui-1.8.18.custom.min.js')
+script(type='text/javascript', src='/javascripts/jquery.li-scroller.1.0.js')
 
 script(type='text/javascript') 
   $(document).ready(function() {
+   $('#home').attr('src','images/Button_Home_Orange.jpg');
 
    var room = io.connect('/room');
+   $(function () {
+     $("ul#ticker01").liScroll();
+   });
 
   room.on('connect', function() {  
      room.emit('drama', {nickName:'text'}); 
@@ -253,6 +259,9 @@ script(type='text/javascript')
   $('#LOGO').click(function(e) {
      location.href = '/';
   });
+  $('#home').click(function(e) {
+     location.href = '/';
+  });
   $('#refresh1').click(function(e) {
      socialfeed1.init();
   });
@@ -283,6 +292,14 @@ script(type='text/javascript')
   $('#joins').click(function(e) {
      document.form2.action ='/joins';
      document.form2.submit;
+  });
+
+  $('#shBt').click(function(e) {
+     var searchText = $('#search').val();
+     location.href='/search/' + searchText;
+  });
+  $('#search').click(function(e) {
+     $('#search').val('');
   });
   
   var getTime = function(){

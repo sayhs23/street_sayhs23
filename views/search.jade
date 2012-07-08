@@ -1,0 +1,233 @@
+script(type='text/javascript', src='/javascripts/daum.js')
+#i_main_1
+   span(style='display:none')#searchName=  searchName
+   img(id='LOGO', style='margin-left:30px; margin-top:10px; float:left',src='http://localhost:8001/images/logo.jpg', title='로고다시') 
+   #top_1
+     #top_1_1
+       <fb:profile-pic uid="loggedinuser" size="square"></fb:profile-pic>
+       <fb:name uid="loggedinuser" use-you="no"></fb:name>
+     #top_1_2
+       <fb:login-button autologoutlink="true"></fb:login-button><p>
+       <button class="menuBt2" onclick="dial()" style='width:80px; height:30px;'>글쓰기</button>
+#i_main_2(style='height:10px;')
+#i_main_3
+  #i_mian_2_1(style='margin-left:140px; height:70px; width: 1250px;  margin-left:50px;')
+     img(class='menuBt',src='http://localhost:8001/images/Text_main.jpg', id='info', style='width:150px; height:60px;')
+     img(class='menuBt',src='http://localhost:8001/images/Button_Home_Black.jpg', id='home', value='Home', style='width:150px; height:50px; margin-left:280px;')
+     img(class='menuBt',src='http://localhost:8001/images/Button_Mstreet_Black.jpg', id='mStreet', value='mStreet', style='width:150px; margin-left:10px; height:50px;')
+     img(class='menuBt',src='http://localhost:8001/images/Button_Cstreet_Black.jpg', id='cStreet', value='cStreet', style='width:150px; margin-left:10px; height:50px;')
+     img(class='menuBt',src='http://localhost:8001/images/Button_Sstreet_Black.jpg', id='sStreet', value='sStreet', style='width:150px; margin-left:10px; height:50px;')
+     img(class='menuBt',src='http://localhost:8001/images/Button_Gstreet_Black.jpg', id='gStreet', value='gStreet', style='width:150px; margin-left:10px; height:50px;')
+#s_main_4
+     #s_main_6_1(style='width:250px;')
+     #s_main_6_2(style='margin-rgith:20px;')
+      p(class='font1', style='margin-top:120px;') 검색 결과
+      hr
+      p(class='font2', id='searchAllBt') 통합 검색
+      p(class='font2', id='searchWebBt') 웹 검색
+      p(class='font2', id='searchBlogBt') 블로그 검색
+      p(class='font2', id='searchCafeBt') 카페 검색
+      p(class='font2', id='searchKnowledgeBt') 지식인 검색
+      p(class='font2', id='searchImageBt') 이미지 검색
+      p(class='font2', id='searchVclipBt') 동영상 검색
+      p(class='font2', id='searchBoardBt') 게시판 검색
+      hr
+
+#s_main_5
+   #s_main_5_1
+      #daumForm                                                        
+        input(type='text', class='txtbox', id='daumSearch', value='안녕', onkeydown="javascript:if(event.keyCode == 13) daumSearch.search();", style='float:left; margin-top:30px; margin-left:200px;')
+        input(type='submit', class='shBt', id='daumSubmit', onclick="javascript:daumSearch.search()", value='검색', style='float:left; width:60px; margin-top:30px; height:30px; margin-left:20px; margin-right:3px;')
+   #s_main_5_2
+      div#daumView
+          h3 웹 검색 결과  
+             div#daumWeb
+          h3 블로그 검색 결과  
+             div#daumBlog
+          h3 카페 검색 결과  
+             div#daumCafe 
+          h3 지식 검색 결과  
+             div#daumKnowledge
+          h3 이미지 검색 결과  
+             div#daumImage  
+          h3 비디오 검색 결과  
+             div#daumVclip  
+          h3 게시판 검색 결과 
+             div#daumBoard      
+      div#daumScript  
+      div#daumVclipScript  
+      div#daumImageScript  
+      div#daumBoardScript  
+      div#daumBlogScript  
+      div#daumWebScript  
+      div#daumKnowledgeScript  
+      div#daumCafeScript  
+#s_main_6
+   #s_main_6_1
+
+script(type='text/javascript', src='http://code.jquery.com/jquery-1.7.0.min.js')
+script(type='text/javascript') 
+  $(document).ready(function() {
+
+    $('#searchAllBt').css('color','#09C');
+    var searchName = $('#searchName').text();
+    $('#daumSearch').val(searchName);
+
+    $('#mStreet').click(function(e) {
+      location.href = '/mStreet';
+    });
+    $('#gStreet').click(function(e) {
+      $('#dialog').dialog();
+    });
+    $('#sStreet').click(function(e) { 
+      location.href = '/sStreet';
+    });
+    $('#cStreet').click(function(e) { 
+      location.href = '/cStreet';
+    });
+    $('#LOGO').click(function(e) {
+      location.href = '/';
+    });
+    $('#home').click(function(e) {
+      location.href = '/';
+    });
+    $('#searchWebBt').click(function(e) {
+       $('#daumWeb').html('');
+       $('#daumBlog').html('');  
+       $('#daumCafe').html('');    
+       $('#daumKnowledge').html('');   
+       $('#daumImage').html('');  
+       $('#daumVclip').html('');  
+       $('#daumBoard').html('');
+
+       $('#searchWebBt').css('color','#09C');
+       $('#searchVclipBt').css('color','#000000');
+       $('#searchImageBt').css('color','#000000');
+       $('#searchKnowledgeBt').css('color','#000000');
+       $('#searchCafeBt').css('color','#000000');
+       $('#searchBlogBt').css('color','#000000');
+       $('#searchBoardBt').css('color','#000000');
+       $('#searchAllBt').css('color','#000000');
+       daumSearch.searchWeb();
+    });
+    $('#searchBlogBt').click(function(e) {
+       $('#daumWeb').html('');
+       $('#daumBlog').html('');  
+       $('#daumCafe').html('');    
+       $('#daumKnowledge').html('');   
+       $('#daumImage').html('');  
+       $('#daumVclip').html('');  
+       $('#daumBoard').html('');
+
+       $('#searchWebBt').css('color','#000000');
+       $('#searchVclipBt').css('color','#000000');
+       $('#searchImageBt').css('color','#000000');
+       $('#searchKnowledgeBt').css('color','#000000');
+       $('#searchCafeBt').css('color','#000000');
+       $('#searchBlogBt').css('color','#09C');
+       $('#searchBoardBt').css('color','#000000');
+       $('#searchAllBt').css('color','#000000');
+       daumSearch.searchBlog();
+    });
+    $('#searchCafeBt').click(function(e) {
+       $('#daumWeb').html('');
+       $('#daumBlog').html('');  
+       $('#daumCafe').html('');    
+       $('#daumKnowledge').html('');   
+       $('#daumImage').html('');  
+       $('#daumVclip').html('');  
+       $('#daumBoard').html('');
+
+       $('#searchWebBt').css('color','#000000');
+       $('#searchVclipBt').css('color','#000000');
+       $('#searchImageBt').css('color','#000000');
+       $('#searchKnowledgeBt').css('color','#000000');
+       $('#searchCafeBt').css('color','#09C');
+       $('#searchBlogBt').css('color','#000000');
+       $('#searchBoardBt').css('color','#000000');
+       $('#searchAllBt').css('color','#000000');
+       daumSearch.searchCafe();
+    });
+    $('#searchKnowledgeBt').click(function(e) {
+       $('#daumWeb').html('');
+       $('#daumBlog').html('');  
+       $('#daumCafe').html('');    
+       $('#daumKnowledge').html('');   
+       $('#daumImage').html('');  
+       $('#daumVclip').html('');  
+       $('#daumBoard').html('');
+
+       $('#searchWebBt').css('color','#000000');
+       $('#searchVclipBt').css('color','#000000');
+       $('#searchImageBt').css('color','#000000');
+       $('#searchKnowledgeBt').css('color','#09C');
+       $('#searchCafeBt').css('color','#000000');
+       $('#searchBlogBt').css('color','#000000');
+       $('#searchBoardBt').css('color','#000000');
+       $('#searchAllBt').css('color','#000000');
+       daumSearch.searchKnowledge();
+    });
+    $('#searchImageBt').click(function(e) {
+       $('#daumWeb').html('');
+       $('#daumBlog').html('');  
+       $('#daumCafe').html('');    
+       $('#daumKnowledge').html('');   
+       $('#daumImage').html('');  
+       $('#daumVclip').html('');  
+       $('#daumBoard').html('');
+
+
+       $('#searchWebBt').css('color','#000000');
+       $('#searchVclipBt').css('color','#000000');
+       $('#searchImageBt').css('color','#09C');
+       $('#searchKnowledgeBt').css('color','#000000');
+       $('#searchCafeBt').css('color','#000000');
+       $('#searchBlogBt').css('color','#000000');
+       $('#searchBoardBt').css('color','#000000');
+       $('#searchAllBt').css('color','#000000');
+       daumSearch.searchImage();
+    });
+    $('#searchVclipBt').click(function(e) {
+       $('#daumWeb').html('');
+       $('#daumBlog').html('');  
+       $('#daumCafe').html('');    
+       $('#daumKnowledge').html('');   
+       $('#daumImage').html('');  
+       $('#daumVclip').html('');  
+       $('#daumBoard').html('');
+
+       $('#searchWebBt').css('color','#000000');
+       $('#searchVclipBt').css('color','#09C');
+       $('#searchImageBt').css('color','#000000');
+       $('#searchKnowledgeBt').css('color','#000000');
+       $('#searchCafeBt').css('color','#000000');
+       $('#searchBlogBt').css('color','#000000');
+       $('#searchBoardBt').css('color','#000000');
+       $('#searchAllBt').css('color','#000000');
+       daumSearch.searchVclip();
+    });
+    $('#searchBoardBt').click(function(e) {
+       $('#daumWeb').html('');
+       $('#daumBlog').html('');  
+       $('#daumCafe').html('');    
+       $('#daumKnowledge').html('');   
+       $('#daumImage').html('');  
+       $('#daumVclip').html('');  
+       $('#daumBoard').html('');
+       
+       $('#searchWebBt').css('color','#000000');
+       $('#searchVclipBt').css('color','#000000');
+       $('#searchImageBt').css('color','#000000');
+       $('#searchKnowledgeBt').css('color','#000000');
+       $('#searchCafeBt').css('color','#000000');
+       $('#searchBlogBt').css('color','#000000');
+       $('#searchBoardBt').css('color','#09C');
+       $('#searchAllBt').css('color','#000000');
+       
+       daumSearch.searchBoard();
+    });
+    $('#searchAllBt').click(function(e) {
+       daumSearch.search();
+    });
+
+  });

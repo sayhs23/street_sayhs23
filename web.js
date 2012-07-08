@@ -60,6 +60,15 @@ app.get('/add/:id', function(req, res) {                         //추가기능 
 		,title: 'Express'
 		});
 });
+//---------------------인덱스 페이지에서 검색어 get방식 /검색어 라우터 부분 -----------------//
+
+app.get('/search/:id', function(req, res) {
+  var searchName = req.params.id;
+  console.log('/search/:id 페이지 호출 get 방식 -> 검색어 이름은?: '+searchName); 
+  res.render('search',{
+	  searchName: searchName
+  });
+});
 
 app.get('/mStreet', function(req, res) { //회원 가입 창 렌더링......!
 	res.render('mStreet');

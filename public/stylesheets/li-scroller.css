@@ -3,9 +3,9 @@
 .tickercontainer { /* the outer div with the black border */
 border: 1px solid #000;
 background: #fff; 
-width: 738px; 
+width: 1350px; 
 height: 27px; 
-margin: 0; 
+margin-left:50px;
 padding: 0;
 overflow: hidden; 
 }
@@ -13,13 +13,13 @@ overflow: hidden;
 position: relative;
 left: 10px;
 top: 8px;
-width: 718px;
+width: 1350px;
 overflow: hidden;
 }
 ul.newsticker { /* that's your list */
 position: relative;
 left: 750px;
-font: bold 10px Verdana;
+font: bold 13px Verdana;
 list-style-type: none;
 margin: 0;
 padding: 0;
@@ -35,9 +35,9 @@ ul.newsticker a {
 white-space: nowrap;
 padding: 0;
 color: #ff0000;
-font: bold 10px Verdana;
+font: bold 13px Verdana;
 margin: 0 50px 0 0;
 } 
 ul.newsticker span {
-margin: 0 10px 0 0;
+margin: 0 13px 0 0;
 } 

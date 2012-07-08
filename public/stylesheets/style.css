@@ -1,15 +1,13 @@
-/*body {
-  padding: 50px;
-  background: #ffffff
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  SCROLLBAR-FACE-COLOR: #ffffff; 
-  SCROLLBAR-HIGHLIGHT-COLOR: #3874c8; 
-  SCROLLBAR-SHADOW-COLOR: #3874c8; 
-  SCROLLBAR-3DLIGHT-COLOR: #ffffff; 
-  SCROLLBAR-ARROW-COLOR: #3874c8;
-  SCROLLBAR-TRACK-COLOR: #ffffff; 
-  SCROLLBAR-DARKSHADOW-COLOR: #ffffff ;
-}*/
+body {
+ scrollbar-face-color:#2B0003;
+ scrollbar-track-color:#ffffff;
+ scrollbar-arrow-color:#ffffff;
+ scrollbar-highlight-color:#FF0099
+ scrollbar-3dlight-color:#ffffff
+ scrollbar-shadow-color:#FF0099
+ scrollbar-darkshadow-color:#00CC66
+ }
+
 .infiniteCarousel {
   width: 800px;
   height: 350px;
@@ -86,6 +84,7 @@
 
 .videos2{
 	background-color: #f5f5f5;
+    overflow: auto;
 	font:12px 굴림;
 }
 .videos1{
@@ -129,7 +128,7 @@ border:5x solid #000000;
 .container-1{
   background-color: #ff5c00;
 }
-.grid_4{width:100px; height:100px; display:inline; float:left ;color:#fff;background-color:#ff6000} 
+.grid_4{width:130px; height:100px; display:inline; float:left ;color:#fff;background-color:#ff6000} 
 
 .menuBt1{
 	height: 40px;
@@ -148,21 +147,14 @@ border:5x solid #000000;
 	background-color: #09C;
 }
 .menuBt3{
-	height: 30px;
+	height: 40px;
 	width:  50px;
 	font: 12px;
 	border-radius:4px;
 	color:#FFFFFF;
 	background-color: #FF0000;
 }
-.menuBt{
-	height: 45px;
-	width:  60px;
-	font: 15px bold;
-	border-radius:4px;
-	color:#ff5c00;
-	background-color: #b4e5ff;
-}
+
 .likeBt{
     position: relative;
 	margin: auto;
@@ -311,7 +303,7 @@ body {
            position: relative;
 }
 #m_right {
-           background-color: #fa0;
+           background-color: #ffffff;
            float: left;
            height:900px;
            width: 210px;
@@ -321,8 +313,8 @@ body {
 #m_right2 {
            background-color: #fa1;
            float: left;
-           height: 700px;
-           width: 100px;
+           height: 1020px;
+           width: 130px;
            position: relative;
 }
 #left_1 {
@@ -330,11 +322,6 @@ body {
 		   color: #000000;   
            position: relative;
 }
-#left_3 {
-		   font-size: 11px;
-		   color: #000000;   
-           position: relative;
-        }
 #left_5 {
 		   font-size: 12px;
 		   color: #000000;   
@@ -348,10 +335,10 @@ body {
            position: relative;          
         }
 #m_main {
-           background-color: #0ff;
+           background-color: #EBEBEB;
            float: left;
            height: 900px;
-           width: 550px;
+           width: 700px;
            position: relative;          
         }
 #bottom {
@@ -362,15 +349,20 @@ body {
            clear: both;
 }
 #m_right_1 {
-		background-color: #faf;
-		height: 80px;
+		background-color: #ffffff;
+		height: 40px;
         width: 210px;
+		margin-top:5px;
+		margin-bottom:5px;
 		position: relative;
 }
+.eTxt{
+		background-color: #EBEBEB;
+}
 #m_right_2 {
-		background-color: #0af;
+		background-color: #EBEBEB;
 		font-size: 13 px;
-		height: 400px;
+		height: 920px;
         width: 210px;
 		overflow: auto;
 		position: relative;
@@ -393,11 +385,6 @@ body {
 }
 #top_1{
 		   position: relative;
-		   float: left;
-}
-#top_2 {
-           position: relative;
-		   margin-left: 65px;
 		   float: left;
 }
 #main_1 {
@@ -501,4 +488,244 @@ body {
 }
 .active {
 	background-position: right 12px;
+}
+
+/* 인덱스 부분에 대한 css */
+#i_main_1{
+           margin-top: 10px;
+           background-color: #ffffff;
+           position: relative;
+		   height: 67px;
+}
+#i_main_2{
+		   background-color: #2b0003;
+           position: relative;
+		   height: 40px;
+}
+#i_main_3{
+		   background-color: #2b0003;
+           position: relative;
+		   height: 80px;
+}
+#i_main_4{
+           background-color: #2b0003;
+           position: relative;
+		   height: 60px;
+}
+#i_main_5{
+           background-color: #2b0003;
+           position: relative;
+		   height: 100px;
+}
+#i_main_6{
+           background-color: #2b0003;
+           position: relative;
+		   height: 50px;
+}
+#i_main_6_1{
+           background-color: #ffffff;
+		   float: left;
+		   color:#4F81BD;
+           position: relative;
+		   font: 18px bold;
+		   width:320px;
+		   height: 50px;
+}
+#i_main_7{
+           background-color: #ffffff;
+           position: relative;
+		   height: 250px;
+}
+#i_main_6_2{
+           background-color: #ffffff;
+           position: relative;
+		   font: 18px bold;
+		   float: left;
+		   color:#4F81BD;
+		   width:320px;
+		   height: 50px;
+}
+#i_main_6_3{
+           background-color: #ffffff;
+           position: relative;
+		   font: 18px bold;
+		   color:#4F81BD;
+		   float: left;
+		   width:320px;
+		   height: 50px;
+}
+#i_main_7_1{
+           background-color: #ffffff;
+		   float: left;
+           position: relative;
+		   font-size: 13px;
+		   width:320px;
+		   height: 220px;
+}
+#i_main_7_2{
+           background-color: #ffffff;
+		   float: left;
+           position: relative;
+		   font-size: 13px;
+		   width:320px;
+		   height: 220px;
+}
+#i_main_7_3{
+           background-color: #ffffff;
+		   float: left;
+           position: relative;
+		   width:320px;
+		   height: 220px;
+}
+#top_1 {  /* 페이스북 버튼 영역 */
+           position: relative;
+		   float: left;
+		   margin-left:750px;
+		   background-color: #ffffff;
+		   height: 67px;
+		   width: 300px;
+}
+#top_1_1 {  /* 페이스북 버튼 영역 */
+           position: relative;
+		   float: left;
+		   background-color: #ffffff;
+		   height: 67px;
+		   width: 120px;
+}
+#top_1_2 {  /* 페이스북 버튼 영역 */
+           position: relative;
+		   float: left;
+		   background-color: #ffffff;
+		   height: 67px;
+		   width: 150px;
+}
+#i_mian_2_1 {  /* 페이스북 버튼 영역 */
+           position: relative;
+		   background-color: #ffffff;
+		   height: 100px;
+}
+/* 인덱스 사용 버튼 */
+.menuBt{
+	position: relative;
+}
+.shBt{
+    color:#000000;
+	font: 18px bold;
+	border-radius:6px;
+	background-color: #FC9F52;
+}
+.info{
+	height: 45px;
+	width:  50px;
+	font: 18px bold;
+	border-radius:6px;
+	color:#ffffff;
+	background-color: #ff0000;
+}
+/*텍스트 박스 디자인 */
+.txtbox{
+    height: 30px;
+    border-radius:2px;
+	width:  550px;
+	font: 18px bold;
+	border: 1px solid #000;
+}
+/* 실시간 검색어 생기는 영역 */
+#left_3 {
+		   font-size: 13px;
+		   color: #000000;   
+           position: relative;
+}
+
+/* 검색 화면 전체 레이아웃 구성 CSS 파일 */
+#s_main_4{
+		   background-color: #ffffff;
+		   float:left;
+           position: relative;
+		   height:1000px;
+		   width: 200px;
+}
+#videoDiv{
+		   background-color: #ffffff;
+		   float:left;
+           position: relative;
+		   height:1000px;
+		   width: 190px;
+		   overflow: auto;
+}
+#s_main_5{
+		   background-color: #ffffff;
+           position: relative;
+		   float:left;
+		   width: 1000px;
+}
+#s_main_6{
+		   background-color: #ffffff;
+           position: relative;
+		   float:left;
+		   height:1000px;
+		   width: 150px;
+}
+#s_main_6_1{
+		   background-color: #2b0000;
+           position: relative;
+		   float:left;
+		   height:100px;
+		   width: 230px;
+}
+#s_main_6_2 {
+           height:700px;
+}
+#s_main_5_1{
+           background-color: #2b0000;
+           position: relative;
+		   height: 100px;
+}
+.font1{
+           color: #FC9F52;
+		   font:30px 굴림;
+}
+.font2{
+          font:18px 굴림;
+}
+#s_main_5_2{
+           background-color: #ffffff;
+           position: relative;
+		   height: 100%;
+}
+/* 비디오 검색 결과 창 */
+#daumVclip{
+		   font:12px 굴림;
+		   background-color: #B6CBE4;
+}
+
+#daumKnowledge {
+		   font:12px;
+		   font:12px 굴림;
+		   background-color: #ffffff;
+}
+#daumWeb   {
+		   font:12px;
+		   font:12px 굴림;
+		   background-color: #ffffff;
+}
+#daumBlog   {
+		   font:12px;
+		   font:12px 굴림;
+		   background-color: #ffffff;
+}
+#daumBoard   {
+		   font:12px;
+		   font:12px 굴림;
+		   background-color: #ffffff;
+}
+#daumImage    {
+		   font:12px;
+		   font:12px 굴림;
+		   background-color: #B6CBE4;
+}
+#daumCafe {
+		   font:12px;
+		   font:12px 굴림;
+		   background-color: #ffffff;
 }

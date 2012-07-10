@@ -16,6 +16,7 @@ app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
   app.use(express.logger('short'));
+  app.use(express.profiler());
   app.use(express.bodyParser()); // 바디 파서 미들웨어는 POST 요청을 할 때 데이터를 쉽게 추출할 수 있게 하는 미들웨어입니다....
   app.use(express.cookieParser());  // 쿠키 파서 미들웨어를 사용하면 request 객체에 cookies 속성이 부여된다. 
   app.use(express.session({secret: 'secret key'}));
@@ -85,7 +86,7 @@ app.get('/elbem/:id', function(req, res) {
 var proxyOptions = {
 hostnameOnly: true,
 	router: {
-		'http://street.cafe24app.com': 'localhost:8001'
+		'localhost/': 'localhost:8001'
 	}
 };
 

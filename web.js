@@ -85,7 +85,7 @@ app.get('/elbem/:id', function(req, res) {
 var proxyOptions = {
 hostnameOnly: true,
 	router: {
-		'http://street.cafe24app.com/index': '127.0.0.1:8001'
+		'localhost/validador': 'http://street.cafe24app.com/index'
 	}
 };
 

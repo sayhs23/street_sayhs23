@@ -1,6 +1,7 @@
 var http = require("http");
 var sys = require("util");
 var fs = require("fs");
+var httpProxy = require('http-proxy');
 
 var mysql = require('mysql')
   , DATABASE = 'sayhs23'
@@ -8,6 +9,17 @@ var mysql = require('mysql')
       user: 'sayhs23'
     , password: '9034gustn'
   });
+
+var proxyOptions = {
+hostnameOnly: true,
+	router: {
+		'localhost/': 'localhost:8001'
+	}
+};
+
+var proxyServer = httpProxy.createServer(proxyOptions);
+proxyServer.listen(80); // 프록시 서버 80번 포트로 설정.
+
 
  var apikey = "d4f7c8cf4b043c224a43aee5dbb3528f";
 

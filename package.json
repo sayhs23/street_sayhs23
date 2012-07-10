@@ -1,10 +1,22 @@
 {
-    "name": "sayhs23lhs"
-  , "version": "0.0.1"
-  , "private": true
-  , "dependencies": {
-      "express": "<= 2.5.9"
-    , "socket.io": "0.8.2"
-    , "jade": ">= 0.0.1"
+  "name": "sayhs23lhs",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "<= 2.5.9",
+    "socket.io": "0.8.2",
+    "jade": ">= 0.0.1"
+  },
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  },
+  "author": "leehyunsu <sayhs23@nate.com> (http://street.cafe24app.com)",
+  "description": "street project",
+  "homepage": "http://street.cafe24app.com",
+  "repository": {
+    "type": "git",
+    "url": "sayhs23@street.cafe24app.com:sayhs23_street"
   }
 }

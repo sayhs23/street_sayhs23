@@ -11,19 +11,11 @@ var express = require('express')
 
 var app = module.exports = express.createServer();
 
-var proxyOptions = {
-hostnameOnly: true,
-router: {
-'localhost/validador': '127.0.0.1:8001'
-}
-};
-
-var proxyServer = httpProxy.createServer(proxyOptions);
-
 // Configuration
 app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
+  app.use(express.logger('short'));
   app.use(express.bodyParser()); // 바디 파서 미들웨어는 POST 요청을 할 때 데이터를 쉽게 추출할 수 있게 하는 미들웨어입니다....
   app.use(express.cookieParser());  // 쿠키 파서 미들웨어를 사용하면 request 객체에 cookies 속성이 부여된다. 
   app.use(express.session({secret: 'secret key'}));
@@ -89,6 +81,17 @@ app.get('/elbem/:id', function(req, res) {
 	  elbemName: elbemName
   });
 });
+
+var proxyOptions = {
+hostnameOnly: true,
+	router: {
+		'localhost/index': '127.0.0.1:8001'
+	}
+};
+
+var proxyServer = httpProxy.createServer(proxyOptions);
+proxyServer.listen(80);
+
 app.listen(8001);
 // Socket.iod
 require('./rooms')(app);

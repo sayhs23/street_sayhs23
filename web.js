@@ -4,10 +4,21 @@
 
 var express = require('express')
   , url = require('url')
-  , request = require('request');
+  , request = require('request')
+  ,httpProxy = require('http-proxy');
+
 
 
 var app = module.exports = express.createServer();
+
+var proxyOptions = {
+hostnameOnly: true,
+router: {
+'localhost/validador': '127.0.0.1:8001'
+}
+};
+
+var proxyServer = httpProxy.createServer(proxyOptions);
 
 // Configuration
 app.configure(function(){

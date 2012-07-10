@@ -4,9 +4,7 @@
 
 var express = require('express')
   , url = require('url')
-  , request = require('request')
-  , Chat = require('./chat')
-  , repo = require('./repository');
+  , request = require('request');
 
 
 var app = module.exports = express.createServer();
@@ -22,9 +20,9 @@ app.configure(function(){
   app.use(express.static(__dirname + '/public'));
 });
 
-//app.configure('development', function(){
- // app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
-//});
+app.configure('development', function(){
+  app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
+});
 
 app.configure('production', function(){
   app.use(express.errorHandler()); 
@@ -45,21 +43,6 @@ app.post('/gStreet', function(req, res) {
 	repo.checkNickName(req, res);
 });
 
-app.get('/add/:id', function(req, res) {                         //추가기능 누르기  GET방식으로 하기.
-	var isSuccess = true;
-	var name = req.params.id;
-	console.log(name);
-    var level = 0;
-	var totalscore = 0;
-	res.render('add', {
-		isSuccess: isSuccess 
-		, nickname: name
-		, level: level
-		, totalscore: totalscore
-		, waitUser: Chat.getWaitUserList()
-		,title: 'Express'
-		});
-});
 //---------------------인덱스 페이지에서 검색어 get방식 /검색어 라우터 부분 -----------------//
 
 app.get('/search/:id', function(req, res) {
@@ -72,17 +55,6 @@ app.get('/search/:id', function(req, res) {
 
 app.get('/mStreet', function(req, res) { //회원 가입 창 렌더링......!
 	res.render('mStreet');
-});
-
-app.get('/join-form', function(req, res) { //회원 가입 창 렌더링......!
-	res.render('join-form');
-});
-
-app.post('/joins', function(req, res) {
-	var nickname = req.body.nickname;
-	if(nickname && nickname.trim() !== ''){
-		repo.hasNickName(req.body, res);
-	}
 });
 
 /*
@@ -99,75 +71,6 @@ app.get('/enter/:id', function(req, res) {
     });
 });
 */
-app.get('/enter', function(req, res) {
-  var user = Chat.getUser(req.session.nickname);
-
-  if (req.session.nickname) {
-    res.render('enter', {
-        isSuccess: true 
-      , nickname: req.session.nickname
-      , level: user.level
-	  , totalscore: user.totalscore 
-      , roomList: Chat.getRoomList()
-	  , roomInfo: Chat.getRoomInfo()
-	  , waitUser: Chat.getWaitUserList()
-    });
-  } else { 
-    res.render('enter', {
-        isSuccess: false 
-      , nickname: ''
-    });
-
-  }
-});
-app.post('/makeRoom', function(req, res) {
-  var isSuccess = false
-  , roomName = req.body.roomname; // 방제
-  var musicmax = req.body.musicmax; // 최대 곡수
-  var captin = req.body.nickname; // 방장 -> 방장에게 시작 권한을 주기 위해서.
-  var usermax = req.body.usermax; // 최대 인원 수 갑 받음.
-
-
- console.log('/makeRoom musicmax, captin, usermax: '+musicmax + captin + usermax);
-
-
-  if(roomName && roomName.trim() != '') {
-    if (!Chat.hasRoom(roomName)) {
-      Chat.addRoom(roomName, musicmax, captin, usermax);
-      isSuccess = true;
-    }
-  }
-
-  res.render('makeRoom', {
-      isSuccess: isSuccess
-    , musicmax: musicmax
-    , roomName: roomName
-  });
-});
-
-app.get('/join/:id', function(req, res) {
-  var isSuccess = false
-    , roomName = req.params.id;
-
-  var user = Chat.getUser(req.session.nickname);
-  var level = user.level;
-  
-  if (Chat.hasRoom(roomName)) {
-    isSuccess = true; 
-  }
-
-  console.log('/join/:id  , '+isSuccess+ roomName, level, Chat.getAttendantsList(roomName));
-   
-  res.render('room', {
-      isSuccess: isSuccess
-    , roomName: roomName
-	, musicnumber: 10
-    , level: level
-    , nickname: req.session.nickname
-    , attendants: Chat.getAttendantsList(roomName)
-  });
-});
-
 app.get('/elbem/:id', function(req, res) {
   var elbemName = req.params.id;
   console.log('/elbem/:id : '+elbemName); 
@@ -175,19 +78,8 @@ app.get('/elbem/:id', function(req, res) {
 	  elbemName: elbemName
   });
 });
-
-
-app.get('/logout/:name', function(req, res) {
-
- var nickname = req.params.name; //로그아웃한놈 저장해서
-
- Chat.deleteNickName(nickname);
- res.render('index'); //하고서 index.로 이동하기.
-});
-
-
 app.listen(8001);
 // Socket.iod
 require('./rooms')(app);
-console.log("runnig");
+console.log("runnig nodejs server nunning jung!~!");
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);

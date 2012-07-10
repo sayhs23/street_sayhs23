@@ -9,13 +9,13 @@ body {
  }
 
 .infiniteCarousel {
-  width: 800px;
+  width: 700px;
   height: 350px;
   position: relative;
 }
 
 .infiniteCarousel .wrapper {
-  width: 740px; /* .infiniteCarousel width - (.wrapper margin-left + .wrapper margin-right) */
+  width: 670px; /* .infiniteCarousel width - (.wrapper margin-left + .wrapper margin-right) */
   height: 350px;
   overflow: auto;
   left: 30px;
@@ -128,7 +128,7 @@ border:5x solid #000000;
 .container-1{
   background-color: #ff5c00;
 }
-.grid_4{width:130px; height:100px; display:inline; float:left ;color:#fff;background-color:#ff6000} 
+.grid_4{width:130px; height:100px; display:inline; float:left ;color:#fff;background-color:#2b0003} 
 
 .menuBt1{
 	height: 40px;
@@ -164,17 +164,18 @@ border:5x solid #000000;
 	color:#ffffff;
 	background-color: #80E12A;
 }
-#e_left_1_1{
-	font: 18px bold;
-}
-#e_left_1_2{
-	font: 18px bold;
-}
+
+
 .e_font{
 	margin: auto;
 	font: 35px bold;
-	color:#ffffff;
-	background-color: #80E12A;
+	color:#FC9F52;
+	margin-left:10px;
+}
+.e_font3{
+	font: 30px bold;
+	background-color:#EBEBEB;
+	color:#2b0003;
 }
 body {
             margin: 0px;
@@ -202,78 +203,6 @@ body {
             margin: auto; 
 			margin-top:30px;
             background-color: #000;
-}
-#e_left {
-           background-color: #ffa;
-           float: left;
-           height: 1000px;
-           width: 210px;
-		   margin-left: 80px;
-		   margin-top: 50px;
-           position: relative;
-}
-#e_left_top {
-           background-color: #2fa;
-           height: 50px;
-           width: 210px;
-           position: relative;
-}
-#e_left_1 {
-           background-color: #afa;
-           height: 250px;
-           width: 210px;
-           position: relative;
-}
-#e_main {
-           background-color: #fa0;
-           float: left;
-		   margin-top: 50px;
-           height: 1000px;
-           width: 800px;
-           position: relative;
-}
-#e_main_1 {
-           background-color: #000;
-           height: 350px;
-           width: 800px;
-           position: relative;
-}
-#e_main_1_1 {
-           background-color: #ba2;
-		   float: left;
-		   margin-left:100px;
-		   margin-top:10px;
-           height: 330px;
-           width: 580px;
-           position: relative;
-}
-#e_main_1_2 {
-           background-color: #000;
-		   float: left;
-           height: 330px;
-           width: 120px;
-           position: relative;
-}
-#e_main_2 {
-           background-color: #fb0;
-           height: 350px;
-           width: 800px;
-		   overflow: auto;
-           position: relative;
-}
-#e_main_3 {
-           background-color: #f60;
-           height: 300px;
-           width: 800px;
-           position: relative;
-}
-#e_right {
-           background-color: #af0;
-           float: left;
-		   margin-top: 50px;
-           height: 1000px;
-           width: 150px;
-           position: relative;
 }
 
 #top {
@@ -307,11 +236,11 @@ body {
            float: left;
            height:900px;
            width: 210px;
-		   margin-left:20px;
+		   margin-left:10px;
            position: relative;
 }
 #m_right2 {
-           background-color: #fa1;
+           background-color: #ffffff;
            float: left;
            height: 1020px;
            width: 130px;
@@ -338,6 +267,13 @@ body {
            background-color: #EBEBEB;
            float: left;
            height: 900px;
+           width: 700px;
+           position: relative;          
+        }
+#e_main {
+           background-color: #EBEBEB;
+           float: left;
+           height: 1000px;
            width: 700px;
            position: relative;          
         }
@@ -556,6 +492,7 @@ body {
 }
 #i_main_7_1{
            background-color: #ffffff;
+		   background-image: URL('http://localhost:8001/images/Background_newspaper.jpg');
 		   float: left;
            position: relative;
 		   font-size: 13px;
@@ -728,4 +665,86 @@ body {
 		   font:12px;
 		   font:12px 굴림;
 		   background-color: #ffffff;
+}
+
+/*앨범 화면 CSS */
+#e_left {
+           background-color: #ffffff;
+           float: left;
+           height: 1000px;
+           width: 250px;
+		   margin-left: 50px;
+           position: relative;
+}
+#e_left_1_1{
+    width: 250px;
+	font: 18px bold;
+}
+#e_left_1_2 {
+		background-color: #ffffff;
+		font-size: 13 px;
+        width: 250px;
+		overflow: auto;
+		position: relative;
+}
+#e_right {
+           background-color: #ffffff;
+           float: left;
+           height: 1000px;
+           width: 230px;
+           position: relative;
+}
+#m_right_0{
+           width:250px;
+           background-color: #EBEBEB;
+}
+#e_left_top {
+           background-color: #ffffff;
+           height: 50px;
+           width: 210px;
+           position: relative;
+}
+#e_left_1 {
+           background-color: #ffffff;
+           height: 200px;
+           width: 250px;
+           position: relative;
+}
+#e_main_1 {
+           background-color: #000;
+           height: 350px;
+           width: 800px;
+           position: relative;
+}
+#e_main_1_1 {
+           background-color: #ba2;
+		   float: left;
+		   margin-left:100px;
+		   margin-top:10px;
+           height: 330px;
+           width: 580px;
+           position: relative;
+}
+#e_main_1_2 {
+           background-color: #000;
+		   float: left;
+           height: 330px;
+           width: 120px;
+           position: relative;
+}
+#e_main_2 {
+           background-color: #fb0;
+           height: 350px;
+           width: 700px;
+           position: relative;
+}
+#e_main_3 {
+           background-color: #f60;
+           height: 300px;
+           width: 800px;
+           position: relative;
+}
+#m_right_3{
+           background-color: #EBEBEB;
+	       color: #2b0000;
 }

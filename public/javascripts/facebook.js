@@ -29,7 +29,7 @@
 		            method: 'feed',
 		            name: document.title,
 		            link: document.URL,
-		            picture: 'http://localhost:8001/images/logo2.gif',
+		            picture: 'http://localhost:8001/images/DOJANG.jpg',
 		            caption: 'title',
 		            description: 'content',
 		            //message: 'Facebook Dialogs are easy!'	//텍스트박스 안의 글자

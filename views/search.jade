@@ -21,17 +21,18 @@ script(type='text/javascript', src='/javascripts/daum.js')
 #s_main_4
      #s_main_6_1(style='width:250px;')
      #s_main_6_2(style='margin-rgith:20px;')
-      p(class='font1', style='margin-top:120px;') 검색 결과
+      img(src='http://localhost:8001/images/Text_SearchResult.jpg', style='margin-top:10px;')
       hr
-      p(class='font2', id='searchAllBt') 통합 검색
-      p(class='font2', id='searchWebBt') 웹 검색
-      p(class='font2', id='searchBlogBt') 블로그 검색
-      p(class='font2', id='searchCafeBt') 카페 검색
-      p(class='font2', id='searchKnowledgeBt') 지식인 검색
-      p(class='font2', id='searchImageBt') 이미지 검색
-      p(class='font2', id='searchVclipBt') 동영상 검색
-      p(class='font2', id='searchBoardBt') 게시판 검색
+      img(src='/images/Text_SearchMenu_Total_Black_.jpg', class='font2', id='searchAllBt') 통합 검색
+      img(src='/images/Text_SearchMenu_Web_Black.jpg', class='font2', id='searchWebBt') 웹 검색
+      img(src='/images/Text_SearchMenu_Blog_Black.jpg', class='font2', id='searchBlogBt') 블로그 검색
+      img(src='/images/Text_SearchMenu_Cafe_Black.jpg', class='font2', id='searchCafeBt') 카페 검색
+      img(src='/images/Text_SearchMenu_Jisik_Black.jpg', class='font2', id='searchKnowledgeBt') 지식인 검색
+      img(src='/images/Text_SearchMenu_Image_Black.jpg', class='font2', id='searchImageBt') 이미지 검색
+      img(src='/images/Text_SearchMenu_Video_Black.jpg', class='font2', id='searchVclipBt') 동영상 검색
+      img(src='/images/Text_SearchMenu_Board_Black.jpg', class='font2', id='searchBoardBt') 게시판 검색
       hr
+
 
 #s_main_5
    #s_main_5_1
@@ -68,8 +69,9 @@ script(type='text/javascript', src='/javascripts/daum.js')
 script(type='text/javascript', src='http://code.jquery.com/jquery-1.7.0.min.js')
 script(type='text/javascript') 
   $(document).ready(function() {
+    
+    $('#searchAllBt').attr('src','/images/Text_SearchMenu_Total_Blue.jpg');
 
-    $('#searchAllBt').css('color','#09C');
     var searchName = $('#searchName').text();
     $('#daumSearch').val(searchName);
 
@@ -100,14 +102,15 @@ script(type='text/javascript')
        $('#daumVclip').html('');  
        $('#daumBoard').html('');
 
-       $('#searchWebBt').css('color','#09C');
-       $('#searchVclipBt').css('color','#000000');
-       $('#searchImageBt').css('color','#000000');
-       $('#searchKnowledgeBt').css('color','#000000');
-       $('#searchCafeBt').css('color','#000000');
-       $('#searchBlogBt').css('color','#000000');
-       $('#searchBoardBt').css('color','#000000');
-       $('#searchAllBt').css('color','#000000');
+       $('#searchAllBt').attr('src','/images/Text_SearchMenu_Total_Black_.jpg');
+       $('#searchWebBt').attr('src','/images/Text_SearchMenu_Web_Blue.jpg');
+       $('#searchBlogBt').attr('src','/images/Text_SearchMenu_Blog_Black.jpg');
+       $('#searchCafeBt').attr('src','/images/Text_SearchMenu_Cafe_Black.jpg');
+       $('#searchKnowledgeBt').attr('src','/images/Text_SearchMenu_Jisik_Black.jpg');
+       $('#searchVclipBt').attr('src','/images/Text_SearchMenu_Video_Black.jpg');
+       $('#searchImageBt').attr('src','/images/Text_SearchMenu_Image_Black.jpg');
+       $('#searchBoardBt').attr('src','/images/Text_SearchMenu_Board_Black.jpg');
+
        daumSearch.searchWeb();
     });
     $('#searchBlogBt').click(function(e) {
@@ -119,14 +122,14 @@ script(type='text/javascript')
        $('#daumVclip').html('');  
        $('#daumBoard').html('');
 
-       $('#searchWebBt').css('color','#000000');
-       $('#searchVclipBt').css('color','#000000');
-       $('#searchImageBt').css('color','#000000');
-       $('#searchKnowledgeBt').css('color','#000000');
-       $('#searchCafeBt').css('color','#000000');
-       $('#searchBlogBt').css('color','#09C');
-       $('#searchBoardBt').css('color','#000000');
-       $('#searchAllBt').css('color','#000000');
+       $('#searchAllBt').attr('src','/images/Text_SearchMenu_Total_Black_.jpg');
+       $('#searchWebBt').attr('src','/images/Text_SearchMenu_Web_Black.jpg');
+       $('#searchBlogBt').attr('src','/images/Text_SearchMenu_Blog_Blue.jpg');
+       $('#searchCafeBt').attr('src','/images/Text_SearchMenu_Cafe_Black.jpg');
+       $('#searchKnowledgeBt').attr('src','/images/Text_SearchMenu_Jisik_Black.jpg');
+       $('#searchVclipBt').attr('src','/images/Text_SearchMenu_Video_Black.jpg');
+       $('#searchImageBt').attr('src','/images/Text_SearchMenu_Image_Black.jpg');
+       $('#searchBoardBt').attr('src','/images/Text_SearchMenu_Board_Black.jpg');
        daumSearch.searchBlog();
     });
     $('#searchCafeBt').click(function(e) {
@@ -138,14 +141,14 @@ script(type='text/javascript')
        $('#daumVclip').html('');  
        $('#daumBoard').html('');
 
-       $('#searchWebBt').css('color','#000000');
-       $('#searchVclipBt').css('color','#000000');
-       $('#searchImageBt').css('color','#000000');
-       $('#searchKnowledgeBt').css('color','#000000');
-       $('#searchCafeBt').css('color','#09C');
-       $('#searchBlogBt').css('color','#000000');
-       $('#searchBoardBt').css('color','#000000');
-       $('#searchAllBt').css('color','#000000');
+       $('#searchAllBt').attr('src','/images/Text_SearchMenu_Total_Black_.jpg');
+       $('#searchWebBt').attr('src','/images/Text_SearchMenu_Web_Black.jpg');
+       $('#searchBlogBt').attr('src','/images/Text_SearchMenu_Blog_Black.jpg');
+       $('#searchCafeBt').attr('src','/images/Text_SearchMenu_Cafe_Blue.jpg');
+       $('#searchKnowledgeBt').attr('src','/images/Text_SearchMenu_Jisik_Black.jpg');
+       $('#searchVclipBt').attr('src','/images/Text_SearchMenu_Video_Black.jpg');
+       $('#searchImageBt').attr('src','/images/Text_SearchMenu_Image_Black.jpg');
+       $('#searchBoardBt').attr('src','/images/Text_SearchMenu_Board_Black.jpg');
        daumSearch.searchCafe();
     });
     $('#searchKnowledgeBt').click(function(e) {
@@ -157,14 +160,14 @@ script(type='text/javascript')
        $('#daumVclip').html('');  
        $('#daumBoard').html('');
 
-       $('#searchWebBt').css('color','#000000');
-       $('#searchVclipBt').css('color','#000000');
-       $('#searchImageBt').css('color','#000000');
-       $('#searchKnowledgeBt').css('color','#09C');
-       $('#searchCafeBt').css('color','#000000');
-       $('#searchBlogBt').css('color','#000000');
-       $('#searchBoardBt').css('color','#000000');
-       $('#searchAllBt').css('color','#000000');
+       $('#searchAllBt').attr('src','/images/Text_SearchMenu_Total_Black_.jpg');
+       $('#searchWebBt').attr('src','/images/Text_SearchMenu_Web_Black.jpg');
+       $('#searchBlogBt').attr('src','/images/Text_SearchMenu_Blog_Black.jpg');
+       $('#searchCafeBt').attr('src','/images/Text_SearchMenu_Cafe_Black.jpg');
+       $('#searchKnowledgeBt').attr('src','/images/Text_SearchMenu_Jisik_Blue.jpg');
+       $('#searchVclipBt').attr('src','/images/Text_SearchMenu_Video_Black.jpg');
+       $('#searchImageBt').attr('src','/images/Text_SearchMenu_Image_Black.jpg');
+       $('#searchBoardBt').attr('src','/images/Text_SearchMenu_Board_Black.jpg');
        daumSearch.searchKnowledge();
     });
     $('#searchImageBt').click(function(e) {
@@ -177,14 +180,14 @@ script(type='text/javascript')
        $('#daumBoard').html('');
 
 
-       $('#searchWebBt').css('color','#000000');
-       $('#searchVclipBt').css('color','#000000');
-       $('#searchImageBt').css('color','#09C');
-       $('#searchKnowledgeBt').css('color','#000000');
-       $('#searchCafeBt').css('color','#000000');
-       $('#searchBlogBt').css('color','#000000');
-       $('#searchBoardBt').css('color','#000000');
-       $('#searchAllBt').css('color','#000000');
+       $('#searchAllBt').attr('src','/images/Text_SearchMenu_Total_Black_.jpg');
+       $('#searchWebBt').attr('src','/images/Text_SearchMenu_Web_Black.jpg');
+       $('#searchBlogBt').attr('src','/images/Text_SearchMenu_Blog_Black.jpg');
+       $('#searchCafeBt').attr('src','/images/Text_SearchMenu_Cafe_Black.jpg');
+       $('#searchKnowledgeBt').attr('src','/images/Text_SearchMenu_Jisik_Black.jpg');
+       $('#searchVclipBt').attr('src','/images/Text_SearchMenu_Video_Black.jpg');
+       $('#searchImageBt').attr('src','/images/Text_SearchMenu_Image_Blue.jpg');
+       $('#searchBoardBt').attr('src','/images/Text_SearchMenu_Board_Black.jpg');
        daumSearch.searchImage();
     });
     $('#searchVclipBt').click(function(e) {
@@ -196,14 +199,14 @@ script(type='text/javascript')
        $('#daumVclip').html('');  
        $('#daumBoard').html('');
 
-       $('#searchWebBt').css('color','#000000');
-       $('#searchVclipBt').css('color','#09C');
-       $('#searchImageBt').css('color','#000000');
-       $('#searchKnowledgeBt').css('color','#000000');
-       $('#searchCafeBt').css('color','#000000');
-       $('#searchBlogBt').css('color','#000000');
-       $('#searchBoardBt').css('color','#000000');
-       $('#searchAllBt').css('color','#000000');
+       $('#searchAllBt').attr('src','/images/Text_SearchMenu_Total_Black_.jpg');
+       $('#searchWebBt').attr('src','/images/Text_SearchMenu_Web_Black.jpg');
+       $('#searchBlogBt').attr('src','/images/Text_SearchMenu_Blog_Black.jpg');
+       $('#searchCafeBt').attr('src','/images/Text_SearchMenu_Cafe_Black.jpg');
+       $('#searchKnowledgeBt').attr('src','/images/Text_SearchMenu_Jisik_Black.jpg');
+       $('#searchVclipBt').attr('src','/images/Text_SearchMenu_Video_Blue.jpg');
+       $('#searchImageBt').attr('src','/images/Text_SearchMenu_Image_Black.jpg');
+       $('#searchBoardBt').attr('src','/images/Text_SearchMenu_Board_Black.jpg');
        daumSearch.searchVclip();
     });
     $('#searchBoardBt').click(function(e) {
@@ -215,18 +218,26 @@ script(type='text/javascript')
        $('#daumVclip').html('');  
        $('#daumBoard').html('');
        
-       $('#searchWebBt').css('color','#000000');
-       $('#searchVclipBt').css('color','#000000');
-       $('#searchImageBt').css('color','#000000');
-       $('#searchKnowledgeBt').css('color','#000000');
-       $('#searchCafeBt').css('color','#000000');
-       $('#searchBlogBt').css('color','#000000');
-       $('#searchBoardBt').css('color','#09C');
-       $('#searchAllBt').css('color','#000000');
+       $('#searchAllBt').attr('src','/images/Text_SearchMenu_Total_Black_.jpg');
+       $('#searchWebBt').attr('src','/images/Text_SearchMenu_Web_Black.jpg');
+       $('#searchBlogBt').attr('src','/images/Text_SearchMenu_Blog_Black.jpg');
+       $('#searchCafeBt').attr('src','/images/Text_SearchMenu_Cafe_Black.jpg');
+       $('#searchKnowledgeBt').attr('src','/images/Text_SearchMenu_Jisik_Black.jpg');
+       $('#searchVclipBt').attr('src','/images/Text_SearchMenu_Video_Black.jpg');
+       $('#searchImageBt').attr('src','/images/Text_SearchMenu_Image_Black.jpg');
+       $('#searchBoardBt').attr('src','/images/Text_SearchMenu_Board_Blue.jpg');
        
        daumSearch.searchBoard();
     });
     $('#searchAllBt').click(function(e) {
+       $('#searchAllBt').attr('src','/images/Text_SearchMenu_Total_Blue.jpg');
+       $('#searchWebBt').attr('src','/images/Text_SearchMenu_Web_Black.jpg');
+       $('#searchBlogBt').attr('src','/images/Text_SearchMenu_Blog_Black.jpg');
+       $('#searchCafeBt').attr('src','/images/Text_SearchMenu_Cafe_Black.jpg');
+       $('#searchKnowledgeBt').attr('src','/images/Text_SearchMenu_Jisik_Black.jpg');
+       $('#searchVclipBt').attr('src','/images/Text_SearchMenu_Video_Black.jpg');
+       $('#searchImageBt').attr('src','/images/Text_SearchMenu_Image_Black.jpg');
+       $('#searchBoardBt').attr('src','/images/Text_SearchMenu_Board_Black.jpg');
        daumSearch.search();
     });
 

@@ -1,5 +1,5 @@
 #i_main_1
-   img(id='LOGO', style='margin-left:30px; margin-top:10px; float:left',src='images/logo.jpg', title='로고다시') 
+   img(id='LOGO', style='margin-left:30px; margin-top:10px; float:left',src='/images/logo.png', title='로고다시') 
    #top_1
      #top_1_1
        <fb:profile-pic uid="loggedinuser" size="square"></fb:profile-pic>
@@ -28,12 +28,12 @@
    #i_main_6_2(style='margin-left:30px;')
       img(src='images/Text_Sports.jpg', style='width:320px; height:50px;')
    #i_main_6_3(style='margin-left:30px;')
-       img(class='menuBt',src='images/Button_Drama_Black.jpg', value='드라마', id='drama', style='width:90px; height:25px; margin-left:10px;')
-       img(class='menuBt',src='images/Button_Movie_Black.jpg', value='영화', id='movie', style='width:90px; height:25px; margin-left:10px;')
-       img(class='menuBt',src='images/Button_People_Black.jpg', value='인물', id='man', style='width:90px; height:25px; margin-left:10px;')
-       img(class='menuBt',src='images/Button_Performance_Black.jpg', value='공연', id='perfomance', style='width:90px; height:25px; margin-left:10px;')
-       img(class='menuBt',src='images/Button_Rec_Black.jpg', value='오락', id='tvshow', style='width:90px; height:25px; margin-left:10px;')
-       img(class='menuBt',src='images/Button_Books_Black.jpg', value='도서', id='book', style='width:90px; height:25px; margin-left:10px;')
+       img(class='menuBt',src='images/Button_Drama_Black_9025.jpg', value='드라마', id='drama', style='width:90px; height:25px; margin-left:10px;')
+       img(class='menuBt',src='images/Button_Movie_Black_9025.jpg', value='영화', id='movie', style='width:90px; height:25px; margin-left:10px;')
+       img(class='menuBt',src='images/Button_People_Black_9025.jpg', value='인물', id='man', style='width:90px; height:25px; margin-left:10px;')
+       img(class='menuBt',src='images/Button_Performance_Black_9025.jpg', value='공연', id='perfomance', style='width:90px; height:25px; margin-left:10px;')
+       img(class='menuBt',src='images/Button_Rec_Black_9025.jpg', value='오락', id='tvshow', style='width:90px; height:25px; margin-left:10px;')
+       img(class='menuBt',src='images/Button_Books_Black_9025.jpg', value='도서', id='book', style='width:90px; height:25px; margin-left:10px;')
 #i_main_7  
     #i_main_7_1(style='margin-left:200px;')
        script(type='text/javascript')
@@ -73,6 +73,12 @@ script(type='text/javascript', src='/javascripts/jquery.li-scroller.1.0.js')
 script(type='text/javascript') 
   $(document).ready(function() {
    $('#home').attr('src','images/Button_Home_Orange.jpg');
+   $('#mStreet').attr('src','images/Button_Mstreet_Black.jpg');
+   $('#sStreet').attr('src','images/Button_Sstreet_Black.jpg');
+   $('#cStreet').attr('src','images/Button_Cstreet_Black.jpg');
+   $('#gStreet').attr('src','images/Button_Gstreet_Black.jpg');
+
+   $('#drama').attr('src','images/Button_Drama_Orange_9025.jpg');
 
    var room = io.connect('/room');
    $(function () {
@@ -95,18 +101,18 @@ script(type='text/javascript')
      output +="<a>9. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R9").find("K").text()+"'>" + $(data.xData).find("R9").find("K").text() + "</a><br />";
      output +="<a>10. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R10").find("K").text()+"'>" + $(data.xData).find("R10").find("K").text() + "</a><br />";
     
-     $('#drama').css('background','#09C');
-     $('#movie').css('background','#ff5c00');
-     $('#man').css('background','#ff5c00');
-     $('#perfomance').css('background','#ff5c00');
-     $('#tvshow').css('background','#ff5c00');
-     $('#book').css('background','#ff5c00');
-
      $('#left_3').html(output);
      getTime();
   });
 
   $('#drama').click(function(e) { 
+     $('#drama').attr('src','images/Button_Drama_Orange_9025.jpg');
+     $('#movie').attr('src','images/Button_Movie_Black_9025.jpg');
+     $('#man').attr('src','images/Button_People_Black_9025.jpg');
+     $('#perfomance').attr('src','images/Button_Performance_Black_9025.jpg');
+     $('#tvshow').attr('src','images/Button_Rec_Black_9025.jpg');
+     $('#book').attr('src','images/Button_Books_Black_9025.jpg');
+
      room.emit('drama', {nickName:'text'});  
   });
 
@@ -126,12 +132,12 @@ script(type='text/javascript')
      output +="<a>9. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R9").find("K").text()+"'>" + $(data.xData).find("R9").find("K").text() + "</a><br />";
      output +="<a>10. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R10").find("K").text()+"'>" + $(data.xData).find("R10").find("K").text() + "</a><br />";
 
-     $('#drama').css('background','#ff5c00');
-     $('#movie').css('background','#09C');
-     $('#man').css('background','#ff5c00');
-     $('#perfomance').css('background','#ff5c00');
-     $('#tvshow').css('background','#ff5c00');
-     $('#book').css('background','#ff5c00');
+     $('#drama').attr('src','images/Button_Drama_Black_9025.jpg');
+     $('#movie').attr('src','images/Button_Movie_Orange_9025.jpg');
+     $('#man').attr('src','images/Button_People_Black_9025.jpg');
+     $('#perfomance').attr('src','images/Button_Performance_Black_9025.jpg');
+     $('#tvshow').attr('src','images/Button_Rec_Black_9025.jpg');
+     $('#book').attr('src','images/Button_Books_Black_9025.jpg');
 
      $('#left_3').html(output);
      getTime();
@@ -153,12 +159,12 @@ script(type='text/javascript')
      output +="<a>9. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R9").find("K").text()+"'>" + $(data.xData).find("R9").find("K").text() + "</a><br />";
      output +="<a>10. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R10").find("K").text()+"'>" + $(data.xData).find("R10").find("K").text() + "</a><br />";
 
-     $('#drama').css('background','#ff5c00');
-     $('#movie').css('background','#ff5c00');
-     $('#man').css('background','#09C');
-     $('#perfomance').css('background','#ff5c00');
-     $('#tvshow').css('background','#ff5c00');
-     $('#book').css('background','#ff5c00');
+     $('#drama').attr('src','images/Button_Drama_Black_9025.jpg');
+     $('#movie').attr('src','images/Button_Movie_Black_9025.jpg');
+     $('#man').attr('src','images/Button_People_Orange_9025.jpg');
+     $('#perfomance').attr('src','images/Button_Performance_Black_9025.jpg');
+     $('#tvshow').attr('src','images/Button_Rec_Black_9025.jpg');
+     $('#book').attr('src','images/Button_Books_Black_9025.jpg');
 
      $('#left_3').html(output);
      getTime();
@@ -180,12 +186,12 @@ script(type='text/javascript')
      output +="<a>9. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R9").find("K").text()+"'>" + $(data.xData).find("R9").find("K").text() + "</a><br />";
      output +="<a>10. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R10").find("K").text()+"'>" + $(data.xData).find("R10").find("K").text() + "</a><br />";
 
-     $('#drama').css('background','#ff5c00');
-     $('#movie').css('background','#ff5c00');
-     $('#man').css('background','#ff5c00');
-     $('#perfomance').css('background','#09C');
-     $('#tvshow').css('background','#ff5c00');
-     $('#book').css('background','#ff5c00');
+     $('#drama').attr('src','images/Button_Drama_Black_9025.jpg');
+     $('#movie').attr('src','images/Button_Movie_Black_9025.jpg');
+     $('#man').attr('src','images/Button_People_Black_9025.jpg');
+     $('#perfomance').attr('src','images/Button_Performance_Orange_9025.jpg');
+     $('#tvshow').attr('src','images/Button_Rec_Black_9025.jpg');
+     $('#book').attr('src','images/Button_Books_Black_9025.jpg');
 
      $('#left_3').html(output);
      getTime();
@@ -207,12 +213,12 @@ script(type='text/javascript')
      output +="<a>9. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R9").find("K").text()+"'>" + $(data.xData).find("R9").find("K").text() + "</a><br />";
      output +="<a>10. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R10").find("K").text()+"'>" + $(data.xData).find("R10").find("K").text() + "</a><br />";
 
-     $('#drama').css('background','#ff5c00');
-     $('#movie').css('background','#ff5c00');
-     $('#man').css('background','#ff5c00');
-     $('#perfomance').css('background','#ff5c00');
-     $('#tvshow').css('background','#09C');
-     $('#book').css('background','#ff5c00');
+     $('#drama').attr('src','images/Button_Drama_Black_9025.jpg');
+     $('#movie').attr('src','images/Button_Movie_Black_9025.jpg');
+     $('#man').attr('src','images/Button_People_Black_9025.jpg');
+     $('#perfomance').attr('src','images/Button_Performance_Black_9025.jpg');
+     $('#tvshow').attr('src','images/Button_Rec_Orange_9025.jpg');
+     $('#book').attr('src','images/Button_Books_Black_9025.jpg');
 
      $('#left_3').html(output);
      getTime();
@@ -234,12 +240,12 @@ script(type='text/javascript')
      output +="<a>9. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R9").find("K").text()+"'>" + $(data.xData).find("R9").find("K").text() + "</a><br />";
      output +="<a>10. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R10").find("K").text()+"'>" + $(data.xData).find("R10").find("K").text() + "</a><br />";
 
-     $('#drama').css('background','#ff5c00');
-     $('#movie').css('background','#ff5c00');
-     $('#man').css('background','#ff5c00');
-     $('#perfomance').css('background','#ff5c00');
-     $('#tvshow').css('background','#ff5c00');
-     $('#book').css('background','#09C');
+     $('#drama').attr('src','images/Button_Drama_Black_9025.jpg');
+     $('#movie').attr('src','images/Button_Movie_Black_9025.jpg');
+     $('#man').attr('src','images/Button_People_Black_9025.jpg');
+     $('#perfomance').attr('src','images/Button_Performance_Black_9025.jpg');
+     $('#tvshow').attr('src','images/Button_Rec_Black_9025.jpg');
+     $('#book').attr('src','images/Button_Books_Orange_9025.jpg');
    
      $('#left_3').html(output);
      getTime();

@@ -83,16 +83,6 @@ app.get('/elbem/:id', function(req, res) {
   });
 });
 
-var proxyOptions = {
-hostnameOnly: true,
-	router: {
-		'localhost/': 'localhost:8001'
-	}
-};
-
-var proxyServer = httpProxy.createServer(proxyOptions);
-proxyServer.listen(80); // 프록시 서버 80번 포트로 설정.
-
 app.listen(8001);
 // Socket.iod
 require('./rooms')(app);

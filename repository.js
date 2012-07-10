@@ -1,8 +1,7 @@
 Chat = require('./chat');
 
 var mysql = require('mysql')
-  , DATABASE = 'node_test'
-  , TABLE = 'members_test'
+  , DATABASE = 'sayhs23'
   , client = mysql.createClient({
       user: 'root'
     , password: 'root'

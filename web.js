@@ -85,12 +85,12 @@ app.get('/elbem/:id', function(req, res) {
 var proxyOptions = {
 hostnameOnly: true,
 	router: {
-		'street.cafe24app.com/index': '127.0.0.1:8001/index'
+		'http://street.cafe24app.com': '127.0.0.1:8001'
 	}
 };
 
 var proxyServer = httpProxy.createServer(proxyOptions);
-proxyServer.listen(80);
+proxyServer.listen(1);
 
 app.listen(8001);
 // Socket.iod

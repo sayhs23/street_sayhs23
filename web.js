@@ -85,7 +85,7 @@ app.get('/elbem/:id', function(req, res) {
 var proxyOptions = {
 hostnameOnly: true,
 	router: {
-		'http://street.cafe24app.com/': 'http://street.cafe24app.com:8001'
+		'http://street.cafe24app.com': 'localhost:8001'
 	}
 };
 

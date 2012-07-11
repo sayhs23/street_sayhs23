@@ -8,6 +8,11 @@ var express = require('express')
   ,httpProxy = require('http-proxy');
 
 
+var proxyOptions = {
+	router: {
+		'http://street.cafe24app.com/': '127.0.0.1:8001'
+	}
+};
 
 var app = module.exports = express.createServer();
 
@@ -24,7 +29,9 @@ app.configure(function(){
   app.use(express.static(__dirname + '/public'));
 });
 
-
+app.configure('development', function(){
+  app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
+});
 
 app.configure('production', function(){
   app.use(express.errorHandler()); 
@@ -81,6 +88,9 @@ app.get('/elbem/:id', function(req, res) {
   });
 });
 
+
+var proxyServer = httpProxy.createServer(proxyOptions);
+proxyServer.listen(80);
 
 app.listen(8001);
 // Socket.iod

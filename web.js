@@ -62,24 +62,10 @@ app.get('/search/:id', function(req, res) {
   });
 });
 
-app.get('/mStreet', function(req, res) { //회원 가입 창 렌더링......!
+app.get('/mStreet', function(req, res) { 
 	res.render('mStreet');
 });
 
-/*
-app.get('/enter/:id', function(req, res) {
-	console.log('\u001b[36m', '  app.get(/enter) ');
-	console.log('\u001b[36m', '  -> req.params.id =  '+req.params.id);
-
-    var nickname = req.params.id;
-
-    res.render('enter', {
-        isSuccess: true
-      , nickname : nickname
-      , roomList: Chat.getRoomList()
-    });
-});
-*/
 app.get('/elbem/:id', function(req, res) {
   var elbemName = req.params.id;
   console.log('/elbem/:id : '+elbemName); 
@@ -90,7 +76,7 @@ app.get('/elbem/:id', function(req, res) {
 
 
 var proxyServer = httpProxy.createServer(proxyOptions);
-proxyServer.listen(80);
+proxyServer.listen(8001);
 
 app.listen(8001);
 // Socket.iod

@@ -7,13 +7,6 @@ var express = require('express')
   , request = require('request')
   ,httpProxy = require('http-proxy');
 
-
-var proxyOptions = {
-	router: {
-		'http://street.cafe24app.com/': '127.0.0.1:8001'
-	}
-};
-
 var app = module.exports = express.createServer();
 
 // Configuration
@@ -75,7 +68,7 @@ app.get('/elbem/:id', function(req, res) {
 });
 
 
-var proxyServer = httpProxy.createServer(proxyOptions);
+httpProxy.createServer(9000, 'localhost').listen(8001);
 proxyServer.listen(8001);
 
 app.listen(8001);

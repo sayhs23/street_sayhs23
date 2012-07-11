@@ -68,8 +68,7 @@ app.get('/elbem/:id', function(req, res) {
 });
 
 
-httpProxy.createServer(9000, 'localhost').listen(8001);
-proxyServer.listen(8001);
+httpProxy.createServer(8002, 'localhost').listen(8001);
 
 app.listen(8001);
 // Socket.iod

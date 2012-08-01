@@ -428,7 +428,8 @@ body {
 
 /* 인덱스 부분에 대한 css */
 #i_main_1{
-           margin-top: 10px;
+		   top:30px;
+		   left:10px;
            background-color: #ffffff;
            position: relative;
 		   height: 67px;

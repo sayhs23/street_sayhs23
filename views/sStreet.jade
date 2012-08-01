@@ -1,0 +1,318 @@
+script(type='text/javascript', src='http://code.jquery.com/jquery-1.7.0.min.js')
+script(type='text/javascript', src='http://plugins.jquery.com/files/imgpreview.min.0.22.jquery.js')
+script(type='text/javascript', src='/javascripts/xml2json.js')
+script(type='text/javascript', src='/javascripts/daum.js')
+script(type='text/javascript', src='/javascripts/zoomer.js')
+script(type='text/javascript', src='/javascripts/jquery.autocomplete.js')
+script(type='text/javascript', src='/javascripts/jquery.paginate.js')
+link(rel='stylesheet', href='/stylesheets/zoomer.css', media='screen')
+link(rel='stylesheet', href='/stylesheets/jquery.autocomplete.css')
+link(rel='stylesheet', href='/stylesheets/paginate.css')
+script(type='text/javascript')
+ var myBag='';
+ var maxPgno;
+ var shoppingSearch = function() {
+    var shoppingText = $('#shoppingText').val(); 
+    var room = io.connect('/room');
+    var selectValue = $(".sort option:selected").val();
+    room.emit('shop', { spText:shoppingText, startPg:1,selectValue:selectValue });
+ };
+ var getPgno = function(result) {
+    var pgno;
+    if(result%12===0){
+       pgno = result/12;
+    }else{
+       pgno = result/12+1;
+    }
+    return pgno;
+ };
+ var fct = function(rsno){
+    var tagName = '#img_'+rsno;
+    $('#img_0').Zoomer({ speedView: 200, speedRemove: 400, altAnim: true, speedTitle: 400, debug: false });
+ };
+ var bagIdfct2 = function() {
+   var room = io.connect('/room');
+   var name = $('#bagname1').val();
+   room.emit('searchBags', { name:name });
+ };
+ var bagIdfct = function() {
+    $('#bagId').val('');
+ };
+ var pwfct = function() {
+    $('#pw').val('');
+ };
+ var repwfct = function() {
+    $('#repw').val('');
+ }
+ var plusBag = function() {
+    var id = $('#bagId').val();
+    var pw = $('#pw').val();
+    var repw = $('#repw').val();
+
+    if(pw!== repw){
+       alert('비밀 번호를 확인해주세요');
+    }else{
+       var room = io.connect('/room');
+       room.emit('addBags', {name:id, pw:pw });
+    }
+ };
+ var selectItem = function(title,link,image,lprice,hprice,mallName) {
+     if(myBag===''){
+        alert('쇼핑 백을 선택해주세요.');
+     } else {
+        var room = io.connect('/room');
+        room.emit('addItem', {bag:myBag, title:title, link:link, image:image, lprice:lprice, hprice:hprice, mallName:mallName});
+     }
+ };
+ var pwCreate = function(name){
+    $('#bagname1').val(name);
+ };
+ var goBag = function(){
+    var icMyBag =encodeURI(myBag);
+    alert(icMyBag);
+    location.href = '/bag/'+icMyBag;
+ };
+ var onchange = function(newPageValue) {
+    alert(newPageValue);
+ };
+#sh_box_wrapper
+ #sh_box
+  #sh_main_1
+   img(id='LOGO', style='float:left',src='/images/로고.png')
+   img(style='margin-left:200px; float:left', src='/images/Text_Webmaster.jpg')
+   #top_1
+     #top_1_1
+       <fb:profile-pic uid="loggedinuser" size="square"></fb:profile-pic>
+       <fb:name uid="loggedinuser" use-you="no"></fb:name>
+     #top_1_2
+       <fb:login-button autologoutlink="true"></fb:login-button><p>
+       <button class="menuBt2" onclick="dial()" style='width:80px; height:30px;'>글쓰기</button>
+  #sh_main_2
+  #sh_main_3
+   #i_mian_2_1(style='margin-left:40px; height:70px; width: 800px;')
+     img(class='menuBt',src='images/Mstreet_Text.png', id='info', style='width:150px; height:60px;')
+     img(class='menuBt',src='images/Button_Home_Black.jpg', id='home', value='Home', style='width:80px; height:40px; margin-left:180px;')
+     img(class='menuBt',src='images/Button_Mstreet_Black.jpg', id='mStreet', value='mStreet', style='width:80px; margin-left:10px; height:40px;')
+     img(class='menuBt',src='images/Button_Cstreet_Black.jpg', id='cStreet', value='cStreet', style='width:80px; margin-left:10px; height:40px;')
+     img(class='menuBt',src='images/Button_Sstreet_Black.jpg', id='sStreet', value='sStreet', style='width:80px; margin-left:10px; height:40px;')
+     img(class='menuBt',src='images/Button_Gstreet_Black.jpg', id='gStreet', value='gStreet', style='width:80px; margin-left:10px; height:40px;')
+  #sh_main_4
+    input(type='text', class='txtbox', id='shoppingText', onkeydown="javascript:if(event.keyCode == 13) shoppingSearch();", style='float:left; margin-top:20px; margin-left:200px;')
+    input(type='button', class='shBt', id='shoppingButton', onclick="shoppingSearch()", value='검색', style='float:left; width:60px; margin-top:20px; height:30px; margin-left:10px; margin-right:3px;')
+    select(class='sort', name ='sort', style='float:left; height:30px; margin-left:5px; margin-top:20px; ')
+       option(value='date', selected) 날짜순
+       option(value='asc') 가격오름차순
+       option(value='dsc') 가격내림차순
+ #sh_box2 
+  #sh_main_5
+    #sh_total
+    #sh_result(style='margin-top:10px;')
+    #pgBtDiv
+  #sh_main_6
+    #sh_right_3
+      #sh_right_3_1
+         img(src='/images/영역1_Sstreet_연주황.png')
+      #sh_right_3_2   
+    #sh_right_1
+      img(src='/images/버튼_Sstreet_장바구니만들기.png', id='addBag',style='margin-left:20px;')
+      #sh_right_1_1
+      img(src='/images/버튼_Sstreet_장바구니들어가기.png', id='loginBagBt',style='margin-left:20px;')
+      #sh_right_1_2
+        input(type='text', class='eTxt', value='백 이름을 입력하세요', id='bagname1', style='width:150px; height: 24px; margin-left:10px; margin-top:5px; float:left;')
+        img(src='/images/Button_Search4.jpg', style='margin-left:5px; margin-left:5px; margin-top:5px; float:left;')
+        input(type='password', class='eTxt', value='1234', id='pw1', style='width:150px; height:24px; margin-left:10px; margin-top:5px; float:left;');
+        input(type='button', id='auoth', value='확인', class='faceBt', style='margin-left:10px; margin-top:5px;')
+    #sh_right_4
+      #sh_right_4_1
+         img(src='/images/버튼_Sstreet_연주황_최근본상품.png', style='margin-left:20px; margin-top:5px;')
+      #sh_right_4_2
+
+script(type='text/javascript') 
+  $(document).ready(function() {
+      var room = io.connect('/room');
+      
+      room.on('getBaglisted', function(data) {
+      var temp = '';
+       $.each(data.result, function(index, item) {
+         temp += item.name+",";
+       });
+       data=temp .split(',');
+       $('#bagname1').autocomplete(data);
+      });
+
+      room.on('shopped2', function(data) {
+         var xml = getXmlDOM(data.xData);
+         var html = ['<div id ="sp_result_2" style="margin-top:5px; margin-left:5px;">'];
+         var rsno = 0;
+
+         $(xml).find("item").each( function() {
+
+            var link = $(this).find("link").text();
+            var image = $(this).find("image").text();
+            var title =  $(this).find("title").text();
+            var lprice = $(this).find("lprice").text();
+            var hprice = $(this).find("hprice").text();
+            var mallName = $(this).find("mallName").text();
+
+            html.push('<div id="result_sub" style="width:180px; height:350px; margin-left:20px; margin-top:20px; float:left;">');
+            html.push('<a><img src="',image,'" id="img_',rsno,'" onclick ="fct(\\'',rsno,'\\')" style="width:160px; height:210px;"/>');
+            html.push('<p><a href="',link,'" target="_blank">', title,'</a>');
+            html.push('<div id = "result_bottom">');
+            html.push('<p> 최저가 : ', lprice,' 원</p>');
+            html.push('<p> 최고가 : ', hprice,' 원</p>');
+            html.push('<p> 쇼핑몰 : ', mallName,'</p>');
+            html.push('<img src="/images/선택_테두리연두.png", onclick ="selectItem(\\'',title,'\\',\\'',link,'\\',\\'',image,'\\',\\'',lprice,'\\',\\'',hprice,'\\',\\'',mallName,'\\')">');
+            html.push('</div>');
+            html.push('</div>');
+            rsno++;
+            if(rsno === 12) {
+               return false;
+            }
+         });
+         html.push('</div><br>');
+         document.getElementById('sh_result').innerHTML = html.join('');
+         $('a').Zoomer({ speedView: 200, speedRemove: 400, altAnim: true, speedTitle: 400, debug: false });
+      });
+
+      room.on('shopped', function(data) {
+         var xml = getXmlDOM(data.xData);
+         var total = $(xml).find("total").text();
+         $('#sh_total').html('총'+total +'개의 상품이 검색 되었습니다.');
+         var totalPg = getPgno(total);
+
+         var html = ['<div id ="sp_result_1" style="margin-top:5px; margin-left:5px;">'];
+         var rsno = 0;
+
+         $(xml).find("item").each( function() {
+
+            var number = getPgno(rsno);
+            var link = $(this).find("link").text();
+            var image = $(this).find("image").text();
+            var title =  $(this).find("title").text();
+            var lprice = $(this).find("lprice").text();
+            var hprice = $(this).find("hprice").text();
+            var mallName = $(this).find("mallName").text();
+
+            html.push('<div id="result_sub" style="width:180px; height:350px; margin-left:20px; margin-top:20px; float:left;">');
+            html.push('<a><img src="',image,'" id="img_',rsno,'" onclick ="fct(\\'',rsno,'\\')" style="width:160px; height:210px;"/>');
+            html.push('<p><a href="',link,'" target="_blank">', title,'</a>');
+            html.push('<div id = "result_bottom">');
+            html.push('<p> 최저가 : ', lprice,' 원</p>');
+            html.push('<p> 최고가 : ', hprice,' 원</p>');
+            html.push('<p> 쇼핑몰 : ', mallName,'</p>');
+            html.push('<img src="/images/선택_테두리연두.png", onclick ="selectItem(\\'',title,'\\',\\'',link,'\\',\\'',image,'\\',\\'',lprice,'\\',\\'',hprice,'\\',\\'',mallName,'\\')">');
+            html.push('</div>');
+            html.push('</div>');
+            rsno++;
+            if(rsno === 12) {
+               return false;
+            }
+   
+         });
+         html.push('</div><br>');
+         document.getElementById('sh_result').innerHTML = html.join('');
+         $('a').Zoomer({ speedView: 200, speedRemove: 400, altAnim: true, speedTitle: 400, debug: false });
+         $("#pgBtDiv").paginate({
+                                count: totalPg,
+                                start: 1,
+                                display: 12,
+                                border					: true,
+                                border_color			: '#fff',
+                                text_color  			: '#fff',
+                                background_color    	: 'black',	
+                                border_hover_color		: '#ccc',
+                                text_hover_color  		: '#000',
+                                background_hover_color	: '#fff', 
+                                images					: false,
+                                mouse: 'press',
+                                onChange: function (page) {
+                                   var startPgs;
+                                   if(page === 1) {
+                                      startPgs = 1;
+                                   } else {
+                                      startPgs = (page-1)*12+1;
+                                   }
+                                   var shoppingText = $('#shoppingText').val(); 
+                                   var room = io.connect('/room');
+                                   var selectValue = $(".sort option:selected").val();
+                                   room.emit('shop2', { spText:shoppingText, startPg:startPgs,selectValue:selectValue });
+                                 }
+            });
+      });
+      $('#addBag').click(function(e) {
+         var output = '';
+         output+=" <input type='text' class='eTxt' name='bagId' id='bagId' value='백 이름 입력' onclick='bagIdfct()' style='width:150px;  height:20px; margin-left:10px; margin-top:5px; float:left;'>";
+         output+=" <input type='text' class='eTxt' name='pw' id='pw' value='비밀번호 입력' onclick='pwfct()' style='width:150px; height:20px; margin-left:10px;   margin-top:5px; float:left;'>";
+         output+=" <input type='text' class='eTxt' name='repw' id='repw' value='비빌번호 확인' onclick='repwfct()' style='width:150px; height:20px; margin-left:10px;  margin-top:5px; float:left;'>";
+         output+=" <img src='/images/Button_Albumcreate.jpg' onclick='plusBag()' style='width:30px; height:30px; float:left;  margin-left:5px;'>";
+         $('#sh_right_1_1').html(output);
+
+         $("#sh_right_1_1").slideToggle("slow");
+         $(this).toggleClass("active"); return false;
+      });
+
+      $('#loginBagBt').click(function(e) {
+         $("#sh_right_1_2").slideToggle("slow");
+         $(this).toggleClass("active"); return false;
+      });
+
+      room.on('addBagsed-fail', function(data) {
+        alert('이미 사용중인 이름입니다.');
+        $("#sh_right_1_1").slideToggle("slow");
+        $(this).toggleClass("active"); return false;
+      });
+      room.on('checkBaged', function(data) {
+        myBag = data.name;
+        var output ='';
+        output += "<p>"+data.name;
+        output += "<input type='button' id ='goBt' value='보기' class='faceBt' onclick='goBag()'>";
+        $('#sh_right_3_2').html(output);
+        $('#sh_right_3_1').html('<p>선택한 장바구니는');
+        $("#sh_right_1_2").slideToggle("slow");
+        $(this).toggleClass("active"); return false;
+      });
+      room.on('checkBag-fail', function(data) {
+        alert('비밀 번호가 달라요');
+      });
+      room.on('addBagsed', function(data) {
+        alert(data.result+'백이 정상으로 생성되었습니다');
+        room.emit('getBaglist',{name:name});
+        $("#sh_right_1_1").slideToggle("slow");
+        $(this).toggleClass("active"); return false;
+      });
+      $('#bagname1').click(function(e) {
+          $('#bagname1').val('');
+          room.emit('getBaglist',{name:name});
+      });
+      $('#pw1').click(function(e) {
+          $('#pw1').val('');
+      });
+      $('#bagname1').keyup(function(e) {
+         var name = $('#bagname1').val();
+         room.emit('searchBags', { name:name });
+      });
+      $('#auoth').click(function(e) {
+         var name = $('#bagname1').val();
+         var pw = $('#pw1').val();
+
+         room.emit('checkBag', {name:name, pw:pw});
+      });
+      room.on('searchBagsed', function(data) {
+      var html = ['<div id ="bagdiv">'];
+      $.each(data.result, function(index, item) {
+         html.push('<p>'+item.name+'<image src="/images/선택_테두리연두.png" onclick="pwCreate(\\'',item.name,'\\')", style="float:right">');
+       });
+       html.push('</div>');
+       document.getElementById('sh_right_2').innerHTML = html.join('');
+     });
+     room.on('addItemed', function(data) {
+       alert(data.title+'이(가) 백에 담겼습니다.');
+       var imageSrc = data.image;
+       var newNodeTitle ='';
+       newNodeTitle += '<div id="newNode" style="width:120px; height:120px; margin-left:20px;">';
+       newNodeTitle += '<a>'+data.title+'</a>';
+       newNodeTitle += '<image src="' + imageSrc + '" style="width:100px; height:100px; margin-top:5px;">';
+       newNodeTitle += '</div>';
+       $('#sh_right_4_2').append(newNodeTitle);
+     });
+  });

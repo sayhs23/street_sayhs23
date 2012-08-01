@@ -1,0 +1,90 @@
+script(type='text/javascript')
+ var likesItem = function(ItemName) {
+   var room = io.connect('/room');
+   var bagName = $('#bagName').text();
+   $(selectBt).css({visibility:"hidden"});
+   room.emit('likeItem', {bagName:bagName, ItemName:ItemName});
+ };
+
+#bag_box
+   #bag_main_1
+     p(class='bagfont1') From.
+     img(src='/images/Text_main.png', id='info', style='width:150px; height:60px; margin-left:20px; float:left;')
+     span(style='display:none;')#bagName= bagName
+   p(class='bagfont2', style='float:left;') 제가 고민중인 상품에 대해 얘기해봐요!.
+   img(src='/images/DOJANG.png', style='widht:170px; height:60px; margin-left:5px; float:rightl;')
+   #bag_main_2
+     #bag_main_2_1
+   input(type='button', id='likeBt',  value='투표결과보기')
+   #bag_main_3
+   #playerdown(style='margin-top:10px;')
+     <fb:comments width="600" height="300" LEFTMARGIN="100" title="댓글달기" canpost="true" candelete="false" publish_feed="false">
+     </fb:comments>
+
+
+script(type='text/javascript')
+  $(document).ready(function() {
+     var room = io.connect('/room');
+     var bagName = $('#bagName').text();
+     room.emit('getItems', {name:bagName });
+     room.on('likeItemed', function(data) {
+         alert(data.result);
+     });
+     room.on('getItemsed', function(data) {
+        var html = ['<div id ="bag_result">'];
+        var rsno = 1;
+        $.each(data.result, function(index, item){
+           var link = item.link;
+           var image = item.image;
+           var title =  item.title;
+           var lprice = item.lprice;
+           var hprice = item.hprice;
+           var mallName = item.mallName;
+           var id = item.id;
+
+           html.push('<div id="result_sub',rsno,'" style="width:150px; height:350px; margin-left:20px; margin-top:20px; float:left;">');
+           html.push('<p>', id,'번</a>');
+           html.push('<a><img src="',image,'" id="img" style="width:140px; height:210px;"/>');
+           html.push('<p><a href="',link,'" target="_blank">', title,'</a>');
+           html.push('<div id = "result_bottom">');
+           html.push('<p> 최저가 : ', lprice,' 원</p>');
+           html.push('<p> 최고가 : ', hprice,' 원</p>');
+           html.push('<p> 쇼핑몰 : ', mallName,'</p>');
+           html.push('<img src="/images/선택_테두리연두.png" id="selectBt" onclick="likesItem(\\'',title,'\\')">');
+           html.push('</div>');
+           html.push('</div>');
+           rsno++;
+        });
+        html.push('</div>');
+        document.getElementById('bag_main_2').innerHTML = html.join('');
+     });
+     $('#likeBt').click(function(e) {
+         var room = io.connect('/room');
+         room.emit('getLikeList', {bagName:bagName});
+     });
+     room.on('getLikeListed', function(data) {
+         var html = ['<div id ="likes_result">'];
+        var rsno = 1;
+        $.each(data.result, function(index, item){
+           var link = item.link;
+           var image = item.image;
+           var title =  item.title;
+           var likes = item.likes;
+           var id = item.id;
+
+           html.push('<div id="result_sub',rsno,'" style="width:50px; height:100px; margin-left:20px; margin-top:20px; float:left;">');
+           html.push('<p>', likes,'표</a>');
+           html.push('<a><img src="',image,'" id="img" style="width:60px; height:80px;"/>');
+           html.push('<p><a href="',link,'" target="_blank">', title,'</a>');
+           html.push('<p>', id,'번</a>');
+           html.push('<div id = "result_bottom">');
+           html.push('</div>');
+           html.push('</div>');
+           rsno++;
+        });
+        html.push('</div>');
+        document.getElementById('bag_main_3').innerHTML = html.join('');
+        $("#bag_main_3").slideToggle("slow");
+        $(this).toggleClass("active"); return false;
+     });
+  });

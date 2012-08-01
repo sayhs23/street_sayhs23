@@ -1,5 +1,7 @@
-#i_main_1
-   img(id='LOGO', style='margin-left:30px; margin-top:10px; float:left',src='/images/logo.png', title='로고다시') 
+#i_box
+ #i_main_1
+   img(id='LOGO', style='float:left',src='/images/로고.png')
+   img(style='margin-left:200px; float:left', src='/images/Text_Webmaster.jpg')
    #top_1
      #top_1_1
        <fb:profile-pic uid="loggedinuser" size="square"></fb:profile-pic>
@@ -7,35 +9,36 @@
      #top_1_2
        <fb:login-button autologoutlink="true"></fb:login-button><p>
        <button class="menuBt2" onclick="dial()" style='width:80px; height:30px;'>글쓰기</button>
-    
-#i_main_2
-#i_main_3
-  #i_mian_2_1(style='margin-left:140px; height:70px; width: 1250px;  margin-left:50px;')
-     img(class='menuBt',src='images/Text_main.jpg', id='info', style='width:150px; height:60px;')
-     img(class='menuBt',src='images/Button_Home_Black.jpg', id='home', value='Home', style='width:150px; height:50px; margin-left:280px;')
-     img(class='menuBt',src='images/Button_Mstreet_Black.jpg', id='mStreet', value='mStreet', style='width:150px; margin-left:10px; height:50px;')
-     img(class='menuBt',src='images/Button_Cstreet_Black.jpg', id='cStreet', value='cStreet', style='width:150px; margin-left:10px; height:50px;')
-     img(class='menuBt',src='images/Button_Sstreet_Black.jpg', id='sStreet', value='sStreet', style='width:150px; margin-left:10px; height:50px;')
-     img(class='menuBt',src='images/Button_Gstreet_Black.jpg', id='gStreet', value='gStreet', style='width:150px; margin-left:10px; height:50px;')
-#i_main_4
-#i_main_5
-     input(type='text', class='txtbox', id='search', value='검색어를 입력하세요', style='float:left; margin-top:30px; margin-left:370px;')
-     img(src='images/Button_Search.jpg', id='shBt', value='검색', style='float:left; width:60px; margin-top:30px; height:30px; margin-left:20px; margin-right:3px;')
+ #i_main_2
+ #i_main_3
+  #i_mian_2_1(style='margin-left:40px; height:70px; width: 800px;')
+     img(class='menuBt',src='images/Text_main.png', id='info', style='width:150px; height:60px;')
+     img(class='menuBt',src='images/Button_Home_Black.jpg', id='home', value='Home', style='width:80px; height:40px; margin-left:180px;')
+     img(class='menuBt',src='images/Button_Mstreet_Black.jpg', id='mStreet', value='mStreet', style='width:80px; margin-left:10px; height:40px;')
+     img(class='menuBt',src='images/Button_Cstreet_Black.jpg', id='cStreet', value='cStreet', style='width:80px; margin-left:10px; height:40px;')
+     img(class='menuBt',src='images/Button_Sstreet_Black.jpg', id='sStreet', value='sStreet', style='width:80px; margin-left:10px; height:40px;')
+     img(class='menuBt',src='images/Button_Gstreet_Black.jpg', id='gStreet', value='gStreet', style='width:80px; margin-left:10px; height:40px;')
+ #i_main_4
+ #i_main_5
+     #txtboxDiv(style='float:left; margin-top:20px; margin-left:150px;')
+        input(type='text', class='txtbox', id='search', value='검색어를 입력하세요',style='margin-top:3px; margin-left:5px;')
+     #imgDiv(style='margin-top:20px; ')
+        img(src='/images/Button_Search.jpg', id='shBt', value='검색', style='float:left; width:56px; height:32px; margin-top:3px; margin-right:10px;')
      script(type='text/javascript', src="http://widgetprovider.daum.net/view?url=http://widgetcfs1.daum.net/xml/5/widget/2008/09/23/10/23/48d844f73a4ab.xml&up_setLocal=108&&width=160&height=70&widgetId=119&scrap=1")
-#i_main_6
-   #i_main_6_1(style='margin-left:200px;')
-      img(src='images/Text_Topnew.jpg', style='width:320px; height:50px;')
-   #i_main_6_2(style='margin-left:30px;')
-      img(src='images/Text_Sports.jpg', style='width:320px; height:50px;')
-   #i_main_6_3(style='margin-left:30px;')
-       img(class='menuBt',src='images/Button_Drama_Black_9025.jpg', value='드라마', id='drama', style='width:90px; height:25px; margin-left:10px;')
-       img(class='menuBt',src='images/Button_Movie_Black_9025.jpg', value='영화', id='movie', style='width:90px; height:25px; margin-left:10px;')
-       img(class='menuBt',src='images/Button_People_Black_9025.jpg', value='인물', id='man', style='width:90px; height:25px; margin-left:10px;')
-       img(class='menuBt',src='images/Button_Performance_Black_9025.jpg', value='공연', id='perfomance', style='width:90px; height:25px; margin-left:10px;')
-       img(class='menuBt',src='images/Button_Rec_Black_9025.jpg', value='오락', id='tvshow', style='width:90px; height:25px; margin-left:10px;')
-       img(class='menuBt',src='images/Button_Books_Black_9025.jpg', value='도서', id='book', style='width:90px; height:25px; margin-left:10px;')
-#i_main_7  
-    #i_main_7_1(style='margin-left:200px;')
+ #i_main_6
+   #i_main_6_1(style='margin-left:10px;')
+      p &nbsp&nbsp 스포츠 / 연예 뉴스
+   #i_main_6_2(style='margin-left:20px;')
+      p &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp TOP 뉴스
+   #i_main_6_3(style='margin-left:20px;')
+       img(class='menuBt',src='/images/Button_Drama_Black_9025.jpg', value='드라마', id='drama', style='width:70px; height:23px; margin-left:20px;')
+       img(class='menuBt',src='/images/Button_Movie_Black_9025.jpg', value='영화', id='movie', style='width:70px; height:23px; margin-left:10px;')
+       img(class='menuBt',src='/images/Button_People_Black_9025.jpg', value='인물', id='man', style='width:70px; height:23px; margin-left:10px;')
+       img(class='menuBt',src='/images/Button_Performance_Black_9025.jpg', value='공연', id='perfomance', style='width:70px; height:23px; margin-left:20px;')
+       img(class='menuBt',src='/images/Button_Rec_Black_9025.jpg', value='오락', id='tvshow', style='width:70px; height:23px; margin-left:10px;')
+       img(class='menuBt',src='/images/Button_Books_Black_9025.jpg', value='도서', id='book', style='width:70px; height:23px; margin-left:10px;')
+ #i_main_7  
+    #i_main_7_1(style='margin-left:11px;')
        script(type='text/javascript')
         var socialfeed1 = new gfeedfetcher("example1", "example1class", "_new")
         socialfeed1.addFeed("동아", "http://news.naver.com/rss/rss_presscenter.nhn?office_id=020") 
@@ -45,8 +48,8 @@
         socialfeed1.setentrycontainer("div") 
         socialfeed1.filterfeed(12, "label")
         socialfeed1.init()
-       input(type='button',class='menuBt2', id='refresh1', value='톱 뉴스 새로고침 이미지', style='width:166px; height:20px') 
-    #i_main_7_2(style='margin-left:30px;')
+       img(src='/images/Button_Refresh.jpg', id='refresh1',style='margin-left:150px;') 
+    #i_main_7_2(style='margin-left:20px;')
        script(type='text/javascript')
         var socialfeed2 = new gfeedfetcher("example2", "example2class", "_new")
         socialfeed2.addFeed("서울", "http://news.naver.com/rss/rss_presscenter.nhn?office_id=073") 
@@ -56,11 +59,11 @@
         socialfeed2.setentrycontainer("div") 
         socialfeed2.filterfeed(12, "label") 
         socialfeed2.init()
-       input(type='button',class='menuBt2', id='refresh2', value='스포츠/연예 새로고침 이미지', style='width:166px; height:20px') 
-    #i_main_7_3(style='margin-left:30px;')
-      #left_3(style='margin-top:30px; border:0px solid #f5f5f5; background-color: #f5f5f5')
-      #left_5(style='margin-left:200px;')
-ul#ticker01(style='width:1350px;')
+       img(src='/images/Button_Refresh.jpg', id='refresh2',style='margin-left:150px;') 
+    #i_main_7_3(style='margin-left:20px;')
+      #left_3
+      #left_5(style='margin-left:100px;')
+ ul#ticker01(style='width:1000px;')
    li<span>소속</span><a>상명대학교 디지털 미디어 전공</a></li>
    li<span>팀</span><a>VERITATS</a></li>
    li<span>street</span><a>너와 내가 있는 이곳은 Street!</a></li>
@@ -304,6 +307,14 @@ script(type='text/javascript')
      var searchText = $('#search').val();
      location.href='/search/' + searchText;
   });
+
+  $("#search").keydown(function (evt) {
+            if ((evt.keyCode) && (evt.keyCode == 13)) {
+                var searchText = $('#search').val();
+                location.href='/search/' + searchText;
+            }
+  });
+
   $('#search').click(function(e) {
      $('#search').val('');
   });

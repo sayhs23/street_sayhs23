@@ -10,7 +10,7 @@ script(type='text/javascript')
 
       swfobject.embedSWF(
       playerUrl + '&rel=1&border=0&fs=1&autoplay=' + 
-      (autoplay?1:0), 'player', '610', '425', '9.0.0', false, 
+      (autoplay?1:0), 'player', '490', '360', '9.0.0', false, 
       false, {allowfullscreen: 'true'});
  };
  var showMyVideos2 = function(data) {
@@ -34,7 +34,7 @@ script(type='text/javascript')
         }
   };
   var loadPlayer = function() {
-        swfobject.embedSWF("http://www.youtube.com/v/_XVIFSM1tEQ?version=3&f=videos&app=youtube_gdata"+ '&rel=1&border=0&fs=1&autoplay=' + (0?1:0), 'player', '610', '425', '9.0.0', false, false, {allowfullscreen: 'true'});
+        swfobject.embedSWF("http://www.youtube.com/v/_XVIFSM1tEQ?version=3&f=videos&app=youtube_gdata"+ '&rel=1&border=0&fs=1&autoplay=' + (0?1:0), 'player', '490', '360', '9.0.0', false, false, {allowfullscreen: 'true'});
   };
   var search = function(selectValue) {
         var number = selectValue;
@@ -49,15 +49,31 @@ script(type='text/javascript')
         script.src = a + name + b +number+ c;
         head.appendChild(script);
   };
-  var selectEmit = function(elbemName) {
-        alert(elbemName+'선택!');
+  var selectEmit = function() {
+        var elbemName = $('#elbemname1').val();
+        var pw = $('#newpw').val();
+        alert(elbemName+pw);
         var room = io.connect('/room');
-        room.emit('addMusicEmit',{name:elbemName, title:currentTitle, thumbnailurl:currentThumbnailurl, playerUrl:currentUrl});
+        room.emit('addMusicEmit',{name:elbemName, title:currentTitle, thumbnailurl:currentThumbnailurl, playerUrl:currentUrl, pw:pw});
   };
   var likeEmit = function(elbemName){
         alert(elbemName+'좋아요!');
         var room = io.connect('/room');
         room.emit('likeElbem',{name:elbemName});
+  };
+  var deleteTxt = function() {
+        $('#newpw').val('');
+  };
+  var selectText = function(elbemName) {
+        $('#elbemname1').val(elbemName);
+        var html =  ['<div id ="selectText2">'];
+        html.push('<input type="password", value="비밀번호를입력하세요", id="newpw", onclick="deleteTxt()" style="float:left; width:200px; margin-top:5px; height: 20px; margin-left:70px;">');
+        html.push('<input type="button", value="담기", onclick="selectEmit()", class="likeBt", id="putBt", style="margin-top:5px; float:left; margin-left:5px; height:25px; widht:30px;">');
+        html.push('</div>');
+        document.getElementById('panel_2_1').innerHTML = html.join('');
+
+        $("#panel_2_1").slideToggle("slow");
+        $(this).toggleClass("active"); return false;
   };
   var searchElbemCall = function() {
         alert($('#elbemname').val());
@@ -65,13 +81,31 @@ script(type='text/javascript')
         var room = io.connect('/room');
         room.emit('searchElbems', {name:name});
   };
-  var addElbemCall = function(){
-     var name = $('#elbemname').val();
-     var room = io.connect('/room');
-     room.emit('addElbems',{name:name});
+  var elbemIdfct = function() {
+        $('#elbemId').val('');
   };
-#i_main_1
-   img(id='LOGO', style='margin-left:30px; margin-top:10px; float:left',src='http://localhost:8001/images/logo.jpg', title='로고다시') 
+  var pwfct = function() {
+        $('#pw').val('');
+  };
+  var repwfct = function() {
+        $('#repw').val('');
+  };
+  var plusElbem = function() {
+     var id = $('#elbemId').val();
+     var pw = $('#pw').val();
+     var repw = $('#repw').val();
+
+     if(pw !== repw) {
+         alert('비밀 번호를 확인해주세요');
+     } else {
+         var room = io.connect('/room');
+         room.emit('addElbems',{name:id, pw:pw});
+     }
+  };
+#m_box
+ #m_main_1
+   img(id='LOGO', style='float:left',src='/images/로고.png')
+   img(style='margin-left:200px; float:left', src='/images/Text_Webmaster.jpg')
    #top_1
      #top_1_1
        <fb:profile-pic uid="loggedinuser" size="square"></fb:profile-pic>
@@ -79,58 +113,60 @@ script(type='text/javascript')
      #top_1_2
        <fb:login-button autologoutlink="true"></fb:login-button><p>
        <button class="menuBt2" onclick="dial()" style='width:80px; height:30px;'>글쓰기</button>
-#i_main_2(style='height:10px;')
-#i_main_3(style='margin-bottom:10px;')
-  #i_mian_2_1(style='margin-left:140px; height:70px; width: 1250px;  margin-left:50px; ')
-     img(class='menuBt',src='http://localhost:8001/images/Text_main.jpg', id='info', style='width:150px; height:60px;')
-     img(class='menuBt',src='http://localhost:8001/images/Button_Home_Black.jpg', id='home', value='Home', style='width:150px; height:50px; margin-left:280px;')
-     img(class='menuBt',src='http://localhost:8001/images/Button_Mstreet_Black.jpg', id='mStreet', value='mStreet', style='width:150px; margin-left:10px; height:50px;')
-     img(class='menuBt',src='http://localhost:8001/images/Button_Cstreet_Black.jpg', id='cStreet', value='cStreet', style='width:150px; margin-left:10px; height:50px;')
-     img(class='menuBt',src='http://localhost:8001/images/Button_Sstreet_Black.jpg', id='sStreet', value='sStreet', style='width:150px; margin-left:10px; height:50px;')
-     img(class='menuBt',src='http://localhost:8001/images/Button_Gstreet_Black.jpg', id='gStreet', value='gStreet', style='width:150px; margin-left:10px; height:50px;')
-#s_main_4(style='width:190px; margin-left:70px;')
-   hr
-   #videoDiv
-     #videos2
+ #m_main_2
+ #m_main_3
+  #i_mian_2_1(style='margin-left:40px; height:70px; width: 800px;')
+     img(class='menuBt',src='images/Mstreet_Text.png', id='info', style='width:150px; height:60px;')
+     img(class='menuBt',src='images/Button_Home_Black.jpg', id='home', value='Home', style='width:80px; height:40px; margin-left:180px;')
+     img(class='menuBt',src='images/Button_Mstreet_Black.jpg', id='mStreet', value='mStreet', style='width:80px; margin-left:10px; height:40px;')
+     img(class='menuBt',src='images/Button_Cstreet_Black.jpg', id='cStreet', value='cStreet', style='width:80px; margin-left:10px; height:40px;')
+     img(class='menuBt',src='images/Button_Sstreet_Black.jpg', id='sStreet', value='sStreet', style='width:80px; margin-left:10px; height:40px;')
+     img(class='menuBt',src='images/Button_Gstreet_Black.jpg', id='gStreet', value='gStreet', style='width:80px; margin-left:10px; height:40px;')
+#m_box2
+ #videoDiv
+      #videos2
       p 보고 싶은 영상을 검색하세요
-   hr
-#s_main_5(style='width:750px; height:1000px;')
- #m_main(style='margin-left:30px; margin-top:3px;')
-    input(type='text', id ='name', style='width:395px;  height:20px; margin-left:80px;')
-    input(type='button',class='faceBt', id='searchBt1', value='검색', style='margin-left:5px;')
+ #m_main(style='width:500px;')
+    input(type='text', id ='name', style='width:300px;  height:20px; margin-left:30px; margin-top:10px; float:left;')
+    img(src='/images/검색버튼.png', id='searchBt1', style='margin-left:5px; float:left; margin-top:8px;')
 
-    label#musicmax(for='musicmax', style='margin-right:10px; ') 곡수
+    label#musicmax(for='musicmax', style='margin-right:10px; margin-top:10px; float:left;') 곡수
        select(class='musicmax',name='musicmax')
         option(value='10', selected) 10곡
         option(value='20') 20곡
         option(value='30') 30곡
         option(value='40') 40곡
     p
-    #obdiv(style='width:650px; margin-left:50px;')
+    #obdiv(style='width:500px; margin-left:5px;')
      object#player
-     input(type='button', value='이 노래 담기', id='addMusicBt')
+     img(src='/images/이노래담기_연두.png', id='addMusicBt')
     #panel
        #panel_1
-          a 앨범을 선택해주세요
+         img(src='/images/cd2.png', style='float:left; width:20px; height:20px; margin-left:70px;')
+         a(style='margin-left:10px;') 앨범을 선택해주세요
        #panel_2
-    #playerdown(style='margin-top:140px;')
-    <fb:comments width="700" height="300" LEFTMARGIN="100" title="댓글달기" canpost="true" candelete="false" publish_feed="false">
-    </fb:comments>       
+          img(src='/images/돋보기4.png', style='width:50px; height: 20px; float:left; margin-left:15px; margin-top:5px; ')
+          input(type='text', value='앨범명을입력하세요', id='elbemname1', style='float:left; width:200px; height: 20px; margin-left:5px; margin-top:5px;')
+       #panel_2_1
+       #panel_3
+    #myMusicDiv
+     img(src='/images/elbem.jpg', style='float:left; width:30px; height:30px;')
+     p(style='margin-left:5px;') 내가 만든 앨범
+     #sidebar2
+    #playerdown(style='margin-top:10px;')
+     <fb:comments width="500" height="300" LEFTMARGIN="100" title="댓글달기" canpost="true" candelete="false" publish_feed="false">
+     </fb:comments>
+    hr
 
-#m_right
- a 공개 앨범 목록
- hr
- p
- #m_right_1
-     input(type='text', class='eTxt', value='앨범명을입력하세요', id='elbemname', style='width:130px; height: 25px;')
-     input(type='button', id='addEbemEmit', value='+', class='faceBt', onclick='addElbemCall()', style='margin-left:5px;')
-     input(type='button', id='addEbemEmit', value='?', class='faceBt', onclick='searchElbemCall()', style='margin-left:5px;')
- #m_right_2
- hr
-#m_right2(style='margin-left:10px;')
- #sidebar(class='grid_4')
-   a(style='margin-top:10px;') 최근 앨범
-   #sidebar2(class='grid_4')
+
+ #m_right
+  #m_right_1
+     input(type='button', id='addBt', value='앨범 만들기', class='faceBt', style='margin-left:5px;')
+     #m_right_1_1
+     img(src='/images/공개앨범목록 복사.png', style='margin-top:10px;')
+     input(type='text', class='eTxt', value='앨범명을입력하세요', id='elbemname', style='width:160px; height: 24px; float:left; margin-top:5px;')
+     img(src='/images/Button_Search4.jpg', id='addEbemEmit', onclick='searchElbemCall()', style='margin-left:5px; margin-top:5px;')
+  #m_right_2
 
 script(type='text/javascript', src='http://code.jquery.com/jquery-1.7.0.min.js')
 script(type='text/javascript', src ='http://www.jisungedu.co.kr/include/jquery-contained-sticky-scroll.js')
@@ -143,8 +179,6 @@ script(type='text/javascript')
     $('#sStreet').attr('src','/images/Button_Sstreet_Black.jpg');
     $('#cStreet').attr('src','/images/Button_Cstreet_Black.jpg');
     $('#gStreet').attr('src','/images/Button_Gstreet_Black.jpg');
-
-    jQuery('#sidebar').containedStickyScroll(); 
 
     $("#name").keydown(function (evt) {
             if ((evt.keyCode) && (evt.keyCode == 13)) {
@@ -159,18 +193,24 @@ script(type='text/javascript')
     
     room.on('searchElbemsed', function(data) {
       var html = ['<div id ="elbemdiv">'];
-      html.push('<p>공개 앨범 목록');
-      $.each(data.result, function(index, item){
-         html.push('<p>'+item.name+" ("+item.likes+") "+ '<input type="button", class="likeBt", onclick="likeEmit(\\'',item.name,'\\')", value="추천", style="float:right">', '<input type="button", onclick="location.href=\\'/elbem/' + item.name + '\\'", class="likeBt", value="보기", style="float:right">');
+      $.each(data.result, function(index, item) {
+         html.push('<p>'+item.name+" ("+item.likes+") "+ '<image src="/images/추천_연두.png", onclick="likeEmit(\\'',item.name,'\\')", style="float:right">', '<image src="/images/보기_연두.png" onclick="location.href=\\'/elbem/' + item.name + '\\'", style="float:right">');
        });
        html.push('</div>');
        document.getElementById('m_right_2').innerHTML = html.join('');
     });
+    room.on('searchElbemsed2', function(data) {
+      var html = ['<div id ="elbemdiv2">'];
+      $.each(data.result, function(index, item) {
+         html.push('<p>'+item.name+" ("+item.likes+") "+ '<image src="/images/선택_테두리연두.png", onclick="selectText(\\'',item.name,'\\')", style="float:right">');
+      });
+      html.push('</div>');
+      document.getElementById('panel_3').innerHTML = html.join('');
+    });
     room.on('getElbemlisted', function(data) {
       var html = ['<div id ="elbemdiv">'];
-      html.push('<p>공개 앨범 목록');
       $.each(data.result, function(index, item){
-         html.push('<p>'+item.name+" ("+item.likes+") "+ '<input type="button", class="likeBt", onclick="likeEmit(\\'',item.name,'\\')", value="추천", style="float:right">', '<input type="button", onclick="location.href=\\'/elbem/' + item.name + '\\'", class="likeBt", value="보기", style="float:right">');
+         html.push('<p>'+item.name+" ("+item.likes+") "+ '<image src="/images/추천_연두.png", onclick="likeEmit(\\'',item.name,'\\')", style="float:right">', '<image src="/images/보기_연두.png" onclick="location.href=\\'/elbem/' + item.name + '\\'", style="float:right">');
       });
       html.push('</div>');
       document.getElementById('m_right_2').innerHTML = html.join('');
@@ -178,25 +218,41 @@ script(type='text/javascript')
     room.on('getElbemList2', function(data) {
       var html = ['<div id ="elbemdiv">'];
       $.each(data.result, function(index, item){
-         html.push('<p>'+item.name+" ("+item.likes+") "+ '<input type="button", class="likeBt", onclick="selectEmit(\\'',item.name,'\\')", value="선택", style="float:right">');
+         html.push('<p>'+item.name+" ("+item.likes+") "+ '<image src="/images/선택_테두리연두.png", onclick="selectText(\\'',item.name,'\\')", style="float:right">');
       });
       html.push('</div>');
-      document.getElementById('panel_2').innerHTML = html.join('');
+      document.getElementById('panel_3').innerHTML = html.join('');
     });
 
     room.on('addElbemsed', function(data) {
         alert(data.result+'앨범이 정상으로 생성되었습니다');
         var html = ['<div id ="elbemdiv2">'];
-        html.push('<p>'+data.result+  '<input type="button", onclick="location.href=\\'/elbem/' + data.result + '\\'", class="likeBt", value="보기", style="float:right">');
+        html.push('<p>'+data.result+  '<image src="/images/보기_연두.png", onclick="location.href=\\'/elbem/' + data.result + '\\'",style="float:right">');
         html.push('</div>');
         
         document.getElementById('sidebar2').innerHTML = html.join('');
-        $('#elbemname').val('');
+        
         room.emit('getElbemlist',{name:name});
+
+        $("#m_right_1_1").slideToggle("slow");
+        $(this).toggleClass("active"); return false;
+   
     });
     room.on('addElbemsed-fail', function(data) {
         alert('이미 사용중인 이름입니다.');
-        $('#m_right_1').html('');
+        $("#m_right_1_1").slideToggle("slow");
+        $(this).toggleClass("active"); return false;
+    });
+
+    room.on('addMusicEmited', function() {
+        alert('정상적으로 추가 되었습니다.');
+        $("#panel_2_1").slideToggle("slow");
+        $(this).toggleClass("active"); return false;
+
+    });
+
+    room.on('addMusicEmited-fail', function() {
+        alert('비밀번호가 다릅니다.');
     });
 
     
@@ -233,6 +289,19 @@ script(type='text/javascript')
     $('#elbemname').click(function(e) {
       $('#elbemname').val('');
     });
+
+    $('#addBt').click(function(e) {
+
+       var output ='';
+       output+=" <input type='text' class='eTxt' name='elbemId' id='elbemId' value='앨범명 입력' onclick='elbemIdfct()' style='width:150px;  height:20px; margin-left:10px; margin-top:5px; float:left;'>";
+       output+=" <input type='text' class='eTxt' name='pw' id='pw' value='비밀번호 입력' onclick='pwfct()' style='width:150px; height:20px; margin-left:10px;   margin-top:5px; float:left;'>";
+       output+=" <input type='text' class='eTxt' name='repw' id='repw' value='비빌번호 확인' onclick='repwfct()' style='width:150px; height:20px; margin-left:10px;  margin-top:5px; float:left;'>";
+       output+=" <img src='/images/Button_Albumcreate.jpg' onclick='plusElbem()' style='width:30px; height:30px; float:left;  margin-left:5px;'>";
+       $('#m_right_1_1').html(output);
+
+       $("#m_right_1_1").slideToggle("slow");
+       $(this).toggleClass("active"); return false;
+    });
    
     $('#searchBt1').click(function(e) {
       var selectValue = $(".musicmax option:selected").val(); search(selectValue);
@@ -241,5 +310,12 @@ script(type='text/javascript')
     $('#elbemname').keyup(function(e) {
       var name = $('#elbemname').val();
       room.emit('searchElbems', {name:name});       
+    });
+    $('#elbemname1').keyup(function(e) {
+      var name = $('#elbemname1').val();
+      room.emit('searchElbems2', { name:name});
+    });
+    $('#elbemname1').click(function(e) {
+      $('#elbemname1').val('');
     });
   });

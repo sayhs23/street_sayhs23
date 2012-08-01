@@ -31,7 +31,7 @@
 		            link: document.URL,
 		            picture: 'http://localhost:8001/images/DOJANG.jpg',
 		            caption: 'title',
-		            description: 'content',
+		            description: 'Street에서 보내는 글',
 		            //message: 'Facebook Dialogs are easy!'	//텍스트박스 안의 글자
 		        }, function (response) {
 		            if (response && response.post_id) {

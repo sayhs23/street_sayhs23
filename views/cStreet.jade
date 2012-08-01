@@ -1,0 +1,122 @@
+script(type='text/javascript', src='/javascripts/zoomer.js')
+script(type='text/javascript', src='/javascripts/jquery.autocomplete.js')
+link(rel='stylesheet', href='/stylesheets/zoomer.css', media='screen')
+link(rel='stylesheet', href='/stylesheets/jquery.autocomplete.css')
+script(type='text/javascript')
+ var goCommunity = function(url) {
+    alert('호출');
+    var icUrl = encodeURI(url);
+    alert(icUrl);
+    location.href='/community/' + icUrl;
+ };
+#c_box_wrapper
+ #c_box
+  #c_main_1
+   img(id='LOGO', style='float:left',src='/images/로고.png')
+   img(style='margin-left:200px; float:left', src='/images/Text_Webmaster.jpg')
+   #top_1
+     #top_1_1
+       <fb:profile-pic uid="loggedinuser" size="square"></fb:profile-pic>
+       <fb:name uid="loggedinuser" use-you="no"></fb:name>
+     #top_1_2
+       <fb:login-button autologoutlink="true"></fb:login-button><p>
+       <button class="menuBt2" onclick="dial()" style='width:80px; height:30px;'>글쓰기</button>
+  #c_main_2
+  #c_main_3
+   #i_mian_2_1(style='margin-left:40px; height:70px; width: 800px;')
+     img(class='menuBt',src='images/Mstreet_Text.png', id='info', style='width:150px; height:60px;')
+     img(class='menuBt',src='images/Button_Home_Black.jpg', id='home', value='Home', style='width:80px; height:40px; margin-left:180px;')
+     img(class='menuBt',src='images/Button_Mstreet_Black.jpg', id='mStreet', value='mStreet', style='width:80px; margin-left:10px; height:40px;')
+     img(class='menuBt',src='images/Button_Cstreet_Black.jpg', id='cStreet', value='cStreet', style='width:80px; margin-left:10px; height:40px;')
+     img(class='menuBt',src='images/Button_Sstreet_Black.jpg', id='sStreet', value='sStreet', style='width:80px; margin-left:10px; height:40px;')
+     img(class='menuBt',src='images/Button_Gstreet_Black.jpg', id='gStreet', value='gStreet', style='width:80px; margin-left:10px; height:40px;')
+  #c_main_4
+ #c_box2
+   #c_box2_1
+      input(type='text', class='txtbox', id='searchCmText', value='커뮤니티를 검색하세요', style='float:left; margin-top:20px; margin-left:100px;')
+      input(type='button', class='shBt', id='searchCmBt',  value='검색', style='width:60px; margin-top:20px; height:30px; margin-left:10px; margin-right:3px;')
+      hr
+      #c_box2_1_1
+   #c_box2_2
+      input(type='button', id='createCmDivBt', value='커뮤니티 개설', class='faceBt', style='margin-left:20px; margin-top:20px; width:200px; height:30px;')
+      #createCmInputDiv(style='margin-top:5px;')
+         input(type='text', value='커뮤니티 명', class='eTxt', id='cmText', style='margin-left:20px; margin-top:10px;')
+         input(type='password', value='1234', class='eTxt', id='cmPw', style='margin-left:20px; margin-top:5px;')
+         input(type='password', value='1234', class='eTxt', id='cmRePw', style='margin-left:20px; margin-top:5px;')
+         input(type='button', class='faceBt', value='확인', id='createCmBt', style='margin-left: 10px;')
+      #myCreateCmDiv
+script(type='text/javascript')
+ $(document).ready(function() {
+    
+    var room = io.connect('/room');
+    $('#searchCmText').click(function(e) {
+       $('#searchCmText').val('');
+    });
+
+    $('#searchCmBt').click(function(e) {
+       var name = $('#searchCmText').val();
+       room.emit('searchComsClick', { name:name });
+    });
+    room.on('searchComsClicked', function(data) {
+      var html = ['<div id ="comsDiv">'];
+      $.each(data.result, function(index, item) {
+         html.push('<p>'+item.name+'<image src="/images/선택_테두리연두.png" onclick="goCommunity(\\'',item.name,'\\')", style="float:right">');
+       });
+       html.push('</div>');
+       document.getElementById('c_box2_1_1').innerHTML = html.join('');
+     });
+    $('#searchCmText').click(function(e) {
+         var name = $('#searchCmText').val();
+         room.emit('searchComs', { name:name });
+    });
+    room.on('searchComsed', function(data) {
+      var temp = '';
+       $.each(data.result, function(index, item) {
+         temp += item.name+",";
+       });
+       data=temp .split(',');
+       $('#searchCmText').autocomplete(data);
+     });
+
+    $('#createCmDivBt').click(function(e) {
+       $("#createCmInputDiv").slideToggle("slow");
+       $(this).toggleClass("active"); return false;
+    });
+
+    $('#cmText').click(function(e) {
+       $('#cmText').val('');
+    });
+   $('#cmPw').click(function(e) {
+       $('#cmPw').val('');
+    });
+   $('#cmRePw').click(function(e) {
+       $('#cmRePw').val('');
+    });
+
+    $('#createCmBt').click(function(e) {
+      var id = $('#cmText').val();
+      var pw = $('#cmPw').val();
+      var repw = $('#cmRePw').val();
+
+      if(pw!==repw) {
+        alert('비밀 번호를 확인해주세요');
+      }else{
+          room.emit('createCm', {name:id, pw:pw });
+      }
+    });
+    room.on('createCmed', function(data) {
+         alert(data.result + '커뮤니티가 정상적으로 만들어졌습니다.');
+         var html = ['<div id ="elbemdiv2">'];
+         html.push('<p>'+data.result+  '<image src="/images/보기_연두.png", onclick="goCommunity(\\'',data.result,'\\')",style="float:right">');
+         html.push('</div>');
+         document.getElementById('myCreateCmDiv').innerHTML = html.join('');
+
+         $("#createCmInputDiv").slideToggle("slow");
+         $(this).toggleClass("active"); return false;
+      
+        
+    });
+    room.on('createCm-fail', function(data) {
+         alert('이미 있는 커뮤니티 명입니다.');
+    });
+ });

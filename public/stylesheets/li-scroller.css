@@ -1,11 +1,11 @@
 /* liScroll styles */
 
 .tickercontainer { /* the outer div with the black border */
+margin-top:5px;
 border: 1px solid #000;
 background: #fff; 
-width: 1350px; 
+width: 880px; 
 height: 27px; 
-margin-left:50px;
 padding: 0;
 overflow: hidden; 
 }
@@ -13,7 +13,7 @@ overflow: hidden;
 position: relative;
 left: 10px;
 top: 8px;
-width: 1350px;
+width: 880px;
 overflow: hidden;
 }
 ul.newsticker { /* that's your list */

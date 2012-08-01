@@ -1,69 +1,503 @@
-div.ui-layout-west(style='overflow:auto;')
-   h2 사용자 정보
-   p 이름: #{nickname}
-   p 레벨: #{level}
-   p 총 점수: #{totalscore}
-   input#logout(type='button', value='로그아웃')
-   input#friendlist(type ='button', value='친구관리')
- div#container.ui-layout-center(style='overflow:auto;')
-   div.ui-layout-north(style='height:500px; ')
-      p 커뮤니티 영역
-      p 커뮤니티 영역
+script(type='text/javascript', src='/javascripts/jquery.autocomplete.js')
+link(rel='stylesheet', href='/stylesheets/jquery.autocomplete.css')
+script(type='text/javascript', src='/javascripts/autoRow.js') 
+script(type='text/javascript')
 
-   div.ui-layout-south(style='overflow:auto;')
-     #chatWindow(style='width:700px; height:190px; overflow:auto; border:1px solid #BF0; float:left; margin-right:10px;')
-      p 대기실 채팅 영역
-     #attentsList(style='height:190px; overflow:auto; border:1px solid #BF0;')
-      p 참여자 목록
-      ul#attendants
-       each wUser in waitUser
-         li(id='wUser.name-'+wUser.name)= wUser.name
-     input(type='text', style='width:540px;')#message
-     input(type='Button', id='chatButton', value='보내기', style='width:60px; height:25px;')
-div.ui-layout-east(style='overflow:auto;')
-  h1 사용자 정보 창
-  p #{nickname}님 환영합니다.
-  p 원하는 채팅방이 없으면 채팅방을 만드세요.
-div.ui-layout-north(style='overflow:auto;')
-   input(type='button', value ='게임 하기', id='gameStart',style='width:230px; height:50px;  overflow:auto; border:2px solid #FC0; float:left; margin-left:215px; margin-top:45px;')
-   input(type='submit', value ='내 앨범 보기', id='myElbem', style='width:230px; height:50px;  overflow:auto; border:2px solid #FC0; float:left; margin-left:8px; margin-top:45px;')
-   input(type='button', value='커뮤니티',id='community',style='width:230px; height:50px;  overflow:auto; border:2px solid #FC0; float:left; margin-left:8px; margin-top:45px;')
-   input(type='button', value='부가 기능1',, id='add', style='width:230px; height:50px; overflow:auto; border:2px solid #FC0; float:left; margin-left:8px; margin-top:45px;')
+  var getTime = function(){
+     var now = new Date();
+     var year = now.getFullYear();
+     var month = now.getMonth()+1;
+     var dd = now.getDate();
+     var hours = now.getHours();
+     var mins = now.getMinutes();
 
- script(type='text/javascript') 
+     return year+'.'+month+'.'+dd+' '+hours+':'+mins;
+  };
+  var comment = function(number) {
+     var t = '#textDiv_3_'+number;
+
+     $(t).slideToggle("slow");
+     $(this).toggleClass("active");
+  };
+  var setUserText = function(number) {
+      var t = '#user'+number;
+      $(t).val('');
+  };
+  var setUserPwText = function(number) {
+      var t = '#userPw'+number;
+      $(t).val('');
+  };
+  var showComment = function(number) {
+      var t = '#textDiv_4_'+number;
+      $(t).slideToggle("slow");
+      $(this).toggleClass("active");
+  };
+  var deleteNote = function(id,number) {
+     var room = io.connect('/room');
+     var t = '#txt'+number;
+
+     var pws = $(t).val();
+     var communityName = $('#communityName').text();
+     
+     room.emit('deleteNote', {id:id, pws:pws, communityName:communityName });
+  };
+  var deleteComment = function(id, number){
+     var room = io.connect('/room');
+     var t = '#Cmtxt'+id;
+
+     var pws = $(t).val();
+     alert(t+pws);
+     var communityName = $('#communityName').text();
+     room.emit('deleteComment', {id:id, pws:pws, communityName:communityName, number:number });
+  };
+  var insertComment = function(number) {
+     var user_tag ='#user'+number;
+     var userPw_tag ='#userPw'+number;
+     var commentTxt_tag ='#commentTxt'+number;
+
+     var commentTxt = $(commentTxt_tag).val();
+     var user = $(user_tag).val();
+     var userPw = $(userPw_tag).val();
+     var nowTime = getTime();
+     var communityName = $('#communityName').text();
+
+     if(user===''||user==='작성자'){
+        alert('사용자를 입력해주세요');
+     }
+     if(userPw===''){
+        alert('비밀번호를 입력해주세요');
+     }
+     if(commentTxt===''){
+        alert('내용을 입력하세요');
+     }
+
+     var room = io.connect('/room');
+     room.emit('comment', {communityName:communityName, writter:user, pws:userPw, description:commentTxt, number:number, date1:nowTime});
+  };
+  var countText = function(number){
+       var t = '#commentTxt'+number;
+       var inputLength = $(t).val().length;
+       var remain = 150;
+       var temp;
+       var inputValue = $(t).val();
+       var s = '#head'+number;
+
+       if (inputLength == 0) {
+          remain = remain - 0;
+          $(s).html(remain);
+       }else {
+          for (var i = 0; i < inputLength; i++) {
+             temp = $(t).val().charAt(i);
+             if (escape(temp).length > 4) {
+                remain = remain - 2;
+                if(remain<0){
+                   alert('글자수를 초과하였습니다.');
+                }
+             } else {
+                remain = remain - 1;
+                if(remain<0){
+                   alert('글자수를 초과하였습니다.');
+                }
+             }
+                $(s).html(remain);
+           }
+       }
+  };
+#cm_box_wrapper
+   #cm_top
+      hr
+      span(style='display:none')#communityName=communityName
+      p(style='margin-top:20px;')  해당 커뮤니티를 사용하기 위해서는 암호를 알아야합니다.!
+      input(type='text', value='커뮤니티 암호를 입력하세요', id='pw', style='margin-left:20px; width:200px;')
+      input(type='button', value='확인', id='login', class='faceBt', style='margin-left:5px;')
+   #cm_box
+      #cm_main_1
+        #cm_image(style='margin-top:50px;')
+           img(src='/images/community.png')
+        #cminfo
+      #cm_main_2
+         #cm_main_2_1
+            #cm_main_2_1_1
+               input(type='button', value='미정', class='faceBt', style='float:left; margin-top:10px;')
+               input(type='button', value='투표', class='faceBt', id='selection', style='float:left; margin-top:10px;')
+               label(for='fwritter', style='margin-left:150px; float:left; margin-top:20px;') 글쓴이
+               input(type='text', value='작성자', class='txtbox2', id='writter', style='width:100px; margin-left:10px; float:left; margin-top:15px;')
+               label(for='fwritterPw', style='margin-left:10px; float:left; margin-top:20px;') 비밀번호
+               input(type='text', value='비밀번호', class='txtbox2', id='writterPw', style='width:100px; margin-left:10px; float:left; margin-top:15px;')
+            #cm_main_2_1_2
+               #next_1
+                  p(style='float:left;') 투표 내용
+                  textarea(id="description2", name='텍스트창', style='border: 2px solid #4b0000; margin-left:10px; width:300px; overflow:hidden;', rows=3, cols=15, onKeyDown='autoRows2(this);')
+               #next_2
+                  label#musicmax(for='musicmax', style='margin-top:5px; float:left;') 후보 갯수
+                     select(class='musicmax',name='musicmax', style='margin-left:5px; margin-top:5px;')
+                        option(value='2', selected) 2개
+                        option(value='3') 3개
+                        option(value='4') 4개
+                        option(value='5') 5개
+                        option(value='6') 6개
+                        option(value='7') 7개
+                  input(type='button', value='확인', class='faceBt', style='float:left; margin-left:10px; margin-top:5px;')
+                  h1(style='margin-left:300px;') 300
+            #cm_main_2_1_3
+               textarea(id="description", name='텍스트창', style='border: 2px solid #4b0000; margin-left:10px; margin-top:10px; float:left; width:600px; overflow:hidden;', rows=8, cols=30, onKeyDown='autoRows(this);')
+            h2(style='margin-left:500px;  float:left;') 300
+            input(type='button', value='글쓰기', class='faceBt', id='writeBt', style='border: 2px solid #4b0000; margin-left:10px; margin-top:10px;  float:left;')
+         #cm_main_2_2
+            label#musicmax(for='sortMethod', style='margin-top:10px;') 정렬순
+               select(class='sortMethod', id='sortMethod', name='sortMethod', style='margin-left:5px; margin-top:10px;')
+                  option(value='5', selected) 모두보기
+                  option(value='1') 공지
+                  option(value='2') 축하
+                  option(value='3') 파이팅
+                  option(value='0') 잡답
+                  option(value='4') 투표
+            #cm_main_2_2_2
+               
+script(type='text/javascript') 
   $(document).ready(function() {
-   var room = io.connect('/room'); 
-  var chatWindow = $('#chatWindow');
-  var messageBox = $('#message');
-  var myName = $('#myName').text();
-  $('#chatWindow').focus();
-  var showMessage = function(msg) {
-        var pos = $("#chatWindow").position().top;
-        chatWindow.append($('<p>').text(msg)).animate({ scrollTop: pos }, 'slow');   
-        chatWindow.scrollTop(chatWindow.height());
-      };
-  room.on('message', function(data) {
-        showMessage(data.nickName + ' : ' + data.msg); 
+     $('#sortMethod').change(function(){
+         var selectValue = $(".sortMethod option:selected").val();
+         room.emit('getSortNote',{communityName:communityName, selectValue:selectValue});
+     });
+      var data =["/공지","/축하","/파이팅","/정보","/투표"];
+      $('#description').autocomplete(data);
+
+     var room = io.connect('/room');
+     var communityName = $('#communityName').text();
+     $(window).scroll(function () {
+            var scrollHeight = $(window).scrollTop() + $(window).height();
+            var documentHeight = $(document).height();
+
+            if (scrollHeight == documentHeight) {
+                alert('무한 스크롤');
+            }
       });
-  $('#chatButton').click(function(e) {
-        var msg = messageBox.val();
-        if ($.trim(msg) !== '') {
-          showMessage(myName + ' : ' + msg);
-          room.json.send({nickName:myName, msg:msg});
-          messageBox.val(''); messageBox.focus();
+     $('#pw').click(function(e) {
+       $('#pw').val('');
+     });
+     $('#writterPw').click(function(e) {
+       $('#writterPw').val('');
+     });
+     $('#writter').click(function(e) {
+       $('#writter').val('');
+     });
+     $('#login').click(function(e) {
+        var pw = $('#pw').val();
+        room.emit('getPw', {name:communityName, pw:pw});
+     });
+
+     room.on('getPwed', function() {
+        alert('인증 성공');
+        room.emit('getNote',{communityName:communityName});	
+        $('#cminfo').html('<p>'+communityName+'에 오신것을 환영합니다.');
+        $("#cm_box").slideToggle("slow");
+        $(this).toggleClass("active");
+
+        $("#cm_top").slideToggle("slow");
+        $(this).toggleClass("active"); 
+        return false;
+     });
+     room.on('getPwed-fail', function() {
+        alert('인증 실패');
+        $('#pw').val('');
+     });
+     
+
+     $('#writeBt').click(function(e) {
+        var nowTime = getTime();
+        var writter = $('#writter').val();
+        var description = $('#description').text();
+        var writterPw = $('#writterPw').val();
+        var style = 0;
+
+        if(writter===''||writter==='작성자'){ 
+           alert('작성자를 입력하세요');
+           return false;
         }
-      });
-   
-  $('body').layout({ east__size: 190,center__size: 500 ,north__size: 100,west__size: 200 });
-  
-   $('#logout').click(function(e) { location.href = '/logout/#{nickname}';  });
-   $('#myElbem').click(function(e) {  location.href='/myelbem/#{nickname}'; });
-   $('#community').click(function(e) { location.href='/community/#{nickname}'; });
-   $('#add').click(function(e) { location.href ='/add/#{nickname}'; });
-   $('#gameStart').click(function(e) { location.href = '/enter'; });
-    $('#community').css('background','Red');
-    
-  
+        if(writterPw ===''||writterPw==='비밀번호'){ 
+           alert('비밀번호를 입력하세요'); 
+           return false;
+        }
+
+        if(description.substr(0,3)==='/공지'){
+              style=1;
+        }
+        else if(description.substr(0,3)==='/축하'){
+              style=2;
+        }
+        else if(description.substr(0,3)==='/파이팅'){
+              style=3;
+        }
+        else if(description.substr(0,3)==='/잡답'){
+              style=0;
+        }
+        else if(description.substr(0,3)==='/투표'){
+              style=4;
+        }
+        
+     
+        room.emit('writeNote', {communityName:communityName, nowTime:nowTime, writter:writter, description:description, style:style, writterPw:writterPw});
+     });
+     room.on('deleteCommented', function(data) {
+        alert('삭제되었습니다.');
+        alert('이제는 '+data.number+'이 영역의 댓글만 빼내면은된다.'+data.id);
+        var tDiv = '#wrapperDiv2'+data.id;
+        $(tDiv).empty();
+     });
+     room.on('deleteNoted',function(){
+        alert('삭제되었습니다.');
+        room.emit('getNote',{communityName:communityName});	
+     });
+     room.on('deleteNoted-fail', function() {
+        alert('비밀 번호가 다릅니다.');
+     });
+     room.on('deleteCommented-fail', function() {
+        alert('비밀 번호가 다릅니다.');
+     });
+     room.on('getNoteed', function(data) {
+        var html = ['<div id="note">'];
+        $.each(data.result, function(index, item){
+           var style = item.style;
+           var number = item.id;
+           html.push('<div id="wrapperDiv">');
+           html.push('<hr style="margin-top:20px;">');
+           html.push('<div id="CmimgDiv", style="float:left;">');
+           if( style ===0){
+              html.push('<img src="/images/잡담.png">');
+           }
+           if( style ===1){
+              html.push('<img src="/images/공지.png">');
+           }
+           if( style ===2){
+              html.push('<img src="/images/축하.png">');
+           }
+           if( style ===3){
+              html.push('<img src="/images/파이팅.png">');
+           }
+           if( style ===4){
+              html.push('<img src="/images/투표.png">');
+           }
+           html.push('</div>');
+           html.push('<div id="CmtextDiv", style="float:left;">');
+           html.push('<div id="textDiv_1",style="float:left;">');
+           html.push('<b style="margin-left:10px", class="writterFont">'+item.writter+'</b>');
+           html.push('<div id="textDiv_1_1", style="float:right; margin-right:50px;">');
+           html.push('<input type="text", id="txt',number,'", class="eTxt">');
+           html.push('<input type="button", value="삭제", onclick="deleteNote(\\'',item.id,'\\',\\'',number,'\\')", class="cmBt",  style="margin-left:5px;">');
+           html.push('</div>');
+           html.push('</div>');
+           html.push('<div id="textDiv_2", style="margin-left:10px;">');
+           var temp = item.description;
+           var result = temp.replace(/\\n/g, '<br />'); 
+           html.push(result);
+           html.push('</div>');
+           html.push('<div id="textDiv_3">');
+           html.push('<input type="button", value="댓글달기", onclick="comment(\\'',number,'\\')" style=" float:left; margin-left:50px;", class="cmBt">');
+           html.push('<input type="button", value="댓글 접기", id="commentBt',number,'", onclick="showComment(\\'',number,'\\')", class="cmBt",  style="margin-left:20px;"/>');
+           html.push('<p class="dateFont", style="margin-left:500px;">'+item.date1+'</p>');
+           html.push('</div>');
+           html.push('<div id="textDiv_3_',number,'", style="display:none;">');
+           html.push('<input type="text", value="작성자", onclick="setUserText(\\'',number,'\\')", id="user',number,'", class="eTxt">');
+           html.push('<input type="text", id="userPw',number,'", onclick="setUserPwText(\\'',number,'\\')", style="margin-left:10px;", value="암호", class="eTxt"/>');
+           html.push('<input type="button", value="확인", id="okayBt',number,'", onclick="insertComment(\\'',number,'\\')", class="cmBt",  style="margin-left:20px;"/>');
+           html.push('<p>');
+           html.push('<textarea id="commentTxt',number,'", style="border: 2px solid #4b0000; margin-left:0px; width:400px; overflow:hidden;", rows=7, cols=15, onkeyup="countText(\\'',number,'\\');", onKeyDown="autoRows3(this);" ></textarea>');           
+           html.push('<p id="head',number,'">150</p>');
+           html.push('</div>');
+           html.push('<div id="textDiv_4_',number,'">');
+           html.push('<hr>');
+           html.push('</div>');
+           html.push('</div>');
+           html.push('<hr>');
+           html.push('</div>');   
+        });
+        html.push('</div>');
+       document.getElementById('cm_main_2_2_2').innerHTML = html.join('');
+       room.emit('getComment',{communityName:communityName});	
+     });
+     room.on('getCommented', function(data) {
+        $.each(data.result, function(index, item){
+           var output='';
+           var number = item.number;
+           var id = item.id;
+           var tDiv = '#textDiv_4_'+number;
+           output+='<div id="wrapperDiv2'+id+'", style="margin-left:50px;">';
+           output+='<div id="CmtextDiv2", style="float:left;">';
+           output+='<div id="textDiv_12",style="float:left;">';
+           output+='<b style="margin-left:10px", class="writterFont">'+item.writter+'</b>';
+           output+='<div id="textDiv_1_12", style="float:right; margin-right:20px;">';
+           output+='<input type="text", id="Cmtxt'+id+'", class="eTxt"/>';
+          output+='<input type="button", value="삭제", onclick="deleteComment('+item.id+','+number+')", class="cmBt",  style="margin-left:5px;"/>';
+           output+='</div>';
+           output+='</div>';
+           output+='<div id="textDiv_22", style="margin-left:10px;">';
+           var temp = item.description;
+           var result = temp.replace(/\\n/g, '<br />'); 
+           output+=result;
+           output+='<p class="dateFont", style="margin-left:350px;">'+item.date1+'</p>';
+           output+='</div>';
+           output+='</div>';
+           output+='</div>';
+           $(tDiv).append(output);
+        });
+     });
+     room.on('writeNoteed', function(data) {
+        $('#writter').val('');
+        $('#description').text('');
+        $('#writterPw').val('');
+        var html = ['<div id="note">'];
+        var number = 1;
+        $.each(data.result, function(index, item){
+           var style = item.style;
+           var number = item.id;
+           html.push('<div id="wrapperDiv">');
+           html.push('<hr style="margin-top:20px;">');
+           html.push('<div id="CmimgDiv", style="float:left;">');
+           if( style ===0){
+              html.push('<img src="/images/잡담.png">');
+           }
+           if( style ===1){
+              html.push('<img src="/images/공지.png">');
+           }
+           if( style ===2){
+              html.push('<img src="/images/축하.png">');
+           }
+           if( style ===3){
+              html.push('<img src="/images/파이팅.png">');
+           }
+           if( style ===4){
+              html.push('<img src="/images/투표.png">');
+           }
+           html.push('</div>');
+           html.push('<div id="CmtextDiv", style="float:left;">');
+           html.push('<div id="textDiv_1",style="float:left;">');
+           html.push('<b style="margin-left:10px", class="writterFont">'+item.writter+'</b>');
+           html.push('<div id="textDiv_1_1", style="float:right; margin-right:50px;">');
+           html.push('<input type="text", id="txt',number,'", class="eTxt">');
+           html.push('<input type="button", value="삭제", onclick="deleteNote(\\'',item.id,'\\',\\'',number,'\\')", class="cmBt",  style="margin-left:5px;">');
+           html.push('</div>');
+           html.push('</div>');
+           html.push('<div id="textDiv_2", style="margin-left:10px;">');
+           var temp = item.description;
+           var result = temp.replace(/\\n/g, '<br />'); 
+           html.push(result);
+           html.push('</div>');
+           html.push('<div id="textDiv_3">');
+           html.push('<input type="button", value="댓글달기", onclick="comment(\\'',number,'\\')" style=" float:left; margin-left:50px;", class="cmBt">');
+           html.push('<input type="button", value="댓글 접기", id="commentBt',number,'", onclick="showComment(\\'',number,'\\')", class="cmBt",  style="margin-left:20px;"/>');
+           html.push('<p class="dateFont", style="margin-left:500px;">'+item.date1+'</p>');
+           html.push('</div>');
+           html.push('<div id="textDiv_3_',number,'", style="display:none;">');
+           html.push('<input type="text", value="작성자", onclick="setUserText(\\'',number,'\\')", id="user',number,'", class="eTxt">');
+           html.push('<input type="text", id="userPw',number,'", onclick="setUserPwText(\\'',number,'\\')", style="margin-left:10px;", value="암호", class="eTxt"/>');
+           html.push('<input type="button", value="확인", id="okayBt',number,'", onclick="insertComment(\\'',number,'\\')", class="cmBt",  style="margin-left:20px;"/>');
+           html.push('<p>');
+           html.push('<textarea id="commentTxt',number,'", style="border: 2px solid #4b0000; margin-left:0px; width:400px; overflow:hidden;", rows=7, cols=15, onkeyup="countText(\\'',number,'\\');", onKeyDown="autoRows3(this);" ></textarea>');           
+           html.push('<p id="head',number,'">150</p>');
+           html.push('</div>');
+           html.push('<div id="textDiv_4_',number,'">');
+           html.push('<hr>');
+           html.push('</div>');
+           html.push('</div>');
+           html.push('<hr>');
+           html.push('</div>');  
+        });
+        html.push('</div>');
+       document.getElementById('cm_main_2_2_2').innerHTML = html.join('');
+       room.emit('getComment',{communityName:communityName});	
+     });
+    room.on('commented', function(data) {
+       alert('commented 이벤트 실행');
+
+       var number = data.number; 
+       var user_tag ='#user'+number;
+       var userPw_tag ='#userPw'+number;
+       var commentTxt_tag ='#commentTxt'+number;
+
+       var output='';
+       var number = data.number;
+       var id = data.id;
+       var tDiv = '#textDiv_4_'+number;
+       output+='<div id="wrapperDiv2'+id+'", style="margin-left:50px;">';
+       output+='<div id="CmtextDiv2", style="float:left;">';
+       output+='<div id="textDiv_12",style="float:left;">';
+       output+='<b style="margin-left:10px", class="writterFont">'+data.writter+'</b>';
+       output+='<div id="textDiv_1_12", style="float:right; margin-right:20px;">';
+       output+='<input type="text", id="Cmtxt'+id+'", class="eTxt"/>';
+       output+='<input type="button", value="삭제", onclick="deleteComment('+data.id+','+number+')", class="cmBt",  style="margin-left:5px;"/>';
+       output+='</div>';
+       output+='</div>';
+       output+='<div id="textDiv_22", style="margin-left:10px;">';
+       var temp = data.description;
+       var result = temp.replace(/\\n/g, '<br />'); 
+       output+=result;
+       output+='<p class="dateFont", style="margin-left:350px;">'+data.date1+'</p>';
+       output+='</div>';
+       output+='</div>';
+       output+='</div>';
+       $(tDiv).prepend(output);
+
+       $(commentTxt_tag).val('');
+       $(user_tag).val('');
+       $(userPw_tag).val('');
+
+       var t = '#textDiv_3_'+number;
+       $(t).slideToggle("slow");
+       $(this).toggleClass("active");
+    });
+    $('#description').keyup(function () {
+       var inputLength = $(this).val().length;
+       var remain = 150;
+       var temp;
+       var inputValue = $(this).val();
+
+       if (inputLength == 0) {
+          remain = remain - 0;
+          $('h2').html(remain);
+       }else {
+          for (var i = 0; i < inputLength; i++) {
+             temp = $(this).val().charAt(i);
+             if (escape(temp).length > 4) {
+                remain = remain - 2;
+                if(remain<0){
+                   alert('글자수를 초과하였습니다.');
+                }
+             } else {
+                remain = remain - 1;
+                if(remain<0){
+                   alert('글자수를 초과하였습니다.');
+                }
+             }
+                $('h2').html(remain);
+           }
+       }
+    });
+    $('#description2').keyup(function () {
+       var inputLength = $(this).val().length;
+       var remain = 150;
+       var temp;
+       var inputValue = $(this).val();
+
+       if (inputLength == 0) {
+          remain = remain - 0;
+          $('h1').html(remain);
+       }else {
+          for (var i = 0; i < inputLength; i++) {
+             temp = $(this).val().charAt(i);
+             if (escape(temp).length > 4) {
+                remain = remain - 2;
+                if(remain<0){
+                   alert('글자수를 초과하였습니다.');
+                }
+             } else {
+                remain = remain - 1;
+                if(remain<0){
+                   alert('글자수를 초과하였습니다.');
+                }
+             }
+                $('h1').html(remain);
+           }
+       }
+    });
   });
- script(type='text/javascript')
-  $('#logout').click(function(e) { location.href = '/logout/#{nickname}'; });

@@ -1,7 +1,9 @@
 script(type='text/javascript', src='/javascripts/daum.js')
-#i_main_1
-   span(style='display:none')#searchName=  searchName
-   img(id='LOGO', style='margin-left:30px; margin-top:10px; float:left',src='http://localhost:8001/images/logo.jpg', title='로고다시') 
+#m_box
+ #m_main_1
+   span(style='display:none;')#searchName= searchName 
+   img(id='LOGO', style='float:left',src='/images/logo.png')
+   img(style='margin-left:200px; float:left', src='/images/Text_Webmaster.jpg')
    #top_1
      #top_1_1
        <fb:profile-pic uid="loggedinuser" size="square"></fb:profile-pic>
@@ -9,19 +11,19 @@ script(type='text/javascript', src='/javascripts/daum.js')
      #top_1_2
        <fb:login-button autologoutlink="true"></fb:login-button><p>
        <button class="menuBt2" onclick="dial()" style='width:80px; height:30px;'>글쓰기</button>
-#i_main_2(style='height:10px;')
-#i_main_3
-  #i_mian_2_1(style='margin-left:140px; height:70px; width: 1250px;  margin-left:50px;')
-     img(class='menuBt',src='http://localhost:8001/images/Text_main.jpg', id='info', style='width:150px; height:60px;')
-     img(class='menuBt',src='http://localhost:8001/images/Button_Home_Black.jpg', id='home', value='Home', style='width:150px; height:50px; margin-left:280px;')
-     img(class='menuBt',src='http://localhost:8001/images/Button_Mstreet_Black.jpg', id='mStreet', value='mStreet', style='width:150px; margin-left:10px; height:50px;')
-     img(class='menuBt',src='http://localhost:8001/images/Button_Cstreet_Black.jpg', id='cStreet', value='cStreet', style='width:150px; margin-left:10px; height:50px;')
-     img(class='menuBt',src='http://localhost:8001/images/Button_Sstreet_Black.jpg', id='sStreet', value='sStreet', style='width:150px; margin-left:10px; height:50px;')
-     img(class='menuBt',src='http://localhost:8001/images/Button_Gstreet_Black.jpg', id='gStreet', value='gStreet', style='width:150px; margin-left:10px; height:50px;')
-#s_main_4
-     #s_main_6_1(style='width:250px;')
+ #m_main_2
+ #m_main_3
+  #i_mian_2_1(style='margin-left:40px; height:70px; width: 800px;')
+     img(class='menuBt',src='/images/Text_main.png', id='info', style='width:150px; height:60px;')
+     img(class='menuBt',src='/images/Button_Home_Black.jpg', id='home', value='Home', style='width:80px; height:40px; margin-left:180px;')
+     img(class='menuBt',src='/images/Button_Mstreet_Black.jpg', id='mStreet', value='mStreet', style='width:80px; margin-left:10px; height:40px;')
+     img(class='menuBt',src='/images/Button_Cstreet_Black.jpg', id='cStreet', value='cStreet', style='width:80px; margin-left:10px; height:40px;')
+     img(class='menuBt',src='/images/Button_Sstreet_Black.jpg', id='sStreet', value='sStreet', style='width:80px; margin-left:10px; height:40px;')
+     img(class='menuBt',src='/images/Button_Gstreet_Black.jpg', id='gStreet', value='gStreet', style='width:80px; margin-left:10px; height:40px;')
+ #s_main_4
+     #s_main_6_1(style='width:150px;')
      #s_main_6_2(style='margin-rgith:20px;')
-      img(src='http://localhost:8001/images/Text_SearchResult.jpg', style='margin-top:10px;')
+      img(src='/images/Text_SearchResult.jpg', style='margin-top:10px;')
       hr
       img(src='/images/Text_SearchMenu_Total_Black_.jpg', class='font2', id='searchAllBt') 통합 검색
       img(src='/images/Text_SearchMenu_Web_Black.jpg', class='font2', id='searchWebBt') 웹 검색
@@ -33,26 +35,31 @@ script(type='text/javascript', src='/javascripts/daum.js')
       img(src='/images/Text_SearchMenu_Board_Black.jpg', class='font2', id='searchBoardBt') 게시판 검색
       hr
 
-
-#s_main_5
+ #s_main_5
    #s_main_5_1
       #daumForm                                                        
-        input(type='text', class='txtbox', id='daumSearch', value='안녕', onkeydown="javascript:if(event.keyCode == 13) daumSearch.search();", style='float:left; margin-top:30px; margin-left:200px;')
-        input(type='submit', class='shBt', id='daumSubmit', onclick="javascript:daumSearch.search()", value='검색', style='float:left; width:60px; margin-top:30px; height:30px; margin-left:20px; margin-right:3px;')
-   #s_main_5_2
-      div#daumView
+        input(type='text', class='txtbox', id='daumSearch', onkeydown="javascript:if(event.keyCode == 13) daumSearch.search();", style='float:left; margin-top:20px; margin-left:100px;')
+        input(type='submit', class='shBt', id='daumSubmit', onclick="javascript:daumSearch.search()", value='검색', style='float:left; width:60px; margin-top:20px; height:30px; margin-left:20px; margin-right:3px;')
+   #s_main_5_2(style='margin-left:20px;')
+      div#daumView(style='widht:720px;')
           h3 웹 검색 결과  
              div#daumWeb
+          hr
           h3 블로그 검색 결과  
              div#daumBlog
+          hr
           h3 카페 검색 결과  
              div#daumCafe 
+          hr
           h3 지식 검색 결과  
              div#daumKnowledge
+          hr
           h3 이미지 검색 결과  
              div#daumImage  
+          hr
           h3 비디오 검색 결과  
              div#daumVclip  
+          hr
           h3 게시판 검색 결과 
              div#daumBoard      
       div#daumScript  
@@ -63,8 +70,8 @@ script(type='text/javascript', src='/javascripts/daum.js')
       div#daumWebScript  
       div#daumKnowledgeScript  
       div#daumCafeScript  
-#s_main_6
-   #s_main_6_1
+ #s_main_6
+  
 
 script(type='text/javascript', src='http://code.jquery.com/jquery-1.7.0.min.js')
 script(type='text/javascript') 

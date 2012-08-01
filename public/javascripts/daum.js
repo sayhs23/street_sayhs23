@@ -59,7 +59,7 @@
         var daumSearch = {
             /** 초기화. **/
             init: function () {
-                this.apikey = "DAUM_SEARCH_DEMO_APIKEY";
+                this.apikey = "8e6217f6591a0ed9984e71a58748b57387020d10";
                 this.q = document.getElementById('daumSearch');
 
                 //검색 객체들 초기화.
@@ -220,6 +220,8 @@
                 strstr = str.replace(/&amp;/g, "&");
                 strstr = str.replace(/&lt;/g, "<");
                 strstr = str.replace(/&gt;/g, ">");
+				strstr = str.replace(/&lt;/g, "<b>");
+				strstr = str.replace(/&gt;/g, "</b>");
                 return str;
             }
         };

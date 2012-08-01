@@ -13,7 +13,7 @@ var mysql = require('mysql')
   , TABLE = 'friends_test'
   , client = mysql.createClient({
       user: 'root'
-	, host: "10.0.0.1" 
+	, host: '10.0.0.1'
     , password: 'root'
   });
 

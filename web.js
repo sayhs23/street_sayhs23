@@ -4,7 +4,8 @@
 
 var express = require('express')
   , url = require('url')
-  , request = require('request');
+  , request = require('request')
+  ,httpProxy = require('http-proxy');
 
 var app = module.exports = express.createServer();
 

@@ -7,8 +7,6 @@ var httpProxy = require('http-proxy');
  var apikey = "d4f7c8cf4b043c224a43aee5dbb3528f";
 
 
-client.query('USE ' + DATABASE);
-
 module.exports = function(app) {
   var io = require('socket.io').listen(app);
 

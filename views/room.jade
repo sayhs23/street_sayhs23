@@ -165,29 +165,7 @@ script(type='text/javascript')
       }
       html.push('</div>');
       document.getElementById('attendantsDiv').innerHTML = html.join(''); 
-     
-
-      room.emit('getUserInfo', {nickname:nickname, roomname:roomname});
-      room.on('getUserInfoed', function(data) {
-         var nickname = data.nickName;
-         var level = data.level;
-         var totalscore = data.totalscore;
-         var html = ['<div id ="userDiv">'];
-         html.push('<div id="userInfImgDiv1">');
-         if(level ==='입문') {
-            html.push('<image src="/images/입문.png">');
-         }
-         html.push('<p>img 95*95 필요');
-         html.push('</div>');
-         html.push('<div id="userInfTxtDiv1">');
-         html.push('<p>별명: '+nickname);
-         html.push('<p> 등급: '+level);
-         html.push('<p> 총 점수: '+totalscore);
-         html.push('</div>');
-         html.push('</div>');
-         alert('사용자 정보 완료');
-         document.getElementById('room_right_1').innerHTML = html.join(''); 
-      });
+    
       if(roomPublish==='true'){
           $('#room_top_1').html('<p style="margin-left:20px;"> 공개방 </p>');
       }

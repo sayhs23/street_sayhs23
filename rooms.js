@@ -42,7 +42,7 @@ module.exports = function(app) {
     .of('/room')
     .on('connection', function(socket) { 
       var joinedRoom = null;
-      console.log('클라이언트 접속함');
+    //  console.log('클라이언트 접속함');
       
 	  socket.on('join', function(data) {
         if (Chat.hasRoom(data.roomName)) {
@@ -64,24 +64,24 @@ module.exports = function(app) {
       });
 	  //////////////////// 캔버스 모두 지우기////////////////////////
 	  socket.on('canvasClear', function(data) {
-		  console.log('canvasClear 이벤트 실행');
+		  //console.log('canvasClear 이벤트 실행');
 		  socket.emit('canvasCleared');
 		  socket.broadcast.to(joinedRoom).emit('canvasCleared');
 	  });
      ////////////////// 캔버스 그리기 이벤트 실행
 	  socket.on('draw', function(data) {
-		  console.log('draw 이벤트 실행'+data.width + data.color + data.x1 + data.y1 + data.x2 + data.y2);
+		//  console.log('draw 이벤트 실행'+data.width + data.color + data.x1 + data.y1 + data.x2 + data.y2);
           socket.emit('line', { width: data.width, color:data.color, x1:data.x1, y1:data.y1, x2:data.x2, y2: data.y2} );
           socket.broadcast.to(joinedRoom).emit('line', { width: data.width, color:data.color, x1:data.x1, y1:data.y1, x2:data.x2, y2: data.y2 });
 	  });
 
      //////////////////////////////////////// 대기실에 부분에 입장 했을 때 의 서버 코드//////////////////////////////////////////////
 	  socket.on('waitRoomjoin', function(data) {   // 유저가 접속을 하면 방이름을 챗.js의 방 배열에 추가한다.
-		console.log('room.js 에서 waitRoomjoin 이벤트');
+		//console.log('room.js 에서 waitRoomjoin 이벤트');
  // socket.io의 join 함수를 이용하여 추가를 시킨다.
         
           var name = data.myName;
-		  console.log(Chat.hasRoom(data.roomName));
+		//  console.log(Chat.hasRoom(data.roomName));
 		  if(!Chat.hasRoom(data.roomName)){
              Chat.addRoom(data.roomName,'','','','','');
 		  }
@@ -92,8 +92,8 @@ module.exports = function(app) {
 
 			 Chat.joinRoom(joinedRoom, data.myName);
 		     var attendantss = Chat.getAttendantsList(joinedRoom);
-		     console.log(attendantss);
-			 console.log(Chat.getRoomList());
+		  //   console.log(attendantss);
+			// console.log(Chat.getRoomList());
              socket.emit('waitRoomjoined', { isSuccess:true, nickname:name, attendants:Chat.getAttendantsList(joinedRoom), roomList:Chat.getRoomList()});
 			 socket.broadcast.to(joinedRoom).emit('waitRoomjoined', {
              isSuccess:true, nickname:name, attendants:Chat.getAttendantsList(joinedRoom), roomList:Chat.getRoomList()});
@@ -104,12 +104,12 @@ module.exports = function(app) {
       });
 /////////////////////////////////방을 만들었을 경우///////////////////////////////////////////////////////////////////////////
      socket.on('getRoomList', function() {
-		console.log('getRoomList 이벤트 발생');
-		console.log(Chat.getRoomList());
+	//	console.log('getRoomList 이벤트 발생');
+	//	console.log(Chat.getRoomList());
         socket.emit('getRoomListed', { roomList: Chat.getRoomList() });
 	 });
      socket.on('createRoom', function(data) {
-		 console.log('createRoom 이벤트 발생!');
+	//	 console.log('createRoom 이벤트 발생!');
 		 var myName = data.myName;
 		 var roomname = data.roomname;
 		 console.log('방이름은 ' + roomname);
@@ -117,17 +117,17 @@ module.exports = function(app) {
 		 var userMax = data.userMax;
 		 var roomPublish = data.roomPublish;
 		 var roompw = data.roompw;
-		 console.log(textMax, userMax);
+	//	 console.log(textMax, userMax);
 
-		 console.log(' 방장이름은 ' + myName);
-		 console.log(roomPublish + roompw);
+	//	 console.log(' 방장이름은 ' + myName);
+	//	 console.log(roomPublish + roompw);
 		 if (!Chat.hasRoom(roomname)) {
 			 if(roomPublish===true) { //공개 모드일때
-				 console.log('공개 모드일때');
+			//	 console.log('공개 모드일때');
 				 Chat.addRoom(roomname, textMax, userMax, myName, roomPublish,'' );  // 방만들면 방이름(방명), 최대 게임 판수, 최대 제한 유저수, 방장이나온다.
 			 }
 			 else if(roomPublish ===false ) { // 비공개 모드
-				   console.log('비공개 모드일때');
+			//	   console.log('비공개 모드일때');
 				  Chat.addRoom(roomname, textMax, userMax, myName, roomPublish, roompw );  
 			 }
 			 socket.emit('createRoomed', {roomname:roomname}); 
@@ -141,7 +141,7 @@ module.exports = function(app) {
       socket.on('addBags', function(data) {
 		    client.query('CREATE TABLE '+data.name + '( id MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY, title varchar(300), link varchar(300), image varchar(150), lprice int(20), hprice int(20), mallName varchar(30), likes int(10));', function(err) {
 				if(err) {
-					console.log('백 테이블 생성 실패');
+				//	console.log('백 테이블 생성 실패');
 					socket.emit('addBagsed-fail', {result:data.name});
 			    }else{
 					console.log('테이블 생성 되고, 받은 값은' + data.name + data.pw);
@@ -149,7 +149,7 @@ module.exports = function(app) {
 					client.query('INSERT INTO bag SET name =?, pws=?', [data.name, data.pw], function(err) {
 
 						if(err){
-							console.log('인서트 에러');
+					//		console.log('인서트 에러');
 						}else{
 							socket.emit('addBagsed', {result: data.name});
 						}
@@ -170,12 +170,12 @@ module.exports = function(app) {
 					socket.emit('addElbemsed-fail', {result: data.name});
              }else{
 				//	console.log('테이블 생성');
-				    console.log('테이블 생성 되고 , 받은 값은' +data.name + data.pw);
+				//    console.log('테이블 생성 되고 , 받은 값은' +data.name + data.pw);
 			
 					client.query('INSERT INTO elbems SET name=?, likes=0, pws=?',[data.name, data.pw], function(err) {
 					
 					if (err) {
-				 	console.log('인서트가 안된서 addElbems 이벤트임. 에러 발생');
+				// 	console.log('인서트가 안된서 addElbems 이벤트임. 에러 발생');
 					}else{
 					//	console.log('인서트 성공');
 						socket.emit('addElbemsed', {result: data.name});
@@ -191,23 +191,23 @@ module.exports = function(app) {
 		//  console.log('addMusicEmit시 서버 측에서 받은 값' + data.name + data.title + data.thumbnailurl + data.playerUrl);
 		  client.query('SELECT pws FROM elbems where name=?',[data.name], function(err, results, fields){
 				  if(err){
-                      console.log('에러가 발생했어요 ');
+                  //    console.log('에러가 발생했어요 ');
 				  } else{
-					    console.log('여기서 알게된 pws는 '+results);
-						console.log('비밀번호는'+results[0].pws);
+					//    console.log('여기서 알게된 pws는 '+results);
+					//	console.log('비밀번호는'+results[0].pws);
 
 						var serverpw= results[0].pws;
 						if(serverpw==data.pw){
 					    client.query('INSERT INTO '+data.name+' SET title=?, thumbnailurl=?, url=?, likes=0',[ data.title, data.thumbnailurl, data.playerUrl], function(err){
 								  if(err){
-										  console.log('인서트 자체를 실패함 100라인');
+									//	  console.log('인서트 자체를 실패함 100라인');
 								 }else{
-									     console.log('인서트를 성공했어요');
+									 //    console.log('인서트를 성공했어요');
 										 socket.emit('addMusicEmited');
 								 }
 						 });
 						}else{
-							    console.log('비밀번호가 달라요!');
+							  //  console.log('비밀번호가 달라요!');
 								socket.emit('addMusicEmited-fail');
 						}
 					    
@@ -223,9 +223,9 @@ module.exports = function(app) {
 								  var title = data.title;
 								  var image = data.image;
 								  if(err){
-										  console.log('인서트 자체를 실패함 148라인');
+									//	  console.log('인서트 자체를 실패함 148라인');
 								 }else{
-									     console.log('인서트를 성공했어요');
+									//     console.log('인서트를 성공했어요');
 										 socket.emit('addItemed',{title:title, image:image});
 								 }
 				});
@@ -235,20 +235,20 @@ module.exports = function(app) {
 	  socket.on('checkBag', function(data) {
 		  client.query('SELECT pws FROM bag where name=?',[data.name], function(err, results, fields){
 				  if(err){
-                      console.log('에러가 발생했어요 ');
+                   //   console.log('에러가 발생했어요 ');
 				  } else{
-					    console.log('여기서 알게된 pws는 '+results);
-						console.log('비밀번호는'+results[0].pws);
+					//    console.log('여기서 알게된 pws는 '+results);
+					//	console.log('비밀번호는'+results[0].pws);
 
 						var serverpw= results[0].pws;
-						console.log('////////////////////////////////'+data.pw);
+					//	console.log('////////////////////////////////'+data.pw);
 						if(serverpw==data.pw){
 							    var name = data.name;
-							    console.log('인서트를 성공했어요');
+							//    console.log('인서트를 성공했어요');
 								socket.emit('checkBaged',{name:name});
 			
 						}else{
-							    console.log('비밀번호가 달라요!');
+							//    console.log('비밀번호가 달라요!');
 								socket.emit('checkBag-fail');
 						}
 					    
@@ -271,7 +271,7 @@ module.exports = function(app) {
 
 					//var data = JSON.stringify(results);
 
-					console.log(results);
+				//	console.log(results);
 					socket.emit('getBaglisted', {result: results});
 			 }
           });
@@ -281,9 +281,9 @@ module.exports = function(app) {
 		        var communityName = data.communityName;
 				client.query('SELECT * FROM '+communityName+' order by id desc;', function(err, results, fields){
 						if(err){
-							console.log('샐랙트 에러');
+						//	console.log('샐랙트 에러');
 						}else{
-						   console.log(results);
+						//   console.log(results);
 						   socket.emit('getNoteed', {result: results});
 						}
 				});
@@ -294,14 +294,14 @@ module.exports = function(app) {
 		  var communityName = data.communityName;
 		  client.query('INSERT INTO '+communityName+' SET writter=?, description=?, date1=?, style=?, pws=?',[ data.writter, data.description, data.nowTime, data.style, data.writterPw], function(err){
 								  if(err){
-										  console.log('인서트 자체를 실패함 148라인');
+									//	  console.log('인서트 자체를 실패함 148라인');
 								 }else{
-									     console.log('인서트를 성공했어요');
+									 //    console.log('인서트를 성공했어요');
 										 client.query('SELECT * FROM '+communityName+' order by id desc;', function(err, results, fields){
 											 if(err){
-												 console.log('샐랙트 에러');
+											//	 console.log('샐랙트 에러');
 										     }else{
-												 console.log(results);
+											//	 console.log(results);
 												 socket.emit('writeNoteed', {result: results});
 											}
 										});
@@ -316,18 +316,18 @@ module.exports = function(app) {
 		  if(selectValue ==5) {
 				client.query('SELECT * FROM '+communityName+' order by id desc;', function(err, results, fields){
 						if(err){
-							console.log('소트 2번째에서 에러');
+						//	console.log('소트 2번째에서 에러');
 						}else{
-						   console.log(results);
+						//   console.log(results);
 						   socket.emit('getNoteed', {result: results});
 						}
 				});
 		  }else{
 			    client.query('SELECT * FROM '+communityName+' WHERE style=? order by id desc;', [selectValue], function(err, results, fields){
 						if(err){
-							console.log('소트 2번째에서 에러');
+						//	console.log('소트 2번째에서 에러');
 						}else{
-						   console.log(results);
+					//	   console.log(results);
 						   socket.emit('getNoteed', {result: results});
 						}
 				});
@@ -336,30 +336,30 @@ module.exports = function(app) {
 	  });
 ////////////////// 글 삭제하기 오기 ////////////////////////////////////////////////////////////////////////
 	  socket.on('deleteNote', function(data) {
-		  console.log(data.id+data.pws+data.communityName);
+		//  console.log(data.id+data.pws+data.communityName);
 		  var communityName = data.communityName;
 		  var id = data.id;
 		  var pws = data.pws;
 		  client.query('SELECT pws FROM '+data.communityName+' WHERE id='+data.id, function(err, results, fields){				
 								  if(err){
-										  console.log('에러발생함.');
+									//	  console.log('에러발생함.');
 								 }else{
 									     var serverpws = results[0].pws; 
-										 console.log('내가 지우고 하는 게시글의 비밀번호는'+serverpws);
-										 console.log('클리언트가 입력한 값은'+pws);
+									//	 console.log('내가 지우고 하는 게시글의 비밀번호는'+serverpws);
+									//	 console.log('클리언트가 입력한 값은'+pws);
 
 										 if(serverpws==pws){
 											 client.query('DELETE FROM '+communityName+' WHERE ID='+id, function(err){
 												 if(err){
-													 console.log('샐랙트 에러');
+											//		 console.log('샐랙트 에러');
 											     }else{
-													 console.log(results);
-													 console.log('성공함');
+											//		 console.log(results);
+											//		 console.log('성공함');
 													 socket.emit('deleteNoted');
 												}
 											});
 									     }else{
-                                             console.log('비번이다르다');
+                                      //       console.log('비번이다르다');
 											 socket.emit('deleteNoted-fail');
 										 }
 								 }
@@ -367,7 +367,7 @@ module.exports = function(app) {
 	  });
 ///////////////////////////댓글 삭제하기//////////////////////////////////////////////////////////////////////////////////
 	  socket.on('deleteComment', function(data) {
-		  console.log('댓글 삭제 이벤트'+data.id+data.pws+data.communityName);
+		//  console.log('댓글 삭제 이벤트'+data.id+data.pws+data.communityName);
 		  var communityName = data.communityName;
 		  var id = data.id;
 		  var pws = data.pws;
@@ -377,23 +377,23 @@ module.exports = function(app) {
 
 		  client.query('SELECT pws FROM comment WHERE id='+data.id, function(err, results, fields){				
 								  if(err){
-										  console.log('에러발생함.');
+									//	  console.log('에러발생함.');
 								 }else{
 									     var serverpws = results[0].pws; 
-										 console.log('내가 지우고 하는 게시글의 비밀번호는'+serverpws);
-										 console.log('클리언트가 입력한 값은'+pws);
+									//	 console.log('내가 지우고 하는 게시글의 비밀번호는'+serverpws);
+									//	 console.log('클리언트가 입력한 값은'+pws);
 
 										 if(serverpws==pws){
 											 client.query('DELETE FROM comment WHERE ID='+id, function(err){
 												 if(err){
-													 console.log('샐랙트 에러');
+												//	 console.log('샐랙트 에러');
 											     }else{
-													 console.log('성공함');
+												//	 console.log('성공함');
 													 socket.emit('deleteCommented',{ number:number, id:id});
 												}
 											});
 									     }else{
-                                             console.log('비번이다르다');
+                                           //  console.log('비번이다르다');
 											 socket.emit('deleteCommented-fail');
 										 }
 								 }
@@ -403,18 +403,18 @@ module.exports = function(app) {
 /////////////////   cStreet 에서 커뮤니티 추가하는 부분 ////////////////////////////////////////////////////////
 //client.query('CREATE TABLE ' + data.name + ' (title varchar(300), thumbnailurl varchar(50), url varchar(100), likes int(5));', function(err) {
       socket.on('createCm', function(data) {
-		    console.log(data.name + data.pw);
+		  //  console.log(data.name + data.pw);
 		    client.query('CREATE TABLE '+data.name + '( id MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY, writter varchar(300), description varchar(1000), date1 varchar(20),  style int(10), pws varchar(30));', function(err) {
 				if(err) {
-					console.log('커뮤니티 테이블 생성 실패');
+					//console.log('커뮤니티 테이블 생성 실패');
 					socket.emit('createCm-fail', {result:data.name});
 			    }else{
-					console.log('테이블 생성 되고, 받은 값은' + data.name + data.pw);
+				//	console.log('테이블 생성 되고, 받은 값은' + data.name + data.pw);
 
 					client.query('INSERT INTO community SET name =?, pws=?', [data.name, data.pw], function(err) {
 
 						if(err){
-							console.log('인서트 에러');
+						//	console.log('인서트 에러');
 						}else{
 							socket.emit('createCmed', {result: data.name});
 						}
@@ -426,7 +426,7 @@ module.exports = function(app) {
 //room.emit('comment', {communityName:communityName, writter:user, pws:userPw, description:commentTxt, number:number, date1:nowTime});
 
 		socket.on('comment', function(data){
-			console.log(data.communityName+data.writter+data.pws+data.description+data.number+data.date1);
+		//	console.log(data.communityName+data.writter+data.pws+data.description+data.number+data.date1);
 			var communityName = data.communityName;
 			var writter = data.writter;
 			var description = data.description;
@@ -435,11 +435,11 @@ module.exports = function(app) {
 
 			client.query('INSERT INTO comment SET community =?, writter=?, pws=?, description=?, number=?, date1=?', [data.communityName,data.writter,data.pws,data.description,data.number,data.date1], function(err) {
 						if(err){
-							console.log('comment 테이블에 댓글 인서트 오류');
+						//	console.log('comment 테이블에 댓글 인서트 오류');
 						}else{
 							client.query('SELECT id FROM comment WHERE community=? and description=? and date1=?', [data.communityName, data.description, data.date1], function(err, results, fields){
 								if(err){
-									console.log('엘러 발생');
+								//	console.log('엘러 발생');
 								}else{
 									var id = results[0].id;
 									socket.emit('commented', { id:id, communityName: communityName, writter:writter, description:description, number:number, date1:date1});
@@ -455,7 +455,7 @@ module.exports = function(app) {
 
 		   client.query('SELECT pws FROM members WHERE nickname=?', [nickName], function(err, results, fields){
 						if(err){
-							console.log('로그인 오류.');
+						//	console.log('로그인 오류.');
 						}else{
 							try{
 								var serverpws = results[0].pws;
@@ -466,7 +466,7 @@ module.exports = function(app) {
 							if(serverpws == pws) {
 								client.query('SELECT * FROM members WHERE nickname=?', [nickName], function(err, results, fields){
 									if(err){
-										console.log('재 결과 탐색시 에러. 발생');
+									//	console.log('재 결과 탐색시 에러. 발생');
 									}else{
 										var nickName = results[0].nickname;
 										var level = results[0].level;
@@ -482,14 +482,14 @@ module.exports = function(app) {
 					});
 	   });
 	   socket.on('getUserInfo', function(data) {
-		   console.log('getUserInfo에 진입함');
+		//   console.log('getUserInfo에 진입함');
 		   var nickname = data.nickname;
 		   console.log(nickname);
 		   var attendants = Chat.getAttendantsList(data.roomname);
 
 		   client.query('SELECT * FROM members WHERE nickname=?', [nickname], function(err, results, fields){
 							if(err){
-								console.log('재 결과 탐색시 에러. 발생');
+							//	console.log('재 결과 탐색시 에러. 발생');
 							}else{
 								var nickName = results[0].nickname;
 								var level = results[0].level;
@@ -505,23 +505,23 @@ module.exports = function(app) {
 ///////////////////////회원 가입//////////////////////////////////////gStreet///////////////////////////////////
 		socket.on('memberJoin', function(data){
 			    var level = '입문';
-				console.log('회원 가입 이벤트에 들어옴//// 회원 가입 렌더링');
+			//	console.log('회원 가입 이벤트에 들어옴//// 회원 가입 렌더링');
 				client.query('INSERT INTO members SET nickname =?, pws=?, level=?, totalscore=0', [data.nickName,data.pws,level], function(err) {
 						if(err){
-							console.log('회원가입 오류 - 이미 있는 아이디 nickname -> primary key!');
+					//		console.log('회원가입 오류 - 이미 있는 아이디 nickname -> primary key!');
 							socket.emit('memberJoined-fail');
 						}else{
-							console.log('회원 가입 성공');
+						//	console.log('회원 가입 성공');
 							client.query('SELECT * FROM members where nickname=?', [data.nickName], function(err, results, fields) {
 								if(err) {
-									console.log('갯 커멘트 쿼리 실패');
+								//	console.log('갯 커멘트 쿼리 실패');
 								}else{
 									var nickName = results[0].nickname;
 									var level = results[0].level;
 									var totalscore = results[0].totalscore;
 
-									console.log(results);
-									console.log(nickName + level + totalscore);
+								//	console.log(results);
+								//	console.log(nickName + level + totalscore);
 									socket.emit('memberJoined', {nickName:nickName, level:level, totalscore:totalscore });
 								}
 							});
@@ -531,12 +531,12 @@ module.exports = function(app) {
 ////////////////////////////////////////comment 즉, 댓글을 가져오는 부분이다//////////////////////////////////////////////////////////////////////////////////////
 
 		socket.on('getComment', function(data){
-			console.log('갯 커맨트 이벤트 발생');
+		//	console.log('갯 커맨트 이벤트 발생');
 			client.query('SELECT * FROM comment where community=? order by id desc;', [data.communityName], function(err, results, fields) {
 				if(err) {
-					console.log('갯 커멘트 쿼리 실패');
+				//	console.log('갯 커멘트 쿼리 실패');
 				}else{
-					console.log(results);
+				//	console.log(results);
 					socket.emit('getCommented', {result: results});
 				}
 			});
@@ -546,9 +546,9 @@ module.exports = function(app) {
 	//	  console.log('getLikes 이벤트 실행');
 		  client.query('SELECT * FROM community WHERE name=?', [data.name], function(err, results, fields) {
 			  if( err) {
-				   console.log('searchElbems! not found');
+				//   console.log('searchElbems! not found');
 			  }else{
-				  console.log(results);
+				//  console.log(results);
 				  socket.emit('searchComsClicked', { result: results});
 			  }
 		  });
@@ -558,9 +558,9 @@ module.exports = function(app) {
 	//	  console.log('getLikes 이벤트 실행');
 		  client.query('SELECT * FROM community WHERE name LIKE "%'+data.name+'%"', function(err, results, fields) {
 			  if( err) {
-				   console.log('searchElbems! not found');
+			//	   console.log('searchElbems! not found');
 			  }else{
-				  console.log(results);
+				//  console.log(results);
 				  socket.emit('searchComsed', { result: results});
 			  }
 		  });
@@ -570,14 +570,14 @@ module.exports = function(app) {
 	//	  console.log('getLikes 이벤트 실행');
 		  client.query('SELECT pws FROM community WHERE name=?',[data.name], function(err, results, fields) {
 			  if( err) {
-				   console.log('getPw! not found');
+				//   console.log('getPw! not found');
 			  }else{
 				  var serverpws = results[0].pws;
 				  if(serverpws === data.pw){
-					  console.log('커뮤니티 인증 성공');
+				//	  console.log('커뮤니티 인증 성공');
 				      socket.emit('getPwed');
 				  }else{
-					  console.log('커뮤니티 인증 실패! . 비밀 번호가 다르다');
+				//	  console.log('커뮤니티 인증 실패! . 비밀 번호가 다르다');
 					  socket.emit('getPwed-fail');
 				  }
 			  }
@@ -593,21 +593,21 @@ module.exports = function(app) {
 
 					//var data = JSON.stringify(results);
 
-					console.log(results);
+				//	console.log(results);
 					socket.emit('getElbemlisted', {result: results});
 			 }
           });
 	  });
 /////////////////   mStreet  앨범 목록 불러오는 부분 ////////////////////////////////////////////////////////////////
 	  socket.on('getElbemList2', function(data) {
-		    console.log('getElbemList2 이벤트 실행');
+		//    console.log('getElbemList2 이벤트 실행');
 			client.query('SELECT * FROM elbems ORDER BY likes DESC;', function(err, results, fields) {
 			 if (err) {
 				//    console.log('앨범 찾기 실패');
              }else{
 					//var data = JSON.stringify(results);
 
-					console.log(results);
+				//	console.log(results);
 					socket.emit('getElbemList2', {result: results});
 			 }
           });
@@ -617,9 +617,9 @@ module.exports = function(app) {
 	//	  console.log('getLikes 이벤트 실행');
 		  client.query('SELECT likes FROM elbems WHERE name=?',[data.name], function(err, results, fields) {
 			  if( err) {
-				   console.log('likes 찾기 실패');
+			//	   console.log('likes 찾기 실패');
 			  }else{
-				  console.log(results[0].likes);
+			//	  console.log(results[0].likes);
 				  var currentLikes = results[0].likes;
 				  socket.emit('getLikesed', { result: currentLikes });
 			  }
@@ -630,9 +630,9 @@ module.exports = function(app) {
 	//	  console.log('getLikes 이벤트 실행');
 		  client.query('SELECT count(*) AS num FROM '+data.name, function(err, results, fields) {
 			  if( err) {
-				   console.log('count not found');
+			//	   console.log('count not found');
 			  }else{
-				  console.log('값은'+results[0].num);
+			//	  console.log('값은'+results[0].num);
 				  socket.emit('getNumbersed', { result: results[0].num  });
 			  }
 		  });
@@ -642,22 +642,22 @@ module.exports = function(app) {
 	//	  console.log('getLikes 이벤트 실행');
 		  client.query('SELECT * FROM elbems WHERE name LIKE "%'+data.name+'%"', function(err, results, fields) {
 			  if( err) {
-				   console.log('searchElbems! not found');
+				//   console.log('searchElbems! not found');
 			  }else{
-				  console.log(results);
+				//  console.log(results);
 				  socket.emit('searchElbemsed', { result: results});
 			  }
 		  });
 	  });
 /////////////////   bag  백 추천수 투표 결과 목록 불러오는 부분 ////////////////////////////////////////////////////////////////
 	  socket.on('getLikeList', function(data) {
-		   console.log('getLikeList 이벤트 실행');
+		 //  console.log('getLikeList 이벤트 실행');
 			client.query('SELECT * FROM '+data.bagName+' ORDER BY likes DESC;', function(err, results, fields) {
 			 if (err) {
-				 console.log('getLikeList 찾기 실패');
+				// console.log('getLikeList 찾기 실패');
              }else{
 					//var data = JSON.stringify(results);
-					console.log(results);
+				//	console.log(results);
 					socket.emit('getLikeListed', {result: results});
 			 }
           });
@@ -667,9 +667,9 @@ module.exports = function(app) {
 	//	  console.log('getLikes 이벤트 실행');
 		  client.query('SELECT * FROM bag WHERE name LIKE "%'+data.name+'%"', function(err, results, fields) {
 			  if( err) {
-				   console.log('searchBags! not found');
+				//   console.log('searchBags! not found');
 			  }else{
-				  console.log(results);
+			//	  console.log(results);
 				  socket.emit('searchBagsed', { result: results});
 			  }
 		  });
@@ -679,9 +679,9 @@ module.exports = function(app) {
 	//	  console.log('getLikes 이벤트 실행');
 		  client.query('SELECT * FROM elbems WHERE name LIKE "%'+data.name+'%"', function(err, results, fields) {
 			  if( err) {
-				   console.log('searchElbems! not found');
+				//   console.log('searchElbems! not found');
 			  }else{
-				  console.log(results);
+			//	  console.log(results);
 				  socket.emit('searchElbemsed2', { result: results});
 			  }
 		  });
@@ -691,9 +691,9 @@ module.exports = function(app) {
 		//  console.log('getMusics 이벤트 실행');
 		  client.query('SELECT * FROM '+data.name,function(err, results, fields) {
 			  if( err) {
-				   console.log('Music 찾기 실패');
+				//   console.log('Music 찾기 실패');
 			  }else{
-				  console.log(results);
+			//	  console.log(results);
 				  socket.emit('getMusicsed', { result: results });
 			  }
 		  });
@@ -760,21 +760,21 @@ socket.on('likeItem', function(data) {
 	      console.log('likeItem실행');
 		  client.query('SELECT likes FROM '+data.bagName+' WHERE title=?',[data.ItemName], function(err, results, fields) {
 					if (err) {
-						console.log('에러 발생1');
+					//	console.log('에러 발생1');
 					}else{
-						console.log('현재 likes 값은'+results[0].likes);
+					//	console.log('현재 likes 값은'+results[0].likes);
 						var currentLikes = results[0].likes;
 						currentLikes++;
 						//console.log('증가된 likes 값은'+currentLikes);
 
 						client.query('UPDATE '+data.bagName+' SET likes=? WHERE title=?',[currentLikes, data.ItemName], function(err, results, fields) {
 							if (err) {
-								console.log('에러 발생2');
+							//	console.log('에러 발생2');
 							}else{
 								//console.log('like 값 바꾸기 성공');
 								client.query('SELECT likes FROM '+data.bagName+' WHERE title=?',[data.ItemName], function(err, results, fields) {
 								 if (err) {
-									 console.log('에러 발생2');
+								//	 console.log('에러 발생2');
 							    }else{
 										socket.emit('likeItemed', {result: results[0].likes});
 								 }
@@ -790,10 +790,10 @@ socket.on('likeItem', function(data) {
 		//  console.log('getMusics 이벤트 실행');
 		  client.query('SELECT * FROM '+data.name,function(err, results, fields) {
 			  if( err) {
-				   console.log('Item 찾기 실패');
+				//   console.log('Item 찾기 실패');
 			  }else{
-				  console.log('----------갯 아이템!----------');
-				  console.log(results);
+				//  console.log('----------갯 아이템!----------');
+				//  console.log(results);
 				  socket.emit('getItemsed', { result: results });
 			  }
 		  });

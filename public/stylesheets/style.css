@@ -98,7 +98,88 @@ body {
     border-radius:4px;/* 8픽셀정도의 모서리 둥글기효과 */
     background-color: #ff5c00;/* 흰색 배경을 투명도 10%로 깔기 */
 }
-
+#roomwapprDiv{
+    background-color: #eaeaea;
+	margin-left:200px;
+    width: 1000px;
+	height: 900px;
+}
+#room_box{
+    background-color: #f00f00;
+    width: 1000px;
+	height: 100px;
+}
+#room_top_1{
+    background-color: #eaeaea;
+    width: 1000px;
+	height: 50px;
+	font: 20px bold;
+}
+#room_top_2{
+    background-color: #ff0f00;
+    width: 1000px;
+	height: 50px;
+	font: 20px bold;
+}
+#room_box2{
+    background-color: #000fff;
+    width: 1000px;
+	height: 800px;
+}
+#room_main{
+    background-color: #d2ffd2;
+    width: 800px;
+	height: 800px;
+	float:left;
+}
+#room_main_1{ /*제시어 영역 */
+    background-color: #14A0A0;
+    width: 800px;
+	height: 50px;
+	float:left;
+}
+#room_main_2{  /*CANVAS 영역 */
+    background-color: #ffffff;
+    width: 800px;
+	height: 500px;
+	float:left;
+}
+#room_main_3{  /*채팅창 영역 */
+    background-color: #FFF96;
+    width: 800px;
+	height: 150px;
+	float:left;
+}
+#room_main_4{  /*채팅 쓰는 영역 */
+    background-color: #F56E6E;
+    width: 800px;
+	height: 50px;
+	float:left;
+}
+#room_right{
+    background-color: #ff5ad9;
+    width: 200px;
+	height: 800px;
+	float:left;
+}
+#room_right_3{
+    background-color: #FFF978;
+    width: 200px;
+	height: 50px;
+	float:left;
+}
+#room_right_1{
+    background-color: #FFF978;
+    width: 200px;
+	height: 150px;
+	float:left;
+}
+#room_right_2{
+    background-color: #B4B4B4;
+    width: 200px;
+	height: 600px;
+	float:left;
+}
 #wrapperDiv{
     width: 700px;
     border:5x solid #000000; 
@@ -750,6 +831,172 @@ body {
 }
 #bag_result{
           text-align: center;
+}
+/* gStreet css 레이아웃 코드 ////////////////*/
+
+#g_box_wrapper{
+		   width: 1100px;
+		   height: 1300px;
+}
+#g_box{
+           margin-left:280px;
+		   margin-top:10px;
+	       background-color: #ffffff;
+		   float: left;
+		   width: 1100px;
+		   height: 180px;
+		   overflow: hidden;
+}
+#g_box2_1 {
+	       background-color: #0fffff;
+		   width: 630px;
+		   height: 800px;
+		   float: left;
+		   overflow: hidden;
+}
+#g_box2_2 {
+	       background-color: #fff00f;
+		   float:left;
+		   width: 250px;
+		   height: 800px;
+		   overflow: hidden;
+}
+#roomListDiv{
+		   background-color: #000fff;
+		   width: 630px;
+		   height: 400px;
+		   overflow: auto;
+}
+#sub_roomList{
+		   background-color: #ffffff;
+		   width: 620px;
+		   border: 1px solid #4b0000;
+}
+#sub_roomList_1{
+		   background-color: #ffffff;
+		   width: 400px;
+		   height: 75px;
+		   border: 1px solid #4b0000;
+		   float:left;
+}
+#sub_roomList_2{
+		   background-color: #fff000;;
+		   width: 200px;
+		   height: 75px;
+		   border: 1px solid #4b0000;
+		   float:left;
+}
+#sub_roomList_3{
+		   background-color: #fff000;;
+		   width: 100px;
+		   height: 75px;
+		   border: 1px solid #4b0000;
+		   float:left;
+}
+#roomListDiv{
+
+}
+#chatDiv{
+           background-color: #aeaeae;
+		   width: 630px;
+		   height: 400px;
+}
+#chatWindow{
+           background-color: #ffffff;
+		   width: 600px;
+		   margin-left:15px;
+		   margin-top:10px;
+		   height:290px;
+		   overflow: auto;
+}
+#messageDiv{
+           background-color: #ffff00;
+		   width:600px;
+		   margin-left:15px;
+		   margin-top:10px;
+		   height: 100px;
+}
+#dialog{
+		   width:630px;
+		   height: 210px;
+		   background-color: #ffaaee;
+}
+#dialog_1{
+		   width:300px;
+		   height: 200px;
+		   margin-left:15px;
+		   background-color: #f0f0f0;
+		   float:left;
+}
+#dialog_2{
+		   width:300px;
+		   height: 200px;
+		   background-color: #fff000;
+		   float:left;
+}
+#userInfImgDiv{
+		   background-color: #aaaaaa;
+		   width: 100px;
+		   height: 100px;
+		   font:10px bold;
+		   color: #4b0000;
+		   float:left;
+}
+#userInfTxtDiv{
+		   background-color: #aaaaaa;
+		   width: 150px;
+		   height: 100px;
+		   float:left;
+}
+#userInfImgDiv1{
+		   background-color: #aaaaaa;
+		   width: 100px;
+		   height: 100px;
+		   font:10px bold;
+		   color: #4b0000;
+		   float:left;
+}
+#userInfTxtDiv1{
+		   background-color: #aaaaaa;
+		   width: 100px;
+		   height: 100px;
+		   float:left;
+}
+#userDiv{
+           background-color: #aaaaaa;
+}
+#attendants{
+		   background-color: #0aa00a;
+		   width: 220px;
+		   height: 500px;
+		   margin-left:15px;
+		   margin-top:10px;
+		   overflow: auto;
+}
+#g_box2 {
+		   margin-left:280px;
+	       background-color: #00efff;
+		   float: left;
+		   width: 880px;
+		   height: 800px;
+		   overflow: hidden;
+}
+#game_main_1{
+           background-color: #000fff;
+		   width: 800px;;
+		   height: 500px;
+		   float: left;
+}
+#game_main_2{
+		   background-color: #2b0003;
+		   width: 300px;
+		   height: 500px;
+		   float: left;
+}
+#g_main_3{
+		   background-color: #2b0003;
+		   width: 880px;;
+		   height: 80px;
 }
 #sh_box_wrapper{
 		   width: 1100px;

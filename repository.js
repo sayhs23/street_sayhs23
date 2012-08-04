@@ -2,116 +2,61 @@ Chat = require('./chat');
 
 var mysql = require('mysql')
   , DATABASE = 'sayhs23'
-  , TABLE = 'friends_test'
+  , TABLE = 'members'
   , client = mysql.createClient({
       user: 'sayhs23'
-	, host: '10.0.0.1'
+    , host: '10.0.0.1'
     , password: '9034gustn'
   });
 
 client.query('USE ' + DATABASE);
 
 var mysqlUtil = module.exports = {
-    insertUser: function(user, res) {
-      client.query(
-          'INSERT INTO ' + TABLE + ' SET nickname = ?, name = ?, password = ?, email = ?, level = ?, totalscore = ?'
-        , [user.nickname, user.name, user.password, user.email, 'low', '0']
-        , function(err) {
-            client.query(
-                'SELECT * FROM ' + TABLE + ' WHERE nickname = ?'
-              , [user.nickname]
-              , function(err, results, fields) {
-                  if (err) {
-                    throw err; 
-                  } 
-                  res.render('join-result', {
-					  usernickname: results[0].nickname
-                    , username: results[0].name
-					, userpassword: results[0].email
-                    , useremail: results[0].email
-                    , userlevel: results[0].level
-				    , usertotalscore: results[0].totalscore
-                    , title: 'Express'
-                  });
-            });
-          }
-      );
+ checkNickName: function(req, res) {
+	   var nickName = req.body.inputNickName;
+		   var pws = req.body.inputPw;
+
+		   client.query('SELECT pws FROM members WHERE nickname=?', [nickName], function(err, results, fields){
+						if(err){
+							console.log('로그인 오류.');
+						}else{
+							try{
+								var serverpws = results[0].pws;
+							}catch(e){
+							//   socket.emit('logined-fail');
+								  console.log('에러 발생 1');
+							}
+							
+							if(serverpws == pws) {
+								client.query('SELECT * FROM members WHERE nickname=?', [nickName], function(err, results, fields){
+									if(err){
+										console.log('재 결과 탐색시 에러. 발생');
+									}else{
+										console.log(results);
+										var nickName = results[0].nickname;
+										var level = results[0].level;
+										var totalscore = results[0].totalscore;
+										req.session.nickname =nickName;
+
+										console.log('repository.js 에서 세션값은->'+req.session.nickname );
+
+									//	socket.emit('logined', { nickName:nickName, level: level, totalscore:totalscore});
+									res.render('waitingRoom', {
+									  nickname: results[0].nickname
+								    , level: results[0].level
+								    , totalscore: results[0].totalscore
+								   , title: 'Express'
+									  });
+									}
+								});
+							}else{
+									//	socket.emit('logined-fail');
+									console.log('에러 발생 2');
+							}
+						}
+					});
     }
-   , checkNickName: function(req, res) {
-	   var isSuccess = false
-    , nickname = req.body.nickname;
-
-      client.query(
-          'SELECT * FROM ' + TABLE + ' WHERE nickname = ?'
-        , [ req.body.nickname]
-        , function(err, results, fields) {
-            if (err) {
-              throw err;
-            }
-            if (results[0].password ==  req.body.password) {
-				console.log('아이디랑 비밀 번호가 같다');
-				 if (!Chat.hasUser(nickname)) {
-						 
-						 req.session.nickname =nickname;
-						 console.log('세션 값'+JSON.stringify(req.session));
-						 isSuccess = true;  
-				 
-						 var level = results[0].level;
-						 var totalscore = results[0].totalscore;
-						 var name = results[0].name;
-						 var email = results[0].email;
-
-						 console.log('\u001b[36m', '  hasNickName() 함수 = /enter.post방식 ');
-					     console.log('\u001b[36m', '  -> session.nickname =  '+req.session.nickname);
-
-					     Chat.addUser(nickname, name, email, level, totalscore);                    //세션에 추가.
-						 Chat.addWaitUser(nickname, name, email, level, totalscore);         
-
-				 }
-				 
-
-				 res.render('enter', {
-					    isSuccess: isSuccess 
-                      , level: level
-					  , totalscore: totalscore
-					  , name: name
-					  , email: email
-					  , nickname: req.session.nickname
-					  , level: level
-					  , totalscore: totalscore
-     			      , roomList: Chat.getRoomList()
-					  , roomInfo: Chat.getRoomInfo()
-                      , waitUser: Chat.getWaitUserList()
-					  ,title: 'Express'
-
-				 });
-           } else {
-				res.render('login-fail', {
-			        title: 'Express'
-              });
-              console.log('아이디랑 비밀 번호가 다르다.');
-           }
-      });
-    }
-  , hasFriend: function(req, res) {
-	  client.query(
-          'SELECT * FROM  friends_test WHERE nickname = ?'
-        , [req.body.nickname]
-        , function(err, results, fields) {
-            if (err) {
-              throw err;
-            }
-            if (results.length > 0) {
-              res.render('friendsList', {
-				   friend:result[0].friend
-                  ,title: 'Express'
-              });
-            } else {
-              console.log('등록 된 친구가 없습니다.');
-            }
-      });
-    }
-  , hasNickName: function(user, res) {
+, hasNickName: function(user, res) {
       client.query(
           'SELECT * FROM ' + TABLE + ' WHERE nickname = ?'
         , [user.nickname]

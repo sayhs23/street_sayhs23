@@ -1,122 +1,229 @@
-#box 
- div#top
-   #top_1
-      input(type='button',class='menuBt', id='LOGO', value='Street', style='width:200px; margin-left:390px;')p
-      input(type='button',class='menuBt', id='mStreet', value='mStreet', style='width:170px; margin-left:45px; margin-top:1px;')
-      input(type='button',class='menuBt', id='cStreet', value='cStreet', style='width:170px;')
-      input(type='button',class='menuBt', id='sStreet', value='sStreet', style='width:170px;')
-      input(type='button',class='menuBt', id='gStreet', value='gStreet', style='width:170px; margin-right:60px;')
-   #top_2
-     span#roomName= roomName 
- #main
-   
-   #j_main_1
-     #g_main_1_1
-        p 힌트창
-        #hintWindow(style='width:575px; height:50px; overflow:auto; border:1px solid #000; float:left; margin-left:10px; margin-right:10px;')
-     #g_main_1_2
-        p 채팅창
-        #chatWindow(style='width:575px; height:180px; overflow:auto; border:1px solid #000; float:left; margin-left:10px; margin-right:10px;')
-        span#myName #{nickname}
-        form
-           input(type='text', style='width:450px; margin-left:10px; margin-top:10px;')#message
-           input(type='Button', id='chatButton', value='보내기', style='width:60px; height:25px;')
-        
-   #j_main_2
-     p 참여자 목록
-     #attentsList(style='width:155px; height:130px; overflow:auto; margin-left:5px; border:1px solid #000;')
-        ul#attendants
-          each attendant in attendants
-            li(id='attendant-'+attendant)= attendant 
-     input(type='button',class='menuBt2', id='game', value='노래 시작', style='height:40px; width:150px; margin-left:5px; margin-top:35px;')
-     input(type='button',class='menuBt3', id='leave', value='게임 끝내기', style='height:40px; width:150px; margin-left:5px; margin-top:5px;')
-   #videoDiv
-     
-
-script(type='text/javascript', src='http://www.google.com/jsapi?key=ABQIAAAAdV0OihhLfo4ru8N1BXzlWxSJ87f2VNqmObhB7kj4DJwDOGkiiBR3Nh79Pxxmk0DgEb3TTwZHI-Fp1g')
-script(type='text/javascript', src='http://code.jquery.com/jquery-1.7.0.min.js')
-script(type='text/javascript', src='/javascripts/jquery-ui-1.8.18.custom.min.js')
-script(type='text/javascript', src = 'http://www.google.com/jsapi')
+link(rel='stylesheet', href='/javascripts/jquery-ui-1.8.18.custom.css')
+link(rel='stylesheet', href='/javascripts/farbtastic.css')
+script(type='text/javascript', src ='/javascripts/jquery-ui-1.8.18.custom.min.js')
+script(type='text/javascript', src ='/javascripts/farbtastic.js')
 script(type='text/javascript')
-  google.load("swfobject", "2.1");
+   var objectToString = function(obj) {
+      var str ="";
+      for(var i in obj) {
+         str += obj[i];
+      }
+      str = str.substring(0, str.length);
+      return str;
+   };
+   var fct = function(data){
+      alert(data);
+   };
+   function Point(event, target) {
+      this.x = event.pageX - $(target).position().left;
+      this.y = event.pageY - $(target).position().top;
+   }
+#roomwapprDiv
+   #room_box
+      span(style='display:none;')#nickname= nickname
+      span(style='display:none;')#textMax= userMax
+      span(style='display:none;')#userMax= userMax
+      span(style='display:none;')#roomPublish= roomPublish
+      span(style='display:none;')#roompw= roompw
+      span(style='display:none;')#roomName= roomName
+      span(style='display:none;')#attendants= attendants
+      #room_top_1
+      #room_top_2
+   #room_box2
+      #room_main
+         #room_main_1
+            p 제시어 힌트 나오는 영역
+         #room_main_2
+           table(border="10", width="200", height="330")
+              tr
+                 td(rowspan="3")
+                    <canvas id ="canvas" width ="570" height ="450"></canvas>
+                 td(height="50")
+                    <div id ="colorpicker"></div>
+              tr
+                 td(height="30")
+                    <div id ="slider"></div>
+              tr
+                 td(height ="30" ,style ="background:Orange;")
+           input(type='button', class='faceBt', value='모두 지우기', id='canvasClear')
+         #room_main_3
+            #chatWindow(style='width:700px; height:140px; overflow:auto; margin-left:50px; margin-bottom:5px;')
+         #room_main_4
+            p(style='float:left; margin-left:50px;')#UserName
+            form
+                input(type='text', value='채팅 내용', calss='eTxt', id='message', style='width:500px; margin-top:17px; margin-left:30px;')
+                input(type='submit', value='전송', class='faceBt', id='chatBt', style='margin-top:17px; margin-left:10px;')
+      #room_right
+         #room_right_3
+          p 사용자 정보
+         #room_right_1
+         #room_right_2
+            p 대기실 참가자 목록
+            #attendantsDiv
+
+               
 script(type='text/javascript')
-   
-   var onPlayerError = function(errorCode) { 
-      alert("An error occured of type:" + errorCode);
-   };
+   $(document).ready(function() {
 
-   var onYouTubePlayerReady = function(playerId) {
-      ytplayer = document.getElementById("ytPlayer");
-      ytplayer.addEventListener("onError", "onPlayerError");
-   };
-
-   var loadPlayer = function() {
-      var videoID = "ylLzyHk54Z0"
-      var params = { allowScriptAccess: "always" };
-      var atts = { id: "ytPlayer" };
-
-      swfobject.embedSWF("http://www.youtube.com/v/" + videoID+ "&enablejsapi=1&playerapiid=ytplayer", "videoDiv", "0","0", "8", false, false, { allowScriptAccess: 'always'}, atts);
-   };
-
-   var reloadPlayer = function(s) {
-      var videoID = s;
-      swfobject.embedSWF("http://www.youtube.com/v/" + videoID + "&autoplay=1??version=`3&enablejsapi=1&playerapiid=ytplayer&fs=1", 'ytPlayer', '220', '220', '9.0.0', false, false, { allowScriptAccess: 'always'});};
      
-   var playVideo = function() {
-      if (ytplayer) {
-             ytplayer.playVideo();
-      } 
-    };
-
-  script(type='text/javascript')
-    $(document).ready(function() {
-      loadPlayer();
-    
       var room = io.connect('/room'); 
-      var chatWindow = $('#chatWindow');
-      var hintWindow = $('#hintWindow');
-      var countWindow = $('#countWindow');
-      var messageBox = $('#message');
-      var myName = $('#myName').text();
+      var roomPublish = $('#roomPublish').text();
+      var textMax = $('#textMax').text();
+      var userMax = $('#userMax').text();
+      var roompw = $('#roopw').text();
+      var nickname = $('#nickname').text();
+      var roomname = $('#roomName').text();
       var attendants = $('#attendants');
-      var resultWindow = $('#resultWindow');
-      var result = 0;
-      var name = '';
-    
-      var showMessage = function(msg) {
-        var pos = $("#chatWindow").position().top;
-        chatWindow.append($('<p>').text(msg)).animate({ scrollTop: pos }, 'slow');   
-        chatWindow.scrollTop(chatWindow.height());
+      var chatWindow = $('#chatWindow');
+      var messageBox = $('#message');
 
+      var canvas = document.getElementById('canvas');
+      var context = canvas.getContext('2d');
+
+      var width = 5;
+      var color = '#000000';
+      var isDown = false;
+      var newPoint, oldPoint;
+
+      canvas.onmousedown = function( event ){
+         isDown = true;
+         oldPoint = new Point(event, this);
       };
-      var resultMessage = function(msg) {
-         var sos = $("#resultWindow").position().top;
-         resultWindow.append($('<p>').text(msg)).animate({ scrollTop: sos }, 'slow');   
-       };
+      canvas.onmouseup = function(){
+         isDown = false;
+      };
+      canvas.onmousemove = function(event) {
+         if(isDown) {
+            newPoint = new Point(event, this);
 
-       var countMessage = function(msg) {
-         var ros = $("#countWindow").position().top;
-         countWindow.append($('<p>').text(msg)).animate({ scrollTop: ros }, 'slow');   
-       };
-       var hintMessage = function(msg) {
-         var hos = $("#hintWindow").position().top;
-         hintWindow.append($('<p>').text(msg)).animate({ scrollTop: hos }, 'slow');   
-       };
+            room.emit('draw', { width: width, color:color, x1:oldPoint.x, y1:oldPoint.y, x2:newPoint.x, y2: newPoint.y });
+            oldPoint = newPoint;
+         }
+      };
+
+      room.on('line', function(data) {
+         context.lineWidth = data.width;
+         context.strokeStyle = data.color;
+         context.beginPath();
+         context.moveTo(data.x1, data.y1);
+         context.lineTo(data.x2, data.y2);
+         context.stroke();
+      });
+          
+      $('#colorpicker').farbtastic(function (data) {
+         color = data;
+      });
+      $('#slider').slider({ 
+         max: 20, min:1, 
+         value: 5, 
+         change: function(event, ui){
+                          width =ui.value;
+                       }
+      });
+      var showMessage = function(msg) {
+         var pos = $("#chatWindow").position().top;
+         chatWindow.append($('<p>').text(msg)).animate({ scrollTop: pos }, 'slow');   
+         chatWindow.scrollTop(chatWindow.height());
+      };
+      room.on('connect', function() {  
+        room.emit('join', {roomName:roomname, nickName:nickname}); 
+      });
+      $('#UserName').html('<p>'+nickname);
+      var count=0;
+      var data2;
+      $.each(attendants, function(item, index) {
+         var attendantsArray = attendants.text();
+         var data = objectToString(attendantsArray);
+         data2=data.split(',');
+         count++;
+      });
+      $('#message').click(function(e) {
+         $('#message').val('');
+      });
+      $('#canvasClear').click(function(e) {
+         room.emit('canvasClear');
+      });
+      room.on('canvasCleared', function() {
+         context.clearRect(0, 0, canvas.width, canvas.height);
+      });
+      var html = ['<div id ="userListDiv">'];
+      if(count===0){
+         html.push('<div id="idListDiv">');
+         html.push('<p> * '+data2[0]);
+         html.push('<input type = "button" value="정보" onclick="fct(\\'',data2[i],'\\')" class="faceBt">');
+         html.push('<input type = "button" value="추가" class="faceBt">');
+         html.push('</div>');
+      }
+      else if(count >=1){
+         for(var i =0 ;i<=count;i++){ 
+            html.push('<div id="idListDiv">');
+            html.push('<p> * '+data2[i]);
+            html.push('<input type = "button" value="정보" onclick="fct(\\'',data2[i],'\\')" class="faceBt">');
+            html.push('<input type = "button" value="추가" class="faceBt">');
+            html.push('</div>');	   
+         }
+      }
+      html.push('</div>');
+      document.getElementById('attendantsDiv').innerHTML = html.join(''); 
+     
+
+      room.emit('getUserInfo', {nickname:nickname, roomname:roomname});
+      room.on('getUserInfoed', function(data) {
+         var nickname = data.nickName;
+         var level = data.level;
+         var totalscore = data.totalscore;
+         var html = ['<div id ="userDiv">'];
+         html.push('<div id="userInfImgDiv1">');
+         if(level ==='입문') {
+            html.push('<image src="/images/입문.png">');
+         }
+         html.push('<p>img 95*95 필요');
+         html.push('</div>');
+         html.push('<div id="userInfTxtDiv1">');
+         html.push('<p>별명: '+nickname);
+         html.push('<p> 등급: '+level);
+         html.push('<p> 총 점수: '+totalscore);
+         html.push('</div>');
+         html.push('</div>');
+         alert('사용자 정보 완료');
+         document.getElementById('room_right_1').innerHTML = html.join(''); 
+      });
+      if(roomPublish==='true'){
+          $('#room_top_1').html('<p style="margin-left:20px;"> 공개방 </p>');
+      }
+      if(roomPublish==='false'){
+         var output ='<p> 비공개방  비밀번호는 : '+roompw
+         $('#room_top_1').html('<p> 비공개방  비밀번호는 : '+roompw);
+      }
+      var output ='<p style="float:left; margin-left:20px;"> 방 이름 : '+roomname;
+      output +='<p style="float:left; margin-left:30px;"> 최대 판수 : '+textMax;
+      output +='<p style="float:left; margin-left:10px;"> 최대 인원 '+userMax;
+      $('#room_top_2').html(output);
+      var showMessage = function(msg) {
+         var pos = $("#chatWindow").position().top;
+         chatWindow.append($('<p>').text(msg)).animate({ scrollTop: pos }, 'slow');   
+         chatWindow.scrollTop(chatWindow.height());
+      };
       room.on('connect', function() {
          room.emit('join', {roomName:$('#roomName').text(), nickName:myName}); 
       });
-
+      
       room.on('joined', function(data) {
-        if(data.isSuccess) {
-          showMessage(data.nickname + '님이 입장하셨습니다.');
-          attendants.append($('<li>')
-            .attr('id', 'attendant-'+data.nickname)
-            .text(data.nickname)); 
-        }
+         showMessage(data.nickname + '님이 입장하셨습니다.');      
       });
 
       room.on('message', function(data) {
-        showMessage(data.nickName + ' : ' + data.msg); 
+         showMessage(data.nickName + ' : ' + data.msg);
+      });
+      $('form').submit(function(e) {
+         e.preventDefault();
+         var msg = messageBox.val();
+         if ($.trim(msg) !== '') {
+           showMessage(nickname + ' : ' + msg);
+           room.json.send({nickName:nickname, msg:msg});
+           messageBox.val('');
+           $(messageBox).focus();
+         }
       });
 
       room.on('leaved', function(data) {
@@ -124,36 +231,8 @@ script(type='text/javascript')
         $('#attendant-'+data.nickName).remove();
       });
 
-      $('form').submit(function(e) {
-        e.preventDefault();
-        var msg = messageBox.val();
-        if ($.trim(msg) !== '') {
-          showMessage(myName + ' : ' + msg);
-          room.json.send({nickName:myName, msg:msg});
-          messageBox.val('');
-        }
-      });
-
-
-      room.on('gamed', function(data) {
-        name = data.msName;
-        hintMessage(data.msHint + ' 힌트입니다.');
-        reloadPlayer(data.msId);
-      });
-
-      room.on('readied', function(data) {
-         resultWindow.val('');
-         resultMessage(data.usName+'님은'+data.usScore+'점이당');
-         a = data.msName; if(data.msCnt === 5) {  alert('끝');  }  
-         hintMessage(data.msHint + ' 힌트입니다.');  
-         
-      });
-
-      $('#game').click(function(e) {
-        room.emit('game', {nickName:myName, result:result});
-      });
-
       $('#leave').click(function(e) {
         room.emit('leave', {nickName:myName});
         location.href='/enter';
-      });});
+      });
+   });

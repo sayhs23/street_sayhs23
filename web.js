@@ -45,21 +45,6 @@ app.post('/gStreet', function(req, res) {
 	repo.checkNickName(req, res);
 });
 
-app.get('/add/:id', function(req, res) {                         //추가기능 누르기  GET방식으로 하기.
-	var isSuccess = true;
-	var name = req.params.id;
-	console.log(name);
-    var level = 0;
-	var totalscore = 0;
-	res.render('add', {
-		isSuccess: isSuccess 
-		, nickname: name
-		, level: level
-		, totalscore: totalscore
-		, waitUser: Chat.getWaitUserList()
-		,title: 'Express'
-		});
-});
 //---------------------인덱스 페이지에서 검색어 get방식 /검색어 라우터 부분 -----------------//
 
 app.get('/search/:id', function(req, res) {
@@ -74,98 +59,72 @@ app.get('/mStreet', function(req, res) { //회원 가입 창 렌더링......!
 	res.render('mStreet');
 });
 
-app.get('/join-form', function(req, res) { //회원 가입 창 렌더링......!
-	res.render('join-form');
-});
 
-app.post('/joins', function(req, res) {
-	var nickname = req.body.nickname;
-	if(nickname && nickname.trim() !== ''){
-		repo.hasNickName(req.body, res);
-	}
-});
+app.get('/room/:id', function(req, res) {
+  var roomName = req.params.id;
+  var nickname = req.session.nickname;
 
-/*
-app.get('/enter/:id', function(req, res) {
-	console.log('\u001b[36m', '  app.get(/enter) ');
-	console.log('\u001b[36m', '  -> req.params.id =  '+req.params.id);
+  console.log('/room/:id인데 이때의 세션값은:'+nickname);
+  console.log('/room/:id인데 이때 방이름은:'+roomName+'세션 접속자이름은'+nickname);
+  console.log('/여기서 이제 먼저 방정보를 가지고 온다. 그리고 유저 정보도 가지고 온다.');
+  var roomInfo = Chat.getRoomInfo(roomName);
+  console.log(roomInfo);
+  console.log(roomInfo.name);
+  console.log('-------------');
+  console.log(roomInfo.textMax);
+  console.log(roomInfo.userMax);
+  console.log(roomInfo.captin);
+  console.log(roomInfo.roomPublish);
 
-    var nickname = req.params.id;
-
-    res.render('enter', {
-        isSuccess: true
-      , nickname : nickname
-      , roomList: Chat.getRoomList()
-    });
-});
-*/
-app.get('/enter', function(req, res) {
-  var user = Chat.getUser(req.session.nickname);
-
-  if (req.session.nickname) {
-    res.render('enter', {
-        isSuccess: true 
-      , nickname: req.session.nickname
-      , level: user.level
-	  , totalscore: user.totalscore 
-      , roomList: Chat.getRoomList()
-	  , roomInfo: Chat.getRoomInfo()
-	  , waitUser: Chat.getWaitUserList()
-    });
-  } else { 
-    res.render('enter', {
-        isSuccess: false 
-      , nickname: ''
-    });
-
+  console.log('-------------');
+  
+  if(roomPublish===true) { //공개 모드일때
+		 console.log('라우터에서 공개 모드일때 방이름 정보 해당 유저를 방에 넣는다.');
+		 Chat.addRoom(roomName, roomInfo.textMax, roomInfo.userMax, nickname, roomInfo.roomPublish,'' );  // 방만들면 방이름(방명), 최대 게임 판수, 최대 제한 유저수, 방장이나온다.
   }
-});
-app.post('/makeRoom', function(req, res) {
-  var isSuccess = false
-  , roomName = req.body.roomname; // 방제
-  var musicmax = req.body.musicmax; // 최대 곡수
-  var captin = req.body.nickname; // 방장 -> 방장에게 시작 권한을 주기 위해서.
-  var usermax = req.body.usermax; // 최대 인원 수 갑 받음.
+  else if(roomPublish ===false ) { // 비공개 모드
+    	  console.log('라우터에서 비공개 모드일때 방이름과 방정보 그리고 해당 유저를 방에 넣는다.');
+		  Chat.addRoom(roomName, roomInfo.textMax, roomInfo.userMax, nickname, roomInfo.roomPublish, roomInfo.roompw );  
+   }
+			 // 이제 방에 넣었으면 이걸 정보를 뿌려주자.
+   console.log('nickname을 roomName방에 넣자'+nickname+roomName);
+   Chat.joinRoom(roomName, nickname);
+   console.log(Chat.getRoomInfo(roomName));
 
+   var textMax = roomInfo.textMax;
+   var userMax = roomInfo.userMax;
+   var captin = roomInfo.captin;
+   var roomPublish = roomInfo.roomPublish;
+   var roompw = roomInfo.roompw;
+   var attendants = roomInfo.attendants;
+   
 
- console.log('/makeRoom musicmax, captin, usermax: '+musicmax + captin + usermax);
-
-
-  if(roomName && roomName.trim() != '') {
-    if (!Chat.hasRoom(roomName)) {
-      Chat.addRoom(roomName, musicmax, captin, usermax);
-      isSuccess = true;
-    }
-  }
-
-  res.render('makeRoom', {
-      isSuccess: isSuccess
-    , musicmax: musicmax
-    , roomName: roomName
-  });
-});
-
-app.get('/join/:id', function(req, res) {
-  var isSuccess = false
-    , roomName = req.params.id;
-
-  var user = Chat.getUser(req.session.nickname);
+	 res.render('room', {
+         nickname : nickname
+       , textMax: textMax
+       , userMax: userMax
+       , roomPublish:roomPublish
+       , roompw: roompw
+       , roomName:roomName
+       , attendants: attendants
+     });
+/*  var user = Chat.getUser(req.session.nickname);
   var level = user.level;
   
   if (Chat.hasRoom(roomName)) {
-    isSuccess = true; 
-  }
+	isSuccess = true; 
+  }*/
 
-  console.log('/join/:id  , '+isSuccess+ roomName, level, Chat.getAttendantsList(roomName));
+
    
-  res.render('room', {
-      isSuccess: isSuccess
-    , roomName: roomName
+ /* res.render('room', {
+	  isSuccess: isSuccess
+	, roomName: roomName
 	, musicnumber: 10
-    , level: level
-    , nickname: req.session.nickname
-    , attendants: Chat.getAttendantsList(roomName)
-  });
+	, level: level
+	, nickname: req.session.nickname
+	, attendants: Chat.getAttendantsList(roomName)
+  });*/
 });
 
 app.get('/elbem/:id', function(req, res) {
@@ -188,26 +147,33 @@ app.get('/bag/:id', function(req, res) {
 app.get('/community/:id', function(req, res) {
 	var communityName = req.params.id;
 	console.log('/community/:id :'+communityName);
-    res.render('community', {
+	res.render('community', {
 		communityName: communityName
 	});
 });
 
-
-app.get('/logout/:name', function(req, res) {
-
- var nickname = req.params.name; //로그아웃한놈 저장해서
-
- Chat.deleteNickName(nickname);
- res.render('index'); //하고서 index.로 이동하기.
+app.get('/gStreet', function(req, res) {
+  res.render('gStreet');
 });
 
-app.get('/sStreet', function(req, res) {
-  res.render('sStreet');
+
+app.post('/waitingRoom', function(req, res) {
+   console.log('/waitingRoom 이벤트 호출');
+   var nickname = req.body.inputNickName;
+   console.log(nickname);
+   repo.checkNickName(req, res);
 });
 
 app.get('/cStreet', function(req, res) {
   res.render('cStreet');
+});
+
+
+app.get('/sStreet', function(req, res) {
+  res.render('sStreet');
+});
+app.get('/gStreet', function(req, res) {
+  res.render('gStreet');
 });
 
 

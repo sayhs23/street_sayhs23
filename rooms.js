@@ -13,7 +13,7 @@ var mysql = require('mysql')
   , TABLE = 'friends_test'
   , client = mysql.createClient({
       user: 'sayhs23'
-	, host: '10.0.0.1'
+    , host: '10.0.0.1'
     , password: '9034gustn'
   });
 
@@ -42,16 +42,16 @@ module.exports = function(app) {
     .of('/room')
     .on('connection', function(socket) { 
       var joinedRoom = null;
-      Game.setCnt();
-   //   console.log('접속함');
-      socket.on('join', function(data) {   // 유저가 접속을 하면 방이름을 챗.js의 방 배열에 추가한다.
+      console.log('클라이언트 접속함');
+      
+	  socket.on('join', function(data) {
         if (Chat.hasRoom(data.roomName)) {
           joinedRoom = data.roomName;
-          socket.join(joinedRoom); // socket.io의 join 함수를 이용하여 추가를 시킨다.
+          socket.join(joinedRoom);
         
-          var name = data.nickName;
+            var name = data.nickName;
 
-          socket.emit('joined', { // 방 확인 후 조인드 이벤트를 시킨다. 
+          socket.emit('joined', {
             isSuccess:true, nickname:name
           });
           socket.broadcast.to(joinedRoom).emit('joined', {
@@ -62,6 +62,79 @@ module.exports = function(app) {
           socket.emit('joined', {isSuccess:false});
         }
       });
+	  //////////////////// 캔버스 모두 지우기////////////////////////
+	  socket.on('canvasClear', function(data) {
+		  console.log('canvasClear 이벤트 실행');
+		  socket.emit('canvasCleared');
+		  socket.broadcast.to(joinedRoom).emit('canvasCleared');
+	  });
+     ////////////////// 캔버스 그리기 이벤트 실행
+	  socket.on('draw', function(data) {
+		  console.log('draw 이벤트 실행'+data.width + data.color + data.x1 + data.y1 + data.x2 + data.y2);
+          socket.emit('line', { width: data.width, color:data.color, x1:data.x1, y1:data.y1, x2:data.x2, y2: data.y2} );
+          socket.broadcast.to(joinedRoom).emit('line', { width: data.width, color:data.color, x1:data.x1, y1:data.y1, x2:data.x2, y2: data.y2 });
+	  });
+
+     //////////////////////////////////////// 대기실에 부분에 입장 했을 때 의 서버 코드//////////////////////////////////////////////
+	  socket.on('waitRoomjoin', function(data) {   // 유저가 접속을 하면 방이름을 챗.js의 방 배열에 추가한다.
+		console.log('room.js 에서 waitRoomjoin 이벤트');
+ // socket.io의 join 함수를 이용하여 추가를 시킨다.
+        
+          var name = data.myName;
+		  console.log(Chat.hasRoom(data.roomName));
+		  if(!Chat.hasRoom(data.roomName)){
+             Chat.addRoom(data.roomName,'','','','','');
+		  }
+		  if(Chat.hasRoom(data.roomName)) {
+			 
+			  var joinedRoom = data.roomName;
+			  socket.join(joinedRoom);
+
+			 Chat.joinRoom(joinedRoom, data.myName);
+		     var attendantss = Chat.getAttendantsList(joinedRoom);
+		     console.log(attendantss);
+			 console.log(Chat.getRoomList());
+             socket.emit('waitRoomjoined', { isSuccess:true, nickname:name, attendants:Chat.getAttendantsList(joinedRoom), roomList:Chat.getRoomList()});
+			 socket.broadcast.to(joinedRoom).emit('waitRoomjoined', {
+             isSuccess:true, nickname:name, attendants:Chat.getAttendantsList(joinedRoom), roomList:Chat.getRoomList()});
+		  } else {
+			 socket.emit('waitRoomjoined', {isSucess:false});
+          }
+		  
+      });
+/////////////////////////////////방을 만들었을 경우///////////////////////////////////////////////////////////////////////////
+     socket.on('getRoomList', function() {
+		console.log('getRoomList 이벤트 발생');
+		console.log(Chat.getRoomList());
+        socket.emit('getRoomListed', { roomList: Chat.getRoomList() });
+	 });
+     socket.on('createRoom', function(data) {
+		 console.log('createRoom 이벤트 발생!');
+		 var myName = data.myName;
+		 var roomname = data.roomname;
+		 console.log('방이름은 ' + roomname);
+		 var textMax = data.textMax;
+		 var userMax = data.userMax;
+		 var roomPublish = data.roomPublish;
+		 var roompw = data.roompw;
+		 console.log(textMax, userMax);
+
+		 console.log(' 방장이름은 ' + myName);
+		 console.log(roomPublish + roompw);
+		 if (!Chat.hasRoom(roomname)) {
+			 if(roomPublish===true) { //공개 모드일때
+				 console.log('공개 모드일때');
+				 Chat.addRoom(roomname, textMax, userMax, myName, roomPublish,'' );  // 방만들면 방이름(방명), 최대 게임 판수, 최대 제한 유저수, 방장이나온다.
+			 }
+			 else if(roomPublish ===false ) { // 비공개 모드
+				   console.log('비공개 모드일때');
+				  Chat.addRoom(roomname, textMax, userMax, myName, roomPublish, roompw );  
+			 }
+			 socket.emit('createRoomed', {roomname:roomname}); 
+          }else{
+			 socket.emit('createRoomed-fail'); 
+		  }
+	 });
 
 /////////////////   sStreet 에서 쇼핑 백 추가하는 부분 ////////////////////////////////////////////////////////
 
@@ -375,7 +448,85 @@ module.exports = function(app) {
 						}
 					});
 		});
+//////////////////////////로그인 하는 부분////////////////////////gStreet////////////////////////////////////////////
+       socket.on('login', function(data) {
+		   var nickName = data.nickName;
+		   var pws = data.pws;
 
+		   client.query('SELECT pws FROM members WHERE nickname=?', [nickName], function(err, results, fields){
+						if(err){
+							console.log('로그인 오류.');
+						}else{
+							try{
+								var serverpws = results[0].pws;
+							}catch(e){
+							   socket.emit('logined-fail');
+							}
+							
+							if(serverpws == pws) {
+								client.query('SELECT * FROM members WHERE nickname=?', [nickName], function(err, results, fields){
+									if(err){
+										console.log('재 결과 탐색시 에러. 발생');
+									}else{
+										var nickName = results[0].nickname;
+										var level = results[0].level;
+										var totalscore = results[0].totalscore;
+
+										socket.emit('logined', { nickName:nickName, level: level, totalscore:totalscore});
+									}
+								});
+							}else{
+										socket.emit('logined-fail');
+							}
+						}
+					});
+	   });
+	   socket.on('getUserInfo', function(data) {
+		   console.log('getUserInfo에 진입함');
+		   var nickname = data.nickname;
+		   console.log(nickname);
+		   var attendants = Chat.getAttendantsList(data.roomname);
+
+		   client.query('SELECT * FROM members WHERE nickname=?', [nickname], function(err, results, fields){
+							if(err){
+								console.log('재 결과 탐색시 에러. 발생');
+							}else{
+								var nickName = results[0].nickname;
+								var level = results[0].level;
+								var totalscore = results[0].totalscore;
+
+								console.log('getUserInfo에서 사용자 리스트는 '+attendants)
+
+								socket.emit('getUserInfoed', { nickName:nickName, level: level, totalscore:totalscore,attendants:attendants});
+							}
+					});
+	   });
+
+///////////////////////회원 가입//////////////////////////////////////gStreet///////////////////////////////////
+		socket.on('memberJoin', function(data){
+			    var level = '입문';
+				client.query('INSERT INTO members SET nickname =?, pws=?, level=?, totalscore=0', [data.nickName,data.pws,level], function(err) {
+						if(err){
+							console.log('회원가입 오류 - 이미 있는 아이디 nickname -> primary key!');
+							socket.emit('memberJoined-fail');
+						}else{
+							console.log('회원 가입 성공');
+							client.query('SELECT * FROM members where nickname=?', [data.nickName], function(err, results, fields) {
+								if(err) {
+									console.log('갯 커멘트 쿼리 실패');
+								}else{
+									var nickName = results[0].nickname;
+									var level = results[0].level;
+									var totalscore = results[0].totalscore;
+
+									console.log(results);
+									console.log(nickName + level + totalscore);
+									socket.emit('memberJoined', {nickName:nickName, level:level, totalscore:totalscore });
+								}
+							});
+						}
+				});
+		   });
 ////////////////////////////////////////comment 즉, 댓글을 가져오는 부분이다//////////////////////////////////////////////////////////////////////////////////////
 
 		socket.on('getComment', function(data){
@@ -813,9 +964,11 @@ socket.on('shop2', function(data){
       socket.on('message', function(data) {
         if (joinedRoom) {
           socket.broadcast.to(joinedRoom).json.send(data);
+		  console.log('해당 방이름은'+joinedRoom);
         }
 		else
 			socket.broadcast.json.send(data);
+		    console.log('채팅 내용은:'+data.nickName+'->'+data.msg);
 	//		console.log('대기실에서 채팅/내용: '+data);
       });
 

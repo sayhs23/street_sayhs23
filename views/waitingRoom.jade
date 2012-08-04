@@ -1,0 +1,260 @@
+script(type='text/javascript')
+ var enterRoom = function(roomName, roomPublish, roompw){
+    if(roomPublish==='true') {
+       location.href = '/room/'+roomName;
+    }
+    else if(roomPublish==='false'){
+      var t = '#pwDiv'+roomName;
+      alert(t);
+      $(t).slideToggle("slow");
+      $(this).toggleClass("active");
+    }
+ };
+ var showRoom =function(roomName){
+    alert(roomName);
+ };
+ var setPw = function(name){
+    var t = '#pw'+name;
+    $(t).val('');
+ };
+ var okay = function(name, roompw) {
+    var t = '#pw'+name;
+    var pw = $(t).val();
+    alert(pw);
+    if(roompw === pw) {
+       location.href = '/room/'+name;
+    }
+    else if(roompw !== pw) {
+       alert('비밀 번호가 다릅니다.');
+    } 
+ };
+#g_box_wrapper
+ #g_box
+  #sh_main_1
+   img(id='LOGO', style='float:left',src='/images/로고.png')
+   img(style='margin-left:200px; float:left', src='/images/Text_Webmaster.jpg')
+   #top_1
+     #top_1_1
+  #sh_main_2
+  #sh_main_3
+   #i_mian_2_1(style='margin-left:40px; height:70px; width: 800px;')
+     img(class='menuBt',src='images/Mstreet_Text.png', id='info', style='width:150px; height:60px;')
+     img(class='menuBt',src='images/Button_Home_Black.jpg', id='home', value='Home', style='width:80px; height:40px; margin-left:180px;')
+     img(class='menuBt',src='images/Button_Mstreet_Black.jpg', id='mStreet', value='mStreet', style='width:80px; margin-left:10px; height:40px;')
+     img(class='menuBt',src='images/Button_Cstreet_Black.jpg', id='cStreet', value='cStreet', style='width:80px; margin-left:10px; height:40px;')
+     img(class='menuBt',src='images/Button_Sstreet_Black.jpg', id='sStreet', value='sStreet', style='width:80px; margin-left:10px; height:40px;')
+     img(class='menuBt',src='images/Button_Gstreet_Black.jpg', id='gStreet', value='gStreet', style='width:80px; margin-left:10px; height:40px;')
+ #g_box2
+   #g_box2_1
+     #beforeLogin
+         span(style='display:none')#nickname= nickname
+         span(style='display:none')#level= level
+         span(style='display:none')#totalscore= totalscore
+     #afterLogin
+       #roomSearchDiv
+          input(type='text', value='게임 방 검색', id='eTxt', style='margin-left:20px; width:300px; height: 25px; float:left;')
+          input(type='button', value='검색', id='roomSearch', class='faceBt', style='margin-left:10px; float:left;')
+          input(type='button', value='방만들기', id='createRoomBt', class='faceBt', style='margin-left:10px;')
+          input(type='button', value='새로고침', id='refreshRoomBt', class='faceBt', style='margin-left:10px;')
+       #dialog(style='display:none; margin-top:5px;')
+          hr
+          #dialog_1
+             label(for='roomname', style='margin-top:10px; margin-left:10px;') 방     제    
+             input(type='text', id='roomname', name='roomname')p
+             label(for='textMaxs', style='margin-left:10px;') 게임판수
+             select(class='textMax', name='textMax')
+                option(value='10', selected) 10판
+                option(value='20') 20판
+                option(value='30') 30판
+                option(value='40') 40판
+             p
+             lable(for='userMaxs', style='margin-left:10px;') 최대인원 
+             select(class='userMax', name='userMax')
+                option(value='2', selected) 2명
+                option(value='3') 3명
+                option(value='4') 4명
+                option(value='5') 5명
+                option(value='6') 6명
+             label(for='roomPublic', style='margin-left:10px;') 공개여부
+                select(class='roomPublic', id='roomPublic', name='roomPublic')
+                   option(value='공개', selected) 공개
+                   option(value='비공개') 비공개
+             p
+             #roomPwDiv(style='display:none;')
+               label(for='roompw', style='margin-top:10px; margin-left:10px;') 비밀 번호 
+               input(type='text', id='roompw', name='roompw')p
+          #dialog_2	      
+             input(type='button', value='입 장', id='enterRoom', class='logBt',style='margin-left:50px; margin-top:20px; width:150px; height:50px;')
+       #roomListDiv(style='margin-top:5px;')
+       #chatDiv
+          #chatWindow
+          #messageDiv
+             p#UserName
+             form
+                input(type='text', value='채팅 내용', calss='eTxt', id='message', style='width:500px; margin-left:10px;')
+                input(type='submit', value='전송', class='faceBt', id='chatBt', style='margin-left:10px;')
+   #g_box2_2
+       #userInfoDiv
+       p 대기실 참가자 목록
+       #attendants
+script(type='text/javascript')
+ $(document).ready(function() {
+    var room = io.connect('/room');
+    var myName = '';
+    var roomPublish =true;
+
+    var nickname = $('#nickname').text();
+    var level = $('#level').text();
+    var totalscore = $('#totalscore').text();
+
+    alert(nickname+level+totalscore);
+    var html = ['<div id ="userDiv">'];
+    html.push('<div id="userInfImgDiv">');
+    if(level ==='입문') {
+       html.push('<image src="/images/입문.png">');
+    }
+    html.push('<p>img 95*95 필요');
+    html.push('</div>');
+    html.push('<div id="userInfTxtDiv">');
+    html.push('<p>별명: '+nickname);
+    html.push('<p> 등급: '+level);
+    html.push('<p> 총 점수: '+totalscore);
+    html.push('</div>');
+    html.push('</div>');
+    document.getElementById('userInfoDiv').innerHTML = html.join('');
+
+    myName = nickname;
+    $('#UserName').html('<p>'+nickname);
+    room.emit('waitRoomjoin', {roomName:'대기실', myName:myName}); 
+     
+    $('#roomPublic').change(function() {
+       if($(".roomPublic option:selected").val() ==='비공개'){
+          roomPublish = false;
+          $('#roomPwDiv').slideToggle("slow");
+          $(this).toggleClass("active");
+          return false;
+       }
+       if($(".roomPublic option:selected").val() ==='공개'){
+          roomPublish = true;
+          $('#roomPwDiv').slideToggle("slow");
+          $(this).toggleClass("active");
+          return false;
+       }
+     });
+    $('#createRoomBt').click(function(e) {
+       $('#dialog').slideToggle("slow");
+       $(this).toggleClass("active"); return false;
+    });
+    $('#enterRoom').click(function(e) {
+       var roomname = $('#roomname').val();
+       var textMax = $(".textMax option:selected").val();
+       var userMax = $(".userMax option:selected").val();
+       var roompw = $('#roompw').val();
+       if(roomname===''){
+          alert('방제를 입력하세요');
+       }else{
+          room.emit('createRoom', {myName:myName, roomname:roomname, textMax:textMax, userMax:userMax, roomPublish:roomPublish, roompw:roompw });
+       }
+    });
+
+    room.on('createRoomed', function(data) {
+       $('#dialog').slideToggle("slow");
+       $(this).toggleClass("active");
+       alert('방이 생성되었습니다.'+data.roomname+'으로 이동');
+    });
+    room.on('createRoomed-fail', function(data) {
+       alert('이미 존재하는 방입니다.');
+    });
+
+
+    $('#message').click(function(e) {
+       $('#message').val('');
+    });
+    var objectToString = function(obj) {
+       var str ="";
+
+       for(var i in obj) {
+          str += obj[i];
+       }
+       str = str.substring(0, str.length);
+       return str;
+    };
+    var chatWindow = $('#chatWindow');
+    var messageBox = $('#message');
+
+    var showMessage = function(msg) {
+        var pos = $("#chatWindow").position().top;
+        chatWindow.append($('<p>').text(msg)).animate({ scrollTop: pos }, 'slow');   
+        chatWindow.scrollTop(chatWindow.height());
+      };
+
+    room.on('waitRoomjoined', function(data) {
+       room.emit('getRoomList');
+       if(data.isSuccess) {
+          var temp;
+          showMessage(nickname+'님이 대기실에 입장하셨습니다.');
+          var html = ['<div id ="elbemdiv2">'];
+          $.each(data.attendants, function() {
+             temp = objectToString(this);
+             alert(temp);
+             html.push('<p>'+temp);
+          });
+          html.push('</div>');
+          document.getElementById('attendants').innerHTML = html.join('');
+       }
+    });
+
+    $('#refreshRoomBt').click(function(e) {
+       room.emit('getRoomList');
+    });
+    room.on('getRoomListed', function(data) {
+       var html =['<div id ="roomListDiv2" style="margin-top:5px;">'];
+          $.each(data.roomList, function(index, item) {
+              if(index == 0) { 
+                 return true;
+              }
+              html.push('<div id="sub_roomList" style="margin-left:5px;">');
+              html.push('<div id="sub_roomList_1">');
+              html.push('<div id="sub_roomList_3">');
+              if(item.roomPublish===false){
+                 html.push('<image src="/images/잠금.png" style="width:99px; height:73px;">');
+              }
+              html.push('</div>');
+              html.push('<div id="sub_roomList_1_1">');
+              html.push('<p style="margin-left:30px;"> 방제: '+item.name);
+              html.push('</div>');
+              html.push('<div id="sub_roomList_1_2">');
+              html.push('<p style="float:left; margin-left:10px;"> 판수: '+item.textMax);
+              html.push('<p style="float:left; margin-left:50px;"> 최대인원: '+item.userMax);
+              html.push('<p style="float:left; margin-left:50px;"> 현재인원: '+item.attendants.length);
+              html.push('</div>');
+              html.push('</div>');
+              html.push('<div id="sub_roomList_2">');
+              html.push('<input type ="button", value="방 입장", class="faceBt", onclick ="enterRoom(\\'',item.name,'\\',\\'',item.roomPublish,'\\',\\'',item.roompw,'\\')">');
+              html.push('<input type ="button" value="방 정보", onclick ="showRoom(\\'',item.name,'\\')", class="faceBt">');
+              html.push('<div id="pwDiv'+item.name+'", style="display:none;">');
+              html.push('<input type ="text" value="비밀번호", id="pw'+item.name+'", onclick="setPw(\\'',item.name,'\\')", class="eTxt", style="margin-top:10px; margin-left:10px;">');
+              html.push('<input type ="button", value="o", onclick="okay(\\'',item.name,'\\',\\'',item.roompw,'\\')", class="faceBt">');              
+              html.push('</div>');
+              html.push('</div>');
+              html.push('</div>');
+          });
+          html.push('</div>');
+          document.getElementById('roomListDiv').innerHTML = html.join('');
+    });
+
+    room.on('message', function(data) {
+      showMessage(data.nickName + ' : ' + data.msg);
+      $(messageBox).focus();
+    });
+    $('form').submit(function(e) {
+      e.preventDefault();
+      var msg = messageBox.val();
+      if ($.trim(msg) !== '') {
+        showMessage(myName + ' : ' + msg);
+        room.json.send({nickName:myName, msg:msg});
+        messageBox.val('');
+        $(messageBox).focus();
+      }
+   });
+ });

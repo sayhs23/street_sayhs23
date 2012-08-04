@@ -9,12 +9,11 @@ var repo = require("./repository");
 var trans = require("./xml2json");
 
 var mysql = require('mysql')
-  , DATABASE = 'sayhs23'
+  , DATABASE = 'node_test'
   , TABLE = 'friends_test'
   , client = mysql.createClient({
-      user: 'sayhs23'
-    , host: '10.0.0.1'
-    , password: '9034gustn'
+      user: 'root'
+    , password: 'root'
   });
 
  var apikey = "d4f7c8cf4b043c224a43aee5dbb3528f";
@@ -505,6 +504,7 @@ module.exports = function(app) {
 ///////////////////////회원 가입//////////////////////////////////////gStreet///////////////////////////////////
 		socket.on('memberJoin', function(data){
 			    var level = '입문';
+				console.log('회원 가입 이벤트에 들어옴//// 회원 가입 렌더링');
 				client.query('INSERT INTO members SET nickname =?, pws=?, level=?, totalscore=0', [data.nickName,data.pws,level], function(err) {
 						if(err){
 							console.log('회원가입 오류 - 이미 있는 아이디 nickname -> primary key!');

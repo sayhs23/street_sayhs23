@@ -72,6 +72,23 @@ script(type='text/javascript')
        $('#dialog').slideToggle("slow");
        $(this).toggleClass("active"); return false;
     });
+    $('#createId').click(function(e) {
+       var nickname = $('#nickName').val();
+       var pw = $('#pw').val();
+       var rePw = $('#rePw').val();
+       alert(nickname + pw + rePw);
+
+       if(nickname ===''){ 
+          alert('아이디를 입력하세요.');
+          return false;
+       }
+       else if(pw!==rePw){ 
+          alert('비밀번호가 서로 다릅니다.');
+          return false;
+       }
+       alert(nickname+pw);
+       room.emit('memberJoin', { nickName:nickname, pws:pw }); 
+    });
     $('#createIdDivBt').click(function(e) {
        $('#createIdDiv_1').slideToggle("slow");
        $(this).toggleClass("active"); return false;

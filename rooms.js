@@ -9,11 +9,12 @@ var repo = require("./repository");
 var trans = require("./xml2json");
 
 var mysql = require('mysql')
-  , DATABASE = 'node_test'
+  , DATABASE = 'sayhs23'
   , TABLE = 'friends_test'
   , client = mysql.createClient({
-      user: 'root'
-    , password: 'root'
+      user: 'sayhs23'
+	, host: '10.0.0.1'
+    , password: '9034gustn'
   });
 
  var apikey = "d4f7c8cf4b043c224a43aee5dbb3528f";

@@ -6,7 +6,6 @@ var Music = require("./Music.js");
 var sys = require("util");
 var fs = require("fs");
 var repo = require("./repository");
-var trans = require("./xml2json");
 
 var mysql = require('mysql')
   , DATABASE = 'sayhs23'
@@ -27,7 +26,7 @@ module.exports = function(app) {
 
 
   io.configure(function(){
-    io.set('log level', 2);
+    io.set('log level', 1);
     io.set('transports', [
         'websocket'
       , 'flashsocket'

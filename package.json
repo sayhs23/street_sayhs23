@@ -1,9 +1,9 @@
 {
     "name": "sayhs23lhs"
   , "version": "0.0.1"
-  , "private": true
   , "dependencies": {
       "express": "<= 2.5.9"
+    , "mysql": "0.9.5"
     , "socket.io": "0.8.2"
     , "jade": ">= 0.0.1"
   }

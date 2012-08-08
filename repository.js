@@ -6,6 +6,7 @@ var mysql = require('mysql')
   , client = mysql.createClient({
       user: 'sayhs23'
 	, host: '10.0.0.1'
+	, port: '3306'
     , password: '9034gustn'
   });
 

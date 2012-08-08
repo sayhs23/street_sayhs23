@@ -13,7 +13,8 @@ var mysql = require('mysql')
   , TABLE = 'friends_test'
   , client = mysql.createClient({
       user: 'sayhs23'
-      , host: '10.0.0.1'
+    , host: '10.0.0.1'
+	, port: '3306'
     , password: '9034gustn'
   });
 
@@ -27,7 +28,7 @@ module.exports = function(app) {
 
 
     io.configure(function(){
-        io.set('log level', 1);
+        io.set('log level', 3);
         io.set('transports', [
         'websocket'
       , 'flashsocket'

@@ -102,12 +102,12 @@ body {
     background-color: #eaeaea;
 	margin-left:200px;
     width: 1000px;
-	height: 900px;
+	height: 950px;
 }
 #room_box{
     background-color: #f00f00;
     width: 1000px;
-	height: 100px;
+	height: 180px;
 }
 #room_top_1{
     background-color: #eaeaea;
@@ -115,34 +115,62 @@ body {
 	height: 50px;
 	font: 20px bold;
 }
+#room_top_1_1{
+    background-color: #eaeaea;
+    width: 500px;
+	height: 50px;
+	font: 20px bold;
+	float:left;
+}
+#room_top_1_2{
+    background-color: #eaeaea;
+    width: 500px;
+	height: 50px;
+	font: 20px bold;
+	float:left;
+}
 #room_top_2{
-    background-color: #ff0f00;
+    background-color: #ffff00;
     width: 1000px;
 	height: 50px;
 	font: 20px bold;
 }
+#room_top_3{
+    background-color: #ff00ff;
+    width: 1000px;
+	height: 50px;
+}
+#drawwerDiv{
+    font: 25px bold;
+}
+#scoreDiv{
+    font: 25px bold;
+}
 #room_box2{
     background-color: #000fff;
     width: 1000px;
-	height: 800px;
 }
 #room_main{
     background-color: #d2ffd2;
-    width: 800px;
+    width: 1000px;
 	height: 800px;
-	float:left;
 }
 #room_main_1{ /*제시어 영역 */
-    background-color: #14A0A0;
-    width: 800px;
+    background-color: #0A6E0A;
+	color: #ffffff;
+	font: 35px bold;
+    width: 1000px;
 	height: 50px;
-	float:left;
 }
 #room_main_2{  /*CANVAS 영역 */
     background-color: #ffffff;
-    width: 800px;
-	height: 500px;
-	float:left;
+    width: 1000px;
+	height: 550px;
+}
+#room_main_34{
+   width: 800px;
+   height:200px;
+   float:left;
 }
 #room_main_3{  /*채팅창 영역 */
     background-color: #FFF96;
@@ -156,6 +184,13 @@ body {
 	height: 50px;
 	float:left;
 }
+#room_main_right{
+    background-color: #aeaeae;
+	width:200px;
+	height: 200px;
+	float:left;
+
+}
 #room_right{
     background-color: #ff5ad9;
     width: 200px;
@@ -168,6 +203,12 @@ body {
 	height: 50px;
 	float:left;
 }
+#room_right_4{
+    background-color: #ff0f00;
+    width: 200px;
+	height: 100px;
+	float:left;
+}
 #room_right_1{
     background-color: #FFF978;
     width: 200px;
@@ -177,7 +218,7 @@ body {
 #room_right_2{
     background-color: #B4B4B4;
     width: 200px;
-	height: 600px;
+	height: 400px;
 	float:left;
 }
 #wrapperDiv{
@@ -967,9 +1008,8 @@ body {
 }
 #attendants{
 		   background-color: #0aa00a;
-		   width: 220px;
-		   height: 500px;
-		   margin-left:15px;
+		   width: 200px;
+		   height: 180px;
 		   margin-top:10px;
 		   overflow: auto;
 }

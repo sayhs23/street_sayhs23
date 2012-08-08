@@ -27,17 +27,27 @@ script(type='text/javascript')
       span(style='display:none;')#roompw= roompw
       span(style='display:none;')#roomName= roomName
       span(style='display:none;')#attendants= attendants
+      span(style='display:none;')#captin= captin
       #room_top_1
+         #room_top_1_1
+         #room_top_1_2
       #room_top_2
+      #room_top_3
+         p
+         input(type='button', value='게임 시작', id='gameStart', class='faceBt', style='margin-left:100px; width:250px; height: 40px;')
+         input(type='button', value='나가기', id='leave', class='faceBt', style='width:250px; height: 40px; margin-left: 300px;')
    #room_box2
       #room_main
          #room_main_1
-            p 제시어 힌트 나오는 영역
+               #hintDiv(style='float:left; width:600px; height:50px; margin-top:5px;')
+               #scoreDiv(style='width:200px; height:50px; float:left; margin-top:15px;')
+               #drawwerDiv(style='width:200px; height:50px; float:left; margin-top:15px;')
+         #gameResult(style='display:block;')
          #room_main_2
            table(border="10", width="200", height="330")
               tr
                  td(rowspan="3")
-                    <canvas id ="canvas" width ="570" height ="450"></canvas>
+                    <canvas id ="canvas" width ="770" height ="490"></canvas>
                  td(height="50")
                     <div id ="colorpicker"></div>
               tr
@@ -46,22 +56,19 @@ script(type='text/javascript')
               tr
                  td(height ="30" ,style ="background:Orange;")
            input(type='button', class='faceBt', value='모두 지우기', id='canvasClear')
-         #room_main_3
-            #chatWindow(style='width:700px; height:140px; overflow:auto; margin-left:50px; margin-bottom:5px;')
-         #room_main_4
-            p(style='float:left; margin-left:50px;')#UserName
-            form
-                input(type='text', value='채팅 내용', calss='eTxt', id='message', style='width:500px; margin-top:17px; margin-left:30px;')
-                input(type='submit', value='전송', class='faceBt', id='chatBt', style='margin-top:17px; margin-left:10px;')
-      #room_right
-         #room_right_3
-          p 사용자 정보
-         #room_right_1
-         #room_right_2
+           input(type='button', class='faceBt', value='지우개', id='erase')
+         #room_main_34
+            #room_main_3
+               #chatWindow(style='width:700px; height:140px; overflow:auto; margin-left:50px; margin-bottom:5px;')
+            #room_main_4
+               p(style='float:left; margin-left:50px;')#UserName
+               form
+                  input(type='text', value='채팅 내용', calss='eTxt', id='message', style='width:500px; margin-top:17px; margin-left:30px;')
+                  input(type='submit', value='전송', class='faceBt', id='chatBt', style='margin-top:17px; margin-left:10px;')
+         #room_main_right
             p 대기실 참가자 목록
             #attendantsDiv
-
-               
+               #attendants
 script(type='text/javascript')
    $(document).ready(function() {
 
@@ -76,6 +83,16 @@ script(type='text/javascript')
       var attendants = $('#attendants');
       var chatWindow = $('#chatWindow');
       var messageBox = $('#message');
+      var captin = $('#captin').text();
+      var myScore = 0;
+      var UserCnt = 0;
+      var gameing = 0;
+      var drawwer='';
+      var hint='';
+
+      if(nickname !== captin){
+          $('#gameStart').css('display', 'none');
+      }
 
       var canvas = document.getElementById('canvas');
       var context = canvas.getContext('2d');
@@ -84,7 +101,7 @@ script(type='text/javascript')
       var color = '#000000';
       var isDown = false;
       var newPoint, oldPoint;
-
+      
       canvas.onmousedown = function( event ){
          isDown = true;
          oldPoint = new Point(event, this);
@@ -95,9 +112,20 @@ script(type='text/javascript')
       canvas.onmousemove = function(event) {
          if(isDown) {
             newPoint = new Point(event, this);
-
-            room.emit('draw', { width: width, color:color, x1:oldPoint.x, y1:oldPoint.y, x2:newPoint.x, y2: newPoint.y });
-            oldPoint = newPoint;
+            
+            if(gameing === 0){
+               context.lineWidth = width;
+               context.strokeStyle = color;
+               context.beginPath();
+               context.moveTo(oldPoint.x, oldPoint.y);
+               context.lineTo(newPoint.x, newPoint.y);
+               context.stroke();
+               oldPoint = newPoint;
+            }else if(gameing === 1&&drawwer === nickname){
+               room.emit('draw', { width: width, color:color, x1:oldPoint.x, y1:oldPoint.y, x2:newPoint.x, y2: newPoint.y });
+               oldPoint = newPoint;
+            }else if(gameing === 1 && drawwer === nickname) {   
+            }
          }
       };
 
@@ -109,9 +137,11 @@ script(type='text/javascript')
          context.lineTo(data.x2, data.y2);
          context.stroke();
       });
-          
       $('#colorpicker').farbtastic(function (data) {
          color = data;
+      });
+      $('#erase').click(function (e) {
+         color ='#FFFFFF';
       });
       $('#slider').slider({ 
          max: 20, min:1, 
@@ -129,49 +159,65 @@ script(type='text/javascript')
         room.emit('join', {roomName:roomname, nickName:nickname}); 
       });
       $('#UserName').html('<p>'+nickname);
-      var count=0;
-      var data2;
-      $.each(attendants, function(item, index) {
-         var attendantsArray = attendants.text();
-         var data = objectToString(attendantsArray);
-         data2=data.split(',');
-         count++;
-      });
+      
       $('#message').click(function(e) {
          $('#message').val('');
       });
       $('#canvasClear').click(function(e) {
-         room.emit('canvasClear');
-      });
-      room.on('canvasCleared', function() {
-         context.clearRect(0, 0, canvas.width, canvas.height);
-      });
-      var html = ['<div id ="userListDiv">'];
-      if(count===0){
-         html.push('<div id="idListDiv">');
-         html.push('<p> * '+data2[0]);
-         html.push('<input type = "button" value="정보" onclick="fct(\\'',data2[i],'\\')" class="faceBt">');
-         html.push('<input type = "button" value="추가" class="faceBt">');
-         html.push('</div>');
-      }
-      else if(count >=1){
-         for(var i =0 ;i<=count;i++){ 
-            html.push('<div id="idListDiv">');
-            html.push('<p> * '+data2[i]);
-            html.push('<input type = "button" value="정보" onclick="fct(\\'',data2[i],'\\')" class="faceBt">');
-            html.push('<input type = "button" value="추가" class="faceBt">');
-            html.push('</div>');	   
+         if(gameing === 0){
+             context.clearRect(0, 0, canvas.width, canvas.height);
+         }else if(gameing === 1 && drawwer === nickname){
+             room.emit('canvasClear');
+         }else if(gameing === 1 && drawwer === nickname) {
          }
-      }
-      html.push('</div>');
-      document.getElementById('attendantsDiv').innerHTML = html.join(''); 
-    
+      });
+     room.on('canvasCleared', function() {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+     });
+     room.on('gameEnd', function(data) {
+        var output ='';
+        output +='<p>게임 결과</p>';
+        output +='<hr>';
+        var i = 1;
+        $.each(data.array, function(index, item) {
+           $.each(item, function(index, item) {
+               output += '<p>'+i+'등 '+item.name+' ('+item.level +') '+'  -      점수 : '+item.currentscore;         
+               i++;
+           });
+        });
+        $('#attendants-'+data.nickname).html('<p>'+data.nickname+'점수:'+data.usercurrentscore);
+        showMessage(data.nickname + '님이 정답을 맞춰었습니다!.');
+        $('#scoreDiv').html('<p style="margin-top:1px;">SCORE: '+data.roomScore);
+        $('#gameResult').html(output);
+        $('#gameResult').slideDown("slow");
+     });
+     room.on('increaseScored', function(data) {
+        $('#hintDiv').html('');
+        hint = data.hint;
+        drawwer = data.drawwer;
+        $('#attendants-'+data.nickname).html('<p>'+data.nickname+'점수:'+data.usercurrentscore);
+        showMessage(data.nickname + '님이 정답을 맞춰었습니다!.');
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        if(nickname === drawwer) {
+           $('#hintDiv').html('<p style="margin-left:100px; margin-top:1px;">'+data.hint);
+        }
+        $('#scoreDiv').html('<p style="margin-top:1px;">SCORE: '+data.roomScore);
+        $('#drawwerDiv').html('<p style="margin-top:1px;">펜: '+data.drawwer);
+     });
+     room.on('getRoomUserListed', function(data) {
+        var html = ['<div id ="userListDiv">'];
+         $.each(data.attendants, function(index, item) {
+            html.push('<p id="attendants-',item,'">'+item+' 점수:'+myScore);
+         });
+         html.push('</div>');
+         document.getElementById('attendantsDiv').innerHTML = html.join(''); 
+      });       
       if(roomPublish==='true'){
-          $('#room_top_1').html('<p style="margin-left:20px;"> 공개방 </p>');
+          $('#room_top_1_2').html('<p style="margin-left:20px;"> 공개방 </p>');
       }
       if(roomPublish==='false'){
          var output ='<p> 비공개방  비밀번호는 : '+roompw
-         $('#room_top_1').html('<p> 비공개방  비밀번호는 : '+roompw);
+         $('#room_top_1_2').html('<p> 비공개방  비밀번호는 : '+roompw);
       }
       var output ='<p style="float:left; margin-left:20px;"> 방 이름 : '+roomname;
       output +='<p style="float:left; margin-left:30px;"> 최대 판수 : '+textMax;
@@ -187,7 +233,8 @@ script(type='text/javascript')
       });
       
       room.on('joined', function(data) {
-         showMessage(data.nickname + '님이 입장하셨습니다.');      
+         showMessage(data.nickname + '님이 입장하셨습니다.');
+         room.emit('getRoomUserList', {roomname:roomname});
       });
 
       room.on('message', function(data) {
@@ -196,21 +243,50 @@ script(type='text/javascript')
       $('form').submit(function(e) {
          e.preventDefault();
          var msg = messageBox.val();
-         if ($.trim(msg) !== '') {
+         if ($.trim(msg) !== ''&& $.trim(msg) !== hint) {
            showMessage(nickname + ' : ' + msg);
            room.json.send({nickName:nickname, msg:msg});
            messageBox.val('');
            $(messageBox).focus();
          }
+         else if ($.trim(msg) !== ''&& $.trim(msg) === hint && nickname!==drawwer) {
+           showMessage(nickname + ' : ' + msg);
+           room.emit('increaseScore', {nickname: nickname, roomname:roomname });
+           messageBox.val('');
+           $(messageBox).focus();
+         }
+         else if ($.trim(msg) !== ''&& $.trim(msg) === hint && nickname===drawwer) {
+           alert('패스');
+         }
       });
 
       room.on('leaved', function(data) {
         showMessage(data.nickName + '님이 나가셨습니다.');
-        $('#attendant-'+data.nickName).remove();
+        captin = data.captin;
+        if(captin === nickname) {
+           $('#gameStart').css('display', 'inline');	
+        }
+        $('#attendants-'+data.nickName).remove();
       });
-
+      $('#gameStart').click(function(e) {
+         room.emit('game', {roomname:roomname}); 
+      });
+      room.on('gamed', function(data) {
+         context.clearRect(0, 0, canvas.width, canvas.height);
+         $('#gameResult').slideUp("slow");
+         $('#hint').html('');
+         drawwer = data.drawwer;
+         gameing = 1;
+         $('#room_top_1_1').html('<p> 게임 중');
+         hint = data.msName;
+         if(nickname === drawwer){
+            $('#hintDiv').html('<p style="margin-left:400px; margin-top:1px;">'+data.msName);
+         }
+         $('#scoreDiv').html('<p style="margin-top:1px;">현재: '+data.score);
+         $('#drawwerDiv').html('<p style="margin-top:1px;">펜: '+data.drawwer);
+      });
       $('#leave').click(function(e) {
-        room.emit('leave', {nickName:myName});
-        location.href='/enter';
+        room.emit('leave', {nickName:nickname});
+        location.href='/waitingRoom';
       });
    });

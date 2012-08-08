@@ -38,6 +38,11 @@ var mysqlUtil = module.exports = {
 										var totalscore = results[0].totalscore;
 										req.session.nickname =nickName;
 
+										console.log('해당 유저를 이제는 users 배열에 담는다. 세션 유지를 위해선');
+										Chat.addUser(nickName, level, totalscore, 0);
+										console.log('갯 유저 인포 함수는');
+										var userInfo = Chat.getUserInfo(nickName);
+										console.log(userInfo);
 										console.log('repository.js 에서 세션값은->'+req.session.nickname );
 
 									//	socket.emit('logined', { nickName:nickName, level: level, totalscore:totalscore});

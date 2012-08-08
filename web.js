@@ -76,11 +76,11 @@ app.get('/room/:id', function(req, res) {
   
   if(roomPublish===true) { //공개 모드일때
 		 console.log('라우터에서 공개 모드일때 방이름 정보 해당 유저를 방에 넣는다.');
-		 Chat.addRoom(roomName, roomInfo.textMax, roomInfo.userMax, nickname, roomInfo.roomPublish,'' );  // 방만들면 방이름(방명), 최대 게임 판수, 최대 제한 유저수, 방장이나온다.
+		 Chat.addRoom(roomName, roomInfo.textMax, roomInfo.captin, nickname, roomInfo.roomPublish,'', 0, 0,'' );  // 방만들면 방이름(방명), 최대 게임 판수, 최대 제한 유저수, 방장이나온다.
   }
   else if(roomPublish ===false ) { // 비공개 모드
     	  console.log('라우터에서 비공개 모드일때 방이름과 방정보 그리고 해당 유저를 방에 넣는다.');
-		  Chat.addRoom(roomName, roomInfo.textMax, roomInfo.userMax, nickname, roomInfo.roomPublish, roomInfo.roompw );  
+		  Chat.addRoom(roomName, roomInfo.textMax, roomInfo.captin, nickname, roomInfo.roomPublish, roomInfo.roompw,0,0,'' );  
    }
 			 // 이제 방에 넣었으면 이걸 정보를 뿌려주자.
    console.log('nickname을 roomName방에 넣자'+nickname+roomName);
@@ -102,6 +102,7 @@ app.get('/room/:id', function(req, res) {
        , roomPublish:roomPublish
        , roompw: roompw
        , roomName:roomName
+       , captin:captin
        , attendants: attendants
      });
 /*  var user = Chat.getUser(req.session.nickname);
@@ -160,6 +161,26 @@ app.post('/waitingRoom', function(req, res) {
    repo.checkNickName(req, res);
 });
 
+app.get('/waitingRoom', function(req, res) {
+   console.log('/waitingRoom get방식 이벤트 호출');
+   var nickname = req.session.nickname;
+
+   var userInfo = Chat.getUserInfo(nickname);
+   console.log(userInfo);
+
+   var name = userInfo.name;
+   var level = userInfo.level;
+   var totalscore = userInfo.totalscore;
+
+   console.log(name + level + totalscore);
+
+   res.render('waitingRoom', {
+					nickname: name
+				  , level: level
+				  , totalscore: totalscore
+				  , title: 'Express'
+				  });
+});
 app.get('/cStreet', function(req, res) {
   res.render('cStreet');
 });

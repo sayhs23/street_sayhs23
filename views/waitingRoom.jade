@@ -20,7 +20,6 @@ script(type='text/javascript')
  var okay = function(name, roompw) {
     var t = '#pw'+name;
     var pw = $(t).val();
-    alert(pw);
     if(roompw === pw) {
        location.href = '/room/'+name;
     }
@@ -195,7 +194,6 @@ script(type='text/javascript')
           var html = ['<div id ="elbemdiv2">'];
           $.each(data.attendants, function() {
              temp = objectToString(this);
-             alert(temp);
              html.push('<p>'+temp);
           });
           html.push('</div>');

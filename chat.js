@@ -13,8 +13,8 @@ var Chat = module.exports = {
         return false; 
       }
     }
-  , addUser: function(nickname) {
-      this.users.push(nickname);
+  , addUser: function(nickname, level, totalscore, currentscore) {
+      this.users.push({name:nickname, level:level, totalscore:totalscore, currentscore:currentscore});
     }
     // 방 관련
   , hasRoom: function(roomName) {
@@ -28,8 +28,8 @@ var Chat = module.exports = {
         return false; 
       }
     }
-  , addRoom: function(roomName, textMax, userMax, captin, roomPublish, roompw) {   //////////////// 방 추가요!
-      this.rooms.push({name:roomName, attendants:[], textMax:textMax, userMax:userMax, captin:captin, roomPublish:roomPublish, roompw:roompw});
+  , addRoom: function(roomName, textMax, userMax, captin, roomPublish, roompw, gameing, score, drawwer) {   //////////////// 방 추가요!
+      this.rooms.push({name:roomName, attendants:[], textMax:textMax, userMax:userMax, captin:captin, roomPublish:roomPublish, roompw:roompw, gameing:gameing, score:score, drawwer:drawwer});
     }
   , getRoomList: function() { ////////////////////// 방 목록이요
       return this.rooms.map(function(element) {
@@ -41,6 +41,12 @@ var Chat = module.exports = {
         return (element.name === roomName);   
       });
       return rooms[0];
+    }
+  , getUserInfo: function(nickname) {
+      var users = this.users.filter(function(element) {
+        return (element.name === nickname);   
+      });
+      return users[0];
     }
   , joinRoom: function(roomName, user) {
       var rooms = this.rooms.filter(function(element) {
@@ -68,10 +74,22 @@ var Chat = module.exports = {
   , deleteNickName: function(nickname) {
 	 this.users.pop(nickname);
   }
+  , deleteRoom: function(roomName){
+     this.rooms.pop(roomName);
+  }
   , getAttendantsList: function(roomName) {
       var rooms = this.rooms.filter(function(element) {
         return (element.name === roomName);   
       });
       return rooms[0].attendants;
+    }
+	, deleteUser: function(roomName, nickName) {
+	  console.log('deleteUsr 함수 실행 방 이름은: '+roomName);
+      var rooms = this.rooms.filter(function(element) {
+        return (element.name === roomName);   
+      });
+      var roomAttendants = rooms[0].attendants;
+	  roomAttendants.pop(nickName);
+
     }
 }

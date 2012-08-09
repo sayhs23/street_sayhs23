@@ -1163,6 +1163,8 @@ module.exports = function(app) {
             }
         });
     });
+	client.end();
+	console.log('connectin closed');
 }
 
 

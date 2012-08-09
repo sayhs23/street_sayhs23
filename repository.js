@@ -4,9 +4,9 @@ var mysql = require('mysql')
   , DATABASE = 'sayhs23'
   , TABLE = 'members'
   , client = mysql.createClient({
-      user: 'sayhs23'
-	, host: '10.0.0.1'
-	, port: '3306'
+      user: 'root'
+	//, host: '10.0.0.1'
+	//, port: '3306'
     , password: '9034gustn'
   });
 

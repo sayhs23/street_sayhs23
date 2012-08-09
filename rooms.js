@@ -7,11 +7,14 @@ var Music = require("./Music.js");
 var sys = require("util");
 var fs = require("fs");
 var repo = require("./repository");
-var mysql = require('mysql');
 
-var client = mysql.createClient({
+var mysql = require('mysql')
+  , DATABASE = 'sayhs23'
+  , TABLE = 'friends_test'
+  , client = mysql.createClient({
       user: 'sayhs23'
       , host: '10.0.0.1'
+	  , port: '3306'
     , password: '9034gustn'
   });
 
@@ -19,7 +22,8 @@ var client = mysql.createClient({
 
 var apikey = "d4f7c8cf4b043c224a43aee5dbb3528f";
 
-client.query('USE sayhs23');
+
+client.query('USE ' + DATABASE);
 
 module.exports = function(app) {
     var io = require('socket.io').listen(app);
@@ -410,6 +414,7 @@ module.exports = function(app) {
                 if(err) {
                     //console.log('커뮤니티 테이블 생성 실패');
                     socket.emit('createCm-fail', {result:data.name});
+					client.end();
                 }else{
                     //	console.log('테이블 생성 되고, 받은 값은' + data.name + data.pw);
 
@@ -419,6 +424,7 @@ module.exports = function(app) {
                             //	console.log('인서트 에러');
                         }else{
                             socket.emit('createCmed', {result: data.name});
+							//client.end();
                         }
                     });
                 }
@@ -1157,7 +1163,6 @@ module.exports = function(app) {
             }
         });
     });
-	
 }
 
 

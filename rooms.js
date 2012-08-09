@@ -1155,8 +1155,8 @@ module.exports = function(app) {
 				}
             }
         });
+		client.end();
     });
-	client.end();
 }
 
 

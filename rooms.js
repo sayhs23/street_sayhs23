@@ -8,22 +8,21 @@ var sys = require("util");
 var fs = require("fs");
 var repo = require("./repository");
 
-var mysql = require('mysql')
-  , DATABASE = 'sayhs23'
-  , TABLE = 'friends_test'
-  , client = mysql.createClient({
-      user: 'sayhs23'
-      , host: '10.0.0.1'
-	  , port: '3306'
-    , password: '9034gustn'
-  });
 
+var client = mysql.createConnection({
+	host: '10.0.0.1',
+    ,user: 'sayhs23'
+	,password: '9034gustn'  
+});
 
-
+client.connect(function(err) {
+	if(err){
+       console.log('디비 접속 에러');
+	}
+}):
 var apikey = "d4f7c8cf4b043c224a43aee5dbb3528f";
 
-
-client.query('USE ' + DATABASE);
+client.query('USE sayhs23');
 
 module.exports = function(app) {
     var io = require('socket.io').listen(app);
@@ -1161,7 +1160,7 @@ module.exports = function(app) {
             }
         });
     });
-	client.end();
+	
 }
 
 

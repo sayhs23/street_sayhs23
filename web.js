@@ -26,6 +26,11 @@ app.configure('production', function(){
   app.use(express.errorHandler()); 
 });
 
+app.configure('development', function(){
+  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+});
+
+
 // Routes
 app.get('/', function(req, res){
  /* res.header("Access-Control-Allow-Headers","X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept");

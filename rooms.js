@@ -13,11 +13,9 @@ var mysql = require('mysql')
   , TABLE = 'friends_test'
   , client = mysql.createClient({
       user: 'sayhs23'
-    , host: '10.0.0.1'
+      , host: '10.0.0.1'
     , password: '9034gustn'
   });
-
-
 
 var apikey = "d4f7c8cf4b043c224a43aee5dbb3528f";
 
@@ -45,8 +43,6 @@ module.exports = function(app) {
     .on('connection', function(socket) { 
         var joinedRoom = null;
         //  console.log('클라이언트 접속함');
-
-		
       
         socket.on('join', function(data) {
             if (Chat.hasRoom(data.roomName)) {
@@ -413,7 +409,6 @@ module.exports = function(app) {
                 if(err) {
                     //console.log('커뮤니티 테이블 생성 실패');
                     socket.emit('createCm-fail', {result:data.name});
-					client.end();
                 }else{
                     //	console.log('테이블 생성 되고, 받은 값은' + data.name + data.pw);
 
@@ -423,7 +418,6 @@ module.exports = function(app) {
                             //	console.log('인서트 에러');
                         }else{
                             socket.emit('createCmed', {result: data.name});
-							//client.end();
                         }
                     });
                 }
@@ -1162,7 +1156,6 @@ module.exports = function(app) {
             }
         });
     });
-	//client.end();
 }
 
 

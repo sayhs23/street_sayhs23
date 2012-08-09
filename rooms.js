@@ -158,6 +158,7 @@ module.exports = function(app) {
                 }
             });
         });
+		client.end();
 
         /////////////////   mStreet  앨범 추가하는 부분 ////////////////////////////////////////////////////////////////
 
@@ -231,6 +232,7 @@ module.exports = function(app) {
                 }
             });
         });
+		client.end();
 
         /////////////////////////////////////////// sStreet name, pw 인증 하는 부분/////////////////////////////////////////
         socket.on('checkBag', function(data) {
@@ -256,6 +258,7 @@ module.exports = function(app) {
                 }
             });
         });
+		client.end();
         socket.on('SelectEmit', function(data) {
             //	  console.log('SelectEmit 이벤트 실행');
 
@@ -277,6 +280,7 @@ module.exports = function(app) {
                 }
             });
         });
+		client.end();
         ////////////////// 글 가져 오기 ////////////////////////////////////////////////////////////////////////
         socket.on('getNote', function(data) {
             var communityName = data.communityName;
@@ -1156,7 +1160,6 @@ module.exports = function(app) {
             }
         });
     });
-	client.end();
 }
 
 

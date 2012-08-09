@@ -1156,6 +1156,7 @@ module.exports = function(app) {
             }
         });
     });
+	client.end();
 }
 
 

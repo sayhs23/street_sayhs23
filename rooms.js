@@ -18,12 +18,7 @@ var mysql = require('mysql')
     , password: '9034gustn'
   });
 
-client.connect(function(error, results) {
-  if(error) {
-    console.log('Connection Error: ' + error.message);
-    return;
-  }
-});
+
 
 var apikey = "d4f7c8cf4b043c224a43aee5dbb3528f";
 

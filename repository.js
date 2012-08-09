@@ -10,12 +10,7 @@ var mysql = require('mysql')
     , password: '9034gustn'
   });
 
-client.connect(function(error, results) {
-  if(error) {
-    console.log('Connection Error: ' + error.message);
-    return;
-  }
-});
+
 
 client.query('USE ' + DATABASE);
 

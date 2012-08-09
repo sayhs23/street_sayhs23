@@ -9,7 +9,7 @@ var fs = require("fs");
 var repo = require("./repository");
 
 var mysql = require('mysql')
-  , DATABASE = '9034gustn'
+  , DATABASE = 'sayhs23'
   , TABLE = 'friends_test'
   , client = mysql.createClient({
       user: 'sayhs23'

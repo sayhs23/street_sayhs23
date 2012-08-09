@@ -14,8 +14,16 @@ var mysql = require('mysql')
   , client = mysql.createClient({
       user: 'sayhs23'
       , host: '10.0.0.1'
+	  , port: '3306'
     , password: '9034gustn'
   });
+
+client.connect(function(error, results) {
+  if(error) {
+    console.log('Connection Error: ' + error.message);
+    return;
+  }
+});
 
 var apikey = "d4f7c8cf4b043c224a43aee5dbb3528f";
 

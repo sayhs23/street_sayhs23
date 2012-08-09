@@ -423,7 +423,6 @@ module.exports = function(app) {
                             //	console.log('인서트 에러');
                         }else{
                             socket.emit('createCmed', {result: data.name});
-							client.end();
                         }
                     });
                 }
@@ -1162,6 +1161,7 @@ module.exports = function(app) {
             }
         });
     });
+	client.end();
 }
 
 

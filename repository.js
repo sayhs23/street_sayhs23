@@ -1,27 +1,24 @@
 Chat = require('./chat');
 
 var mysql = require('mysql')
-  , DATABASE = 'sayhs23'
+  , DATABASE = 'node_test'
   , TABLE = 'members'
   , client = mysql.createClient({
       user: 'root'
-	, host: '10.0.0.1'
-    , password: '9034gustn'
+	//, host: '10.0.0.1'
+    , password: 'root'
   });
-
-
 
 client.query('USE ' + DATABASE);
 
 var mysqlUtil = module.exports = {
  checkNickName: function(req, res) {
 	   var nickName = req.body.inputNickName;
-	   var pws = req.body.inputPw;
+		   var pws = req.body.inputPw;
 
 		   client.query('SELECT pws FROM members WHERE nickname=?', [nickName], function(err, results, fields){
 						if(err){
 							console.log('로그인 오류.');
-							client.end();
 						}else{
 							try{
 								var serverpws = results[0].pws;
@@ -34,7 +31,6 @@ var mysqlUtil = module.exports = {
 								client.query('SELECT * FROM members WHERE nickname=?', [nickName], function(err, results, fields){
 									if(err){
 										console.log('재 결과 탐색시 에러. 발생');
-										client.end();
 									}else{
 										console.log(results);
 										var nickName = results[0].nickname;

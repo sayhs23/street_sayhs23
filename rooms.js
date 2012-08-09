@@ -46,6 +46,8 @@ module.exports = function(app) {
     .on('connection', function(socket) { 
         var joinedRoom = null;
         //  console.log('클라이언트 접속함');
+
+		
       
         socket.on('join', function(data) {
             if (Chat.hasRoom(data.roomName)) {
@@ -421,6 +423,7 @@ module.exports = function(app) {
                             //	console.log('인서트 에러');
                         }else{
                             socket.emit('createCmed', {result: data.name});
+							client.end();
                         }
                     });
                 }

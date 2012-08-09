@@ -10,7 +10,7 @@ var repo = require("./repository");
 
 
 var client = mysql.createConnection({
-	host: '10.0.0.1',
+	host: '10.0.0.1'
     ,user: 'sayhs23'
 	,password: '9034gustn'  
 });

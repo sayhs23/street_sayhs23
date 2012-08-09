@@ -40,12 +40,6 @@ script(type='text/javascript')
   var loadPlayer = function() {
         swfobject.embedSWF("http://www.youtube.com/v/_XVIFSM1tEQ?version=3&f=videos&app=youtube_gdata"+ '&rel=1&border=0&fs=1&autoplay=' + (0?1:0), 'player', '450', '320', '9.0.0', false, false, {allowfullscreen: 'true'});
   };
-  var likeEmit = function(elbemName){
-        alert(elbemName+'좋아요!');
-        var room = io.connect('/room');
-        room.emit('likeElbem',{name:elbemName});
-        room.emit('thisLikesEmit', { name: elbemName });
-  };
 #m_box
  #m_main_1
    img(id='LOGO', style='float:left',src='/images/logo.png', title='로고다시')
@@ -251,4 +245,9 @@ script(type='text/javascript')
     $('#home').click(function(e) {
      location.href = '/';
     });
+    var likeEmit = function(elbemName){
+       alert(elbemName+'좋아요!');
+       room.emit('likeElbem',{name:elbemName});
+       room.emit('thisLikesEmit', { name: elbemName });
+    };
   });

@@ -13,8 +13,8 @@ var Chat = module.exports = {
         return false; 
       }
     }
-  , addUser: function(nickname, level, totalscore, currentscore) {
-      this.users.push({name:nickname, level:level, totalscore:totalscore, currentscore:currentscore});
+  , addUser: function(nickname, level, totalscore) {
+      this.users.push({name:nickname, level:level, totalscore:totalscore});
     }
     // 방 관련
   , hasRoom: function(roomName) {
@@ -74,9 +74,6 @@ var Chat = module.exports = {
   , deleteNickName: function(nickname) {
 	 this.users.pop(nickname);
   }
-  , deleteRoom: function(roomName){
-     this.rooms.pop(roomName);
-  }
   , getAttendantsList: function(roomName) {
       var rooms = this.rooms.filter(function(element) {
         return (element.name === roomName);   
@@ -84,12 +81,14 @@ var Chat = module.exports = {
       return rooms[0].attendants;
     }
 	, deleteUser: function(roomName, nickName) {
-	  console.log('deleteUsr 함수 실행 방 이름은: '+roomName);
+	  console.log('deleteUsr 함수 실행');
       var rooms = this.rooms.filter(function(element) {
         return (element.name === roomName);   
       });
       var roomAttendants = rooms[0].attendants;
+	  console.log('팝하기 전에' +roomAttendants);
 	  roomAttendants.pop(nickName);
+	  console.log('팝하고 나서'+roomAttendants);
 
     }
 }

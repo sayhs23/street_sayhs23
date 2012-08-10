@@ -4,15 +4,9 @@ var mysql = require('mysql')
   , DATABASE = 'node_test'
   , TABLE = 'members'
   , client = mysql.createClient({
-<<<<<<< HEAD
-      user: 'root'
-	//, host: '10.0.0.1'
-    , password: 'root'
-=======
       user: 'sayhs23'
 	, host: '10.0.0.1'
     , password: '9034gustn'
->>>>>>> 69e1074a136079a901ff3fa220b88446c26f140d
   });
 
 client.query('USE ' + DATABASE);

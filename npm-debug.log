@@ -2,7 +2,7 @@ info it worked if it ends with ok
 verbose cli [ 'C:\\Program Files\\nodejs\\\\node.exe',
 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
 verbose cli   'install',
-verbose cli   'git://github.com/felixge/node-mysql.git' ]
+verbose cli   'heroku' ]
 info using npm@1.1.12
 info using node@v0.6.14
 verbose C:\Program Files\nodejs\\node.exe node symlink
@@ -13,93 +13,80 @@ verbose mkdir done: C:\Users\Lee\AppData\Roaming\npm 755
 verbose mkdir done: C:\Users\Lee\Desktop\sayhs23_street 755
 verbose caching C:\Users\Lee\Desktop\sayhs23_street\package.json
 verbose loadDefaults sayhs23lhs@0.0.1
-verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\cloud9\package.json
-verbose loadDefaults cloud9@0.5.1
-verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\ejs\package.json
-verbose loadDefaults ejs@0.7.1
-verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\mime\package.json
-verbose loadDefaults mime@1.2.4
-verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\connect-mongodb\package.json
-verbose loadDefaults connect-mongodb@1.0.0
-verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\mkdirp\package.json
-verbose loadDefaults mkdirp@0.0.7
-verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\qs\package.json
-verbose loadDefaults qs@0.3.1
-verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\node-schedule\package.json
-verbose loadDefaults node-schedule@0.1.5
-verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\request\package.json
-verbose loadDefaults request@2.9.100
-verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\restler\package.json
-verbose loadDefaults restler@0.2.5
-verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\traverse\package.json
-verbose loadDefaults traverse@0.5.1
-verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\uglify-js\package.json
-verbose loadDefaults uglify-js@1.0.6
-verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\websocket-client\package.json
-verbose loadDefaults websocket-client@1.0.0
-verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\xmlhttprequest\package.json
-verbose loadDefaults xmlhttprequest@1.2.2
-verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\express\package.json
-verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\socket.io-client\package.json
-verbose loadDefaults socket.io-client@0.8.2
-verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\socket.io\package.json
-verbose loadDefaults socket.io@0.8.2
-verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\jade\package.json
-verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\npm\package.json
-verbose loadDefaults npm@1.1.0-beta-4
-verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\http-proxy\package.json
 verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\connect\package.json
 verbose loadDefaults connect@1.7.2
-verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\policyfile\package.json
-verbose loadDefaults policyfile@0.0.4
-verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\redis\package.json
-verbose loadDefaults redis@0.6.6
+verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\ejs\package.json
+verbose loadDefaults ejs@0.7.1
+verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\connect-mongodb\package.json
+verbose loadDefaults connect-mongodb@1.0.0
 verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\express-csrf\package.json
 verbose loadDefaults express-csrf@0.3.3
+verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\express\package.json
+verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\http-proxy\package.json
 verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\hashish\package.json
 verbose loadDefaults hashish@0.0.4
+verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\mime\package.json
+verbose loadDefaults mime@1.2.4
+verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\jade\package.json
 verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\mongodb\package.json
 verbose loadDefaults mongodb@0.9.6-23
+verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\mkdirp\package.json
+verbose loadDefaults mkdirp@0.0.7
+verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\node-schedule\package.json
+verbose loadDefaults node-schedule@0.1.5
+verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\cloud9\package.json
+verbose loadDefaults cloud9@0.5.1
+verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\qs\package.json
+verbose loadDefaults qs@0.3.1
+verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\policyfile\package.json
+verbose loadDefaults policyfile@0.0.4
+verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\request\package.json
+verbose loadDefaults request@2.9.100
+verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\socket.io\package.json
+verbose loadDefaults socket.io@0.8.2
+verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\redis\package.json
+verbose loadDefaults redis@0.6.6
+verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\traverse\package.json
+verbose loadDefaults traverse@0.5.1
+verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\restler\package.json
+verbose loadDefaults restler@0.2.5
+verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\socket.io-client\package.json
+verbose loadDefaults socket.io-client@0.8.2
+verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\xmlhttprequest\package.json
+verbose loadDefaults xmlhttprequest@1.2.2
+verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\websocket-client\package.json
+verbose loadDefaults websocket-client@1.0.0
+verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\uglify-js\package.json
+verbose loadDefaults uglify-js@1.0.6
+verbose caching C:\Users\Lee\Desktop\sayhs23_street\node_modules\npm\package.json
+verbose loadDefaults npm@1.1.0-beta-4
 verbose from cache C:\Users\Lee\Desktop\sayhs23_street\package.json
 verbose readDependencies: using package.json deps
-verbose cache add [ 'git://github.com/felixge/node-mysql.git', null ]
-silly cache add: name, spec, args [ undefined,
-silly cache add: name, spec, args   'git://github.com/felixge/node-mysql.git',
-silly cache add: name, spec, args   [ 'git://github.com/felixge/node-mysql.git', null ] ]
-verbose parsed url { protocol: 'git:',
-verbose parsed url   slashes: true,
-verbose parsed url   host: 'github.com',
-verbose parsed url   hostname: 'github.com',
-verbose parsed url   href: 'git://github.com/felixge/node-mysql.git',
-verbose parsed url   pathname: '/felixge/node-mysql.git',
-verbose parsed url   path: '/felixge/node-mysql.git' }
-verbose addRemoteGit [ 'git://github.com/felixge/node-mysql.git', 'master' ]
-verbose mkdir (expected) error ENOENT, stat 'C:\Users\Lee\AppData\Local\Temp\npm-1344480653131'
-verbose mkdir done: C:\Users\Lee\AppData\Local\Temp\npm-1344480653131 755
-silly exec git "clone" "git://github.com/felixge/node-mysql.git" "C:\\Users\\Lee\\AppData\\Local\\Temp\\npm-1344480653131\\1344480653131-0.9612233284860849"
-silly spawning [ 'git',
-silly spawning   [ 'clone',
-silly spawning     'git://github.com/felixge/node-mysql.git',
-silly spawning     'C:\\Users\\Lee\\AppData\\Local\\Temp\\npm-1344480653131\\1344480653131-0.9612233284860849' ],
-silly spawning   null ]
-ERR! git clone git://github.com/felixge/node-mysql.git CreateProcessW: ������ ������ ã�� �� �����ϴ�.
-ERR! Error: `git "clone" "git://github.com/felixge/node-mysql.git" "C:\\Users\\Lee\\AppData\\Local\\Temp\\npm-1344480653131\\1344480653131-0.9612233284860849"` failed with 127
-ERR!     at ChildProcess.<anonymous> (C:\Program Files\nodejs\node_modules\npm\lib\utils\exec.js:49:20)
-ERR!     at ChildProcess.emit (events.js:70:17)
-ERR!     at maybeExit (child_process.js:360:16)
-ERR!     at Socket.<anonymous> (child_process.js:465:7)
-ERR!     at Socket.emit (events.js:67:17)
-ERR!     at Array.1 (net.js:335:10)
-ERR!     at EventEmitter._tickCallback (node.js:192:40)
+verbose cache add [ 'heroku', null ]
+silly cache add: name, spec, args [ undefined, 'heroku', [ 'heroku', null ] ]
+verbose parsed url { pathname: 'heroku', path: 'heroku', href: 'heroku' }
+verbose addNamed [ 'heroku', '' ]
+verbose addNamed [ null, '' ]
+silly name, range, hasData [ 'heroku', '', false ]
+verbose raw, before any munging heroku
+verbose url resolving [ 'https://registry.npmjs.org/', './heroku' ]
+verbose url resolved https://registry.npmjs.org/heroku
+http GET https://registry.npmjs.org/heroku
+ERR! Error: connect ETIMEDOUT
+ERR!     at errnoException (net.js:670:11)
+ERR!     at Object.afterConnect [as oncomplete] (net.js:661:19)
 ERR! You may report this log at:
 ERR!     <http://github.com/isaacs/npm/issues>
 ERR! or email it to:
 ERR!     <npm-@googlegroups.com>
 ERR! 
 ERR! System Windows_NT 6.1.7600
-ERR! command "C:\\Program Files\\nodejs\\\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "git://github.com/felixge/node-mysql.git"
+ERR! command "C:\\Program Files\\nodejs\\\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "heroku"
 ERR! cwd C:\Users\Lee\Desktop\sayhs23_street
 ERR! node -v v0.6.14
 ERR! npm -v 1.1.12
-ERR! message `git "clone" "git://github.com/felixge/node-mysql.git" "C:\\Users\\Lee\\AppData\\Local\\Temp\\npm-1344480653131\\1344480653131-0.9612233284860849"` failed with 127
+ERR! syscall connect
+ERR! code ETIMEDOUT
+ERR! message connect ETIMEDOUT
+ERR! errno {}
 verbose exit [ 1, true ]

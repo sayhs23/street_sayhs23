@@ -27,6 +27,11 @@ app.configure('production', function(){
   app.use(express.errorHandler()); 
 });
 
+app.configure('development', function(){
+  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+});
+
+
 // Routes
 app.get('/', function(req, res){
  /* res.header("Access-Control-Allow-Headers","X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept");
@@ -106,23 +111,6 @@ app.get('/room/:id', function(req, res) {
        , captin:captin
        , attendants: attendants
      });
-/*  var user = Chat.getUser(req.session.nickname);
-  var level = user.level;
-  
-  if (Chat.hasRoom(roomName)) {
-	isSuccess = true; 
-  }*/
-
-
-   
- /* res.render('room', {
-	  isSuccess: isSuccess
-	, roomName: roomName
-	, musicnumber: 10
-	, level: level
-	, nickname: req.session.nickname
-	, attendants: Chat.getAttendantsList(roomName)
-  });*/
 });
 
 app.get('/elbem/:id', function(req, res) {
@@ -132,6 +120,7 @@ app.get('/elbem/:id', function(req, res) {
 	  elbemName: elbemName
   });
 });
+
 /////////////////////////////////////////////////////////////백  : bagName //////////////////////////////////////////////////////////////////
 app.get('/bag/:id', function(req, res) {
   var bagName = req.params.id;
@@ -196,7 +185,5 @@ app.get('/gStreet', function(req, res) {
 
 
 app.listen(8001);
-// Socket.iod
 require('./rooms')(app);
-console.log("runnig");
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);

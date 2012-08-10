@@ -1,16 +1,12 @@
 // JavaScript source code
 var Chat = require("./chat");
-var User = require("./User");
 var http = require("http");
-var Game = require("./Game");
-var Music = require("./Music.js");
 var sys = require("util");
 var fs = require("fs");
 var repo = require("./repository");
 
 var mysql = require('mysql')
   , DATABASE = 'sayhs23'
-  , TABLE = 'friends_test'
   , client = mysql.createClient({
       user: 'sayhs23'
     , host: '10.0.0.1'
@@ -228,6 +224,7 @@ module.exports = function(app) {
                 }else{
                     //     console.log('인서트를 성공했어요');
                     socket.emit('addItemed',{title:title, image:image});
+					client.end();
                 }
             });
         });
@@ -247,10 +244,12 @@ module.exports = function(app) {
                         var name = data.name;
                         //    console.log('인서트를 성공했어요');
                         socket.emit('checkBaged',{name:name});
+						client.end();
 			
                     }else{
                         //    console.log('비밀번호가 달라요!');
                         socket.emit('checkBag-fail');
+						client.end();
                     }
 					    
                 }
@@ -274,6 +273,7 @@ module.exports = function(app) {
 
                     //	console.log(results);
                     socket.emit('getBaglisted', {result: results});
+					client.end();
                 }
             });
         });
@@ -286,6 +286,7 @@ module.exports = function(app) {
                 }else{
                     //   console.log(results);
                     socket.emit('getNoteed', {result: results});
+					client.end();
                 }
             });
         });
@@ -299,11 +300,13 @@ module.exports = function(app) {
                 }else{
                     //    console.log('인서트를 성공했어요');
                     client.query('SELECT * FROM '+communityName+' order by id desc;', function(err, results, fields){
+
                         if(err){
                             //	 console.log('샐랙트 에러');
                         }else{
                             //	 console.log(results);
                             socket.emit('writeNoteed', {result: results});
+							client.end();
                         }
                     });
                 }
@@ -321,6 +324,7 @@ module.exports = function(app) {
                     }else{
                         //   console.log(results);
                         socket.emit('getNoteed', {result: results});
+						client.end();
                     }
                 });
             }else{
@@ -330,6 +334,7 @@ module.exports = function(app) {
                     }else{
                         //	   console.log(results);
                         socket.emit('getNoteed', {result: results});
+						client.end();
                     }
                 });
             }
@@ -357,11 +362,13 @@ module.exports = function(app) {
                                 //		 console.log(results);
                                 //		 console.log('성공함');
                                 socket.emit('deleteNoted');
+								client.end();
                             }
                         });
                     }else{
                         //       console.log('비번이다르다');
                         socket.emit('deleteNoted-fail');
+						client.end();
                     }
                 }
             });
@@ -391,11 +398,13 @@ module.exports = function(app) {
                             }else{
                                 //	 console.log('성공함');
                                 socket.emit('deleteCommented',{ number:number, id:id});
+								client.end();
                             }
                         });
                     }else{
                         //  console.log('비번이다르다');
                         socket.emit('deleteCommented-fail');
+						client.end();
                     }
                 }
             });
@@ -418,6 +427,7 @@ module.exports = function(app) {
                             //	console.log('인서트 에러');
                         }else{
                             socket.emit('createCmed', {result: data.name});
+							client.end();
                         }
                     });
                 }
@@ -444,7 +454,8 @@ module.exports = function(app) {
                         }else{
                             var id = results[0].id;
                             socket.emit('commented', { id:id, communityName: communityName, writter:writter, description:description, number:number, date1:date1});
-                        }
+							client.end();
+						}
                     });
                 }
             });
@@ -478,6 +489,7 @@ module.exports = function(app) {
                         });
                     }else{
                         socket.emit('logined-fail');
+
                     }
                 }
             });

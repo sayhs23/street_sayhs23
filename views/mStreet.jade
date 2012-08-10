@@ -49,18 +49,6 @@ script(type='text/javascript')
         script.src = a + name + b +number+ c;
         head.appendChild(script);
   };
-  var selectEmit = function() {
-        var elbemName = $('#elbemname1').val();
-        var pw = $('#newpw').val();
-        alert(elbemName+pw);
-        var room = io.connect('/room');
-        room.emit('addMusicEmit',{name:elbemName, title:currentTitle, thumbnailurl:currentThumbnailurl, playerUrl:currentUrl, pw:pw});
-  };
-  var likeEmit = function(elbemName){
-        alert(elbemName+'좋아요!');
-        var room = io.connect('/room');
-        room.emit('likeElbem',{name:elbemName});
-  };
   var deleteTxt = function() {
         $('#newpw').val('');
   };
@@ -75,12 +63,6 @@ script(type='text/javascript')
         $("#panel_2_1").slideToggle("slow");
         $(this).toggleClass("active"); return false;
   };
-  var searchElbemCall = function() {
-        alert($('#elbemname').val());
-        var name = $('#elbemname').val();
-        var room = io.connect('/room');
-        room.emit('searchElbems', {name:name});
-  };
   var elbemIdfct = function() {
         $('#elbemId').val('');
   };
@@ -89,18 +71,6 @@ script(type='text/javascript')
   };
   var repwfct = function() {
         $('#repw').val('');
-  };
-  var plusElbem = function() {
-     var id = $('#elbemId').val();
-     var pw = $('#pw').val();
-     var repw = $('#repw').val();
-
-     if(pw !== repw) {
-         alert('비밀 번호를 확인해주세요');
-     } else {
-         var room = io.connect('/room');
-         room.emit('addElbems',{name:id, pw:pw});
-     }
   };
 #m_box
  #m_main_1
@@ -318,4 +288,28 @@ script(type='text/javascript')
     $('#elbemname1').click(function(e) {
       $('#elbemname1').val('');
     });
+    var selectEmit = function() {
+       var elbemName = $('#elbemname1').val();
+       var pw = $('#newpw').val();
+       room.emit('addMusicEmit',{name:elbemName, title:currentTitle, thumbnailurl:currentThumbnailurl, playerUrl:currentUrl, pw:pw});
+    };
+    var likeEmit = function(elbemName){
+       alert(elbemName+'좋아요!');
+       room.emit('likeElbem',{name:elbemName});
+    };
+    var searchElbemCall = function() {
+       var name = $('#elbemname').val();
+       room.emit('searchElbems', {name:name});
+    };
+    var plusElbem = function() {
+       var id = $('#elbemId').val();
+       var pw = $('#pw').val();
+       var repw = $('#repw').val();
+
+       if(pw !== repw) {
+          alert('비밀 번호를 확인해주세요');
+       } else {
+          room.emit('addElbems',{name:id, pw:pw});
+       }
+    };
   });

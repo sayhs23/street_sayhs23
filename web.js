@@ -198,5 +198,4 @@ app.get('/gStreet', function(req, res) {
 app.listen(8001);
 // Socket.io
 require('./rooms')(app);
-console.log("runnig");
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);

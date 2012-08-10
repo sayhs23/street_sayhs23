@@ -9,13 +9,12 @@ var fs = require("fs");
 var repo = require("./repository");
 
 var mysql = require('mysql')
-  , DATABASE = 'sayhs23'
+  , DATABASE = 'node_test'
   , TABLE = 'friends_test'
   , client = mysql.createClient({
-      user: 'sayhs23'
-    , host: '10.0.0.1'
-	, port: '3306'
-    , password: '9034gustn'
+      user: 'root'
+      //, host: '10.0.0.1'
+    , password: 'root'
   });
 
 var apikey = "d4f7c8cf4b043c224a43aee5dbb3528f";
@@ -28,7 +27,7 @@ module.exports = function(app) {
 
 
     io.configure(function(){
-        io.set('log level', 3);
+        io.set('log level', 1);
         io.set('transports', [
         'websocket'
       , 'flashsocket'

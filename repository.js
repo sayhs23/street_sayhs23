@@ -1,19 +1,18 @@
 Chat = require('./chat');
 
 var mysql = require('mysql')
-  , DATABASE = 'sayhs23'
-  , TABLE = 'members'
+  , DATABASE = 'node_test'
   , client = mysql.createClient({
-      user: 'sayhs23'
+      user: 'root'
 	, host: '10.0.0.1'
-    , password: '9034gustn'
+    , password: 'root'
   });
 
 client.query('USE ' + DATABASE);
 
 var mysqlUtil = module.exports = {
  checkNickName: function(req, res) {
-	   var nickName = req.body.inputNickName;
+	       var nickName = req.body.inputNickName;
 		   var pws = req.body.inputPw;
 
 		   client.query('SELECT pws FROM members WHERE nickname=?', [nickName], function(err, results, fields){
@@ -60,23 +59,6 @@ var mysqlUtil = module.exports = {
 							}
 						}
 					});
-    }
-, hasNickName: function(user, res) {
-      client.query(
-          'SELECT * FROM ' + TABLE + ' WHERE nickname = ?'
-        , [user.nickname]
-        , function(err, results, fields) {
-            if (err) {
-              throw err;
-            }
-            if (results.length > 0) {
-              res.render('join-fail', {
-                  title: 'Express'
-              });
-            } else {
-              mysqlUtil.insertUser(user, res);
-            }
-      });
     }
 
 };

@@ -1,20 +1,16 @@
 // JavaScript source code
 var Chat = require("./chat");
-var User = require("./User");
 var http = require("http");
-var Game = require("./Game");
-var Music = require("./Music.js");
 var sys = require("util");
 var fs = require("fs");
 var repo = require("./repository");
 
 var mysql = require('mysql')
-  , DATABASE = 'sayhs23'
-  , TABLE = 'friends_test'
+  , DATABASE = 'node_test'
   , client = mysql.createClient({
-      user: 'sayhs23'
+      user: 'root'
     , host: '10.0.0.1'
-    , password: '9034gustn'
+    , password: 'root'
   });
 
 var apikey = "d4f7c8cf4b043c224a43aee5dbb3528f";
@@ -62,12 +58,16 @@ module.exports = function(app) {
                 socket.emit('joined', {isSuccess:false});
             }
         });
+
+
         //////////////////// 캔버스 모두 지우기////////////////////////
         socket.on('canvasClear', function(data) {
             //console.log('canvasClear 이벤트 실행');
             socket.emit('canvasCleared');
             socket.broadcast.to(joinedRoom).emit('canvasCleared');
         });
+
+
         ////////////////// 캔버스 그리기 이벤트 실행
         socket.on('draw', function(data) {
             //  console.log('draw 이벤트 실행'+data.width + data.color + data.x1 + data.y1 + data.x2 + data.y2);
@@ -102,6 +102,8 @@ module.exports = function(app) {
             }
 		  
         });
+
+
         /////////////////////////////////방을 만들었을 경우///////////////////////////////////////////////////////////////////////////
         socket.on('getRoomList', function() {
          //   console.log('getRoomList 이벤트 발생');
@@ -109,6 +111,8 @@ module.exports = function(app) {
          //   console.log(Chat.getRoomList());
             socket.emit('getRoomListed', { roomList: Chat.getRoomList() });
         });
+
+		///////////////////////////////방만들기 이벤트 //////////////////////////////////////////////
         socket.on('createRoom', function(data) {
             //	 console.log('createRoom 이벤트 발생!');
             var myName = data.myName;
@@ -137,8 +141,8 @@ module.exports = function(app) {
             }
         });
 
-        /////////////////   sStreet 에서 쇼핑 백 추가하는 부분 ////////////////////////////////////////////////////////
 
+        /////////////////   sStreet 에서 쇼핑 백 추가하는 부분 ////////////////////////////////////////////////////////
         socket.on('addBags', function(data) {
             client.query('CREATE TABLE '+data.name + '( id MEDIUMINT NOT NULL AUTO_INCREMENT PRIMARY KEY, title varchar(300), link varchar(300), image varchar(150), lprice int(20), hprice int(20), mallName varchar(30), likes int(10));', function(err) {
                 if(err) {
@@ -159,8 +163,8 @@ module.exports = function(app) {
             });
         });
 
-        /////////////////   mStreet  앨범 추가하는 부분 ////////////////////////////////////////////////////////////////
 
+        /////////////////   mStreet  앨범 추가하는 부분 ////////////////////////////////////////////////////////////////
         socket.on('addElbems', function(data) {
             //    console.log('addElbem 이벤트 실행');
             //	console.log('addElbem시 서버 측에서 받은 값' +data.name);
@@ -186,6 +190,8 @@ module.exports = function(app) {
                 }
             });
         });
+
+
         /////////////////   mStreet  에서 노래 담기 부분 ////////////////////////////////////////////////////////////////
         socket.on('addMusicEmit', function(data) {
             //  console.log('addMusicEmit 이벤트 실행');
@@ -216,8 +222,8 @@ module.exports = function(app) {
             });
         });
 
-        /////////////////////////////////////////// sStreet 에서 아이템(쇼핑 품목) 담기 부분 ///////////////////////////////////////////
 
+        /////////////////////////////////////////// sStreet 에서 아이템(쇼핑 품목) 담기 부분 ///////////////////////////////////////////
         socket.on('addItem', function(data) {
             console.log(data.bag+data.title+data.link+data.image+data.lprice+data.hprice+data.mallName);
             client.query('INSERT INTO '+data.bag+' SET title=?, link=?, image=?, lprice=?, hprice=?, mallName=?, likes=0',[ data.title, data.link, data.image, data.lprice, data.hprice, data.mallName], function(err){
@@ -259,6 +265,8 @@ module.exports = function(app) {
                 }
             });
         });
+
+
         socket.on('SelectEmit', function(data) {
             //	  console.log('SelectEmit 이벤트 실행');
 
@@ -281,6 +289,8 @@ module.exports = function(app) {
                 }
             });
         });
+
+
         ////////////////// 글 가져 오기 ////////////////////////////////////////////////////////////////////////
         socket.on('getNote', function(data) {
             var communityName = data.communityName;
@@ -294,6 +304,8 @@ module.exports = function(app) {
                 }
             });
         });
+
+
         ////////////////// 글 가져 오기 ////////////////////////////////////////////////////////////////////////
         socket.on('writeNote', function(data) {
             console.log(data.writterPw+data.nowTime+data.writter+data.description+data.style+data.writterPw);
@@ -316,6 +328,8 @@ module.exports = function(app) {
                 }
             });
         });
+
+
         ////////////////// 정렬해서 가져 오기 ////////////////////////////////////////////////////////////////////////
         socket.on('getSortNote', function(data) {
             var communityName = data.communityName;
@@ -344,6 +358,8 @@ module.exports = function(app) {
             }
 
         });
+
+
         ////////////////// 글 삭제하기 오기 ////////////////////////////////////////////////////////////////////////
         socket.on('deleteNote', function(data) {
             //  console.log(data.id+data.pws+data.communityName);
@@ -377,6 +393,8 @@ module.exports = function(app) {
                 }
             });
         });
+
+
         ///////////////////////////댓글 삭제하기//////////////////////////////////////////////////////////////////////////////////
         socket.on('deleteComment', function(data) {
             //  console.log('댓글 삭제 이벤트'+data.id+data.pws+data.communityName);
@@ -413,6 +431,8 @@ module.exports = function(app) {
                 }
             });
         });
+
+
         /////////////////////////////// cStreet 서버 코드 ///////////////////////////////////////////////////////////////////////
         /////////////////   cStreet 에서 커뮤니티 추가하는 부분 ////////////////////////////////////////////////////////
         //client.query('CREATE TABLE ' + data.name + ' (title varchar(300), thumbnailurl varchar(50), url varchar(100), likes int(5));', function(err) {
@@ -437,6 +457,8 @@ module.exports = function(app) {
                 }
             });
         });
+
+
         ////////////////////////////////////////////community 에서 comment 댓글 다는 거 테이블에 저장 할 때 /////////////////////////////////////////////////////
         //room.emit('comment', {communityName:communityName, writter:user, pws:userPw, description:commentTxt, number:number, date1:nowTime});
 
@@ -464,6 +486,8 @@ module.exports = function(app) {
                 }
             });
         });
+
+
         //////////////////////////로그인 하는 부분////////////////////////gStreet////////////////////////////////////////////
         socket.on('login', function(data) {
             var nickName = data.nickName;
@@ -498,6 +522,8 @@ module.exports = function(app) {
                 }
             });
         });
+
+
         socket.on('getUserInfo', function(data) {
             //   console.log('getUserInfo에 진입함');
             var nickname = data.nickname;
@@ -546,7 +572,6 @@ module.exports = function(app) {
             });
         });
         ////////////////////////////////////////comment 즉, 댓글을 가져오는 부분이다//////////////////////////////////////////////////////////////////////////////////////
-
         socket.on('getComment', function(data){
             //	console.log('갯 커맨트 이벤트 발생');
             client.query('SELECT * FROM comment where community=? order by id desc;', [data.communityName], function(err, results, fields) {
@@ -558,6 +583,8 @@ module.exports = function(app) {
                 }
             });
         });
+
+
         /////////////////   cStreet 에서 커뮤니티 찾는 부분 //////////////////////////////////////////////////////////////// 키이벤트일경우 자동완성을 위해////////
         socket.on('searchComsClick', function(data) {
             //	  console.log('getLikes 이벤트 실행');
@@ -570,6 +597,8 @@ module.exports = function(app) {
                 }
             });
         });
+
+
         /////////////////   cStreet 에서 커뮤니티 찾는 부분 //////////////////////////////////////////////////////////////// 마우스 클릭이벤트 일경우/////////////////
         socket.on('searchComs', function(data) {
             //	  console.log('getLikes 이벤트 실행');
@@ -582,6 +611,8 @@ module.exports = function(app) {
                 }
             });
         });
+
+
         /////////////////   cStreet 에서 비밀 번호 찾는 부분 //////////////////////////////////////////////////////////////// 마우스 클릭이벤트 일경우/////////////////
         socket.on('getPw', function(data) {
             //	  console.log('getLikes 이벤트 실행');
@@ -600,6 +631,8 @@ module.exports = function(app) {
                 }
             });
         });
+
+
         /////////////////   mStreet  앨범 목록 불러오는 부분 ////////////////////////////////////////////////////////////////
         socket.on('getElbemlist', function(data) {
             //    console.log('getElbemlist 이벤트 실행');
@@ -615,6 +648,8 @@ module.exports = function(app) {
                 }
             });
         });
+
+
         /////////////////   mStreet  앨범 목록 불러오는 부분 ////////////////////////////////////////////////////////////////
         socket.on('getElbemList2', function(data) {
             //    console.log('getElbemList2 이벤트 실행');
@@ -629,6 +664,8 @@ module.exports = function(app) {
                 }
             });
         });
+
+
         /////////////////   elbem 에서 추천 수 구하는 부분 ////////////////////////////////////////////////////////////////
         socket.on('getLikes', function(data) {
             //	  console.log('getLikes 이벤트 실행');
@@ -642,6 +679,8 @@ module.exports = function(app) {
                 }
             });
         });
+
+
         /////////////////   elbem 에서 노래 수 구하는 부분 ////////////////////////////////////////////////////////////////
         socket.on('getNumbers', function(data) {
             //	  console.log('getLikes 이벤트 실행');
@@ -654,6 +693,8 @@ module.exports = function(app) {
                 }
             });
         });
+
+
         /////////////////   elbem 에서 앨범 찾는 부분 ////////////////////////////////////////////////////////////////
         socket.on('searchElbems', function(data) {
             //	  console.log('getLikes 이벤트 실행');
@@ -666,6 +707,8 @@ module.exports = function(app) {
                 }
             });
         });
+
+
         /////////////////   bag  백 추천수 투표 결과 목록 불러오는 부분 ////////////////////////////////////////////////////////////////
         socket.on('getLikeList', function(data) {
             //  console.log('getLikeList 이벤트 실행');
@@ -679,6 +722,8 @@ module.exports = function(app) {
                 }
             });
         });
+
+
         /////////////////// 쇼핑에서 장바구니 목록 찾는 부분 ///////////////////////////////////////////////////////////
         socket.on('searchBags', function(data) {
             //	  console.log('getLikes 이벤트 실행');
@@ -691,6 +736,8 @@ module.exports = function(app) {
                 }
             });
         });
+
+
         /////////////////   elbem 에서 담게에서 앨범 찾는 부분 ////////////////////////////////////////////////////////////////
         socket.on('searchElbems2', function(data) {
             //	  console.log('getLikes 이벤트 실행');
@@ -703,6 +750,8 @@ module.exports = function(app) {
                 }
             });
         });
+
+
         /////////////////   elbem 에서 노래 목록 리스트 가져 오는 부분////////////////////////////////////////////////////////////////
         socket.on('getMusics', function(data) {
             //  console.log('getMusics 이벤트 실행');
@@ -715,6 +764,8 @@ module.exports = function(app) {
                 }
             });
         });
+
+
         /////////////////   elbem 안에서 이 앨범 추천 수 구하는 부분 ////////////////////////////////////////////////////////////////
         socket.on('thisLikesEmit', function(data) {
             client.query('SELECT likes FROM elbems WHERE name=?',[data.name], function(err, results, fields) {
@@ -743,6 +794,8 @@ module.exports = function(app) {
                 }
             });
         });
+
+
         /////////////////   mStreet  앨범 추천 하는 부분 ////////////////////////////////////////////////////////////////
         socket.on('likeElbem', function(data) {
             client.query('SELECT likes FROM elbems WHERE name=?',[data.name], function(err, results, fields) {
@@ -771,6 +824,8 @@ module.exports = function(app) {
                 }
             });
         });
+
+
         /////////////////   bag 안에서 해당 아이템 추천하는 부분 ////////////////////////////////////////////////////////////////
         socket.on('likeItem', function(data) {
             console.log('likeItem실행');
@@ -801,6 +856,8 @@ module.exports = function(app) {
                 }
             });
         });
+
+
         /////////////////   bag 에서 아이템 목록 리스트 가져 오는 부분////////////////////////////////////////////////////////////////
         socket.on('getItems', function(data) {
             //  console.log('getMusics 이벤트 실행');
@@ -814,6 +871,8 @@ module.exports = function(app) {
                 }
             });
         });
+
+
         //////////////////////////////////////////드라마 실시간 검색 값 요청 시/////////////////////////////////////////
         socket.on('tvshow', function(data){
             var query = "broadcast";
@@ -833,6 +892,8 @@ module.exports = function(app) {
                     socket.emit('tvshowed', {xData: body});  
                 });}).on('error', function(e) {console.log("Got error: " + e.message);});
         });
+
+
         //////////////////////////////////////////책 실시간 검색 값 요청 시/////////////////////////////////////////
         socket.on('book', function(data){
             var query = "book";
@@ -852,6 +913,8 @@ module.exports = function(app) {
                     socket.emit('booked', {xData: body});  
                 });}).on('error', function(e) {console.log("Got error: " + e.message);});
         });
+
+
         //////////////////////////////////////////드라마 실시간 검색 값 요청 시/////////////////////////////////////////
         socket.on('drama', function(data){
             var query = "drama";
@@ -871,6 +934,9 @@ module.exports = function(app) {
                     socket.emit('dramaed', {xData: body});  
                 });}).on('error', function(e) {console.log("Got error: " + e.message);});
         });
+
+
+
         //////////////////////////////////////////영화 실시간 검색 값 요청 시/////////////////////////////////////////
         socket.on('movie', function(data){
             var query = "movie";
@@ -890,6 +956,9 @@ module.exports = function(app) {
                     socket.emit('movied', {xData: body});  
                 });}).on('error', function(e) {console.log("Got error: " + e.message);});
         });
+
+
+
         //////////////////////////////////////////인물 실시간 검색 값 요청 시/////////////////////////////////////////
         socket.on('man', function(data){
             var query = "people";
@@ -909,6 +978,10 @@ module.exports = function(app) {
                     socket.emit('maned', {xData: body});  
                 });}).on('error', function(e) {console.log("Got error: " + e.message);});
         });
+
+
+
+
         //////////////////////////////////////////공연 실시간 검색 값 요청 시/////////////////////////////////////////
         socket.on('perfomance', function(data){
             var query = "perform";
@@ -928,7 +1001,12 @@ module.exports = function(app) {
                     socket.emit('perfomanced', {xData: body});  
                 });}).on('error', function(e) {console.log("Got error: " + e.message);});
         });
-        /////////////////////////////////////////////쇼핑 api 를 요청 시 ///////////////////////////////////////////////////
+    
+		
+		
+		
+		
+		/////////////////////////////////////////////쇼핑 api 를 요청 시 ///////////////////////////////////////////////////
         socket.on('shop', function(data){
             var query = data.spText;
             var startPg = data.startPg;
@@ -945,7 +1023,7 @@ module.exports = function(app) {
             var body = "";
             http.get(options, function(response){
                 response.addListener('data', function(chunk){
-                    //sys.debug("response...");
+                    sys.debug("기존 쇼핑 함수 response...");
                     body += chunk;
                 });
                 response.addListener('end', function(){
@@ -953,7 +1031,11 @@ module.exports = function(app) {
                     socket.emit('shopped', {xData: body});  
                 });}).on('error', function(e) {console.log("Got error: " + e.message);});
         });
-        /////////////////////////////////////////////쇼핑 api 를 요청 시 ///////////////////////////////////////////////////
+   
+		
+		
+		
+		/////////////////////////////////////////////쇼핑 api 를 요청 시 ///////////////////////////////////////////////////
         socket.on('shop2', function(data){
             var query = data.spText;
             var startPg = data.startPg;
@@ -977,6 +1059,9 @@ module.exports = function(app) {
                     socket.emit('shopped2', {xData: body});  
                 });}).on('error', function(e) {console.log("Got error: " + e.message);});
         });
+
+
+
         // socket.io를 이용한 채팅 관련 부분 메시지 이벤트//////////////////////////////////////////
         socket.on('message', function(data) {
             if (joinedRoom) {
@@ -990,22 +1075,17 @@ module.exports = function(app) {
         });
 
 
-        socket.on('end', function(data) {
-            var roomName = data.roomName;
-            socket.emit('ended', {roomName:roomName});
-            socket.broadcast.to(joinedRoom).emit('ended', {roomName:roomName});
-        });
+
         ////////////현재방유저리스트 불러오는 부분/////////////////////////
         socket.on('getRoomUserList', function(data) {
             var roomname = data.roomname;
             var room = Chat.getRoomInfo(roomname);
             var userList = room.attendants;
-
-       //     console.log('getRoomUserList 이벤트 호출 '+ userList);
-
             socket.emit('getRoomUserListed', {attendants:userList});
         });
 
+
+     /////// 방 현재 인원 세기 /////////////////////
         socket.on('getUserCnt', function(data){
             var roomname = data.roomname;
             var room = Chat.getRoomInfo(roomname);
@@ -1014,9 +1094,9 @@ module.exports = function(app) {
         //    console.log('해당 방의 유저의 수는'+ room.attendants.length);
             //현재 방에 있는 사람들의 수를 센다.
             socket.emit('getUserCnted', {UserCnt:room.attendants.length});
-
- 
         });
+
+
 
         /// drawwer 가 아니 어느 사람이 정답을 맞췄을 때.
         socket.on('increaseScore', function(data) {
@@ -1073,8 +1153,6 @@ module.exports = function(app) {
                         }
                     });
                 }
-			
-
                 socket.emit('gameEnd', {array:array, nickname:nickname, roomScore: room.score, usercurrentscore:usercurrentscore});
                 socket.broadcast.to(roomname).emit('gameEnd', {array:array, nickname:nickname, roomScore: room.score, usercurrentscore:usercurrentscore});
             
@@ -1096,6 +1174,7 @@ module.exports = function(app) {
                 });
             }
         });
+
 
         /// 게임 시작 하기를 했을 시.
         socket.on('game', function(data) { ////////////////////////////////////// 
@@ -1135,8 +1214,7 @@ module.exports = function(app) {
             });
         });
 
-   
-
+    ///////////////// 방나가기 이벤트 /////////////////////////////////////
 
         socket.on('leave', function(data) {
             console.log('leave 이벤트가 발생하였다');

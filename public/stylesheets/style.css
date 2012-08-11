@@ -1227,6 +1227,15 @@ body {
 		   width: 880px;
 		   height: 80px;
 }
+.mtxtbox{
+    height: 30px;
+	width:  100px;
+	font: 18px bold;
+	border: 1px solid #4b0000;
+	border-radius:4px;
+	color:#000000
+	background-color: #eaeaea;
+}
 .txtbox{
     height: 30px;
 	width:  450px;
@@ -1362,6 +1371,11 @@ body {
     background-color: #e8e6e5;
     height: 40px;
 	width:  460px;
+}
+#mtxtboxDiv{
+    background-color: #e8e6e5;
+    height: 40px;
+	width:  260px;
 }
 #imgDiv{
     background-color:#e8e6e5;

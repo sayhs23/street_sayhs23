@@ -70,9 +70,15 @@
    
 script(type='text/javascript', src='http://www.google.com/jsapi?key=ABQIAAAAdV0OihhLfo4ru8N1BXzlWxSJ87f2VNqmObhB7kj4DJwDOGkiiBR3Nh79Pxxmk0DgEb3TTwZHI-Fp1g')
 script(type='text/javascript', src='/javascripts/jquery.li-scroller.1.0.js')
-
 script(type='text/javascript') 
   $(document).ready(function() {
+   
+    var smartPhones = [ 'iphone', 'ipod', 'windows ce', 'android', 'blackberry', 'nokia', 'webos', 'opera mini', 'sonyerricsson', 'opera mobi', 'iemobile'];
+    for(var i in smartPhones) {
+       if(navigator.userAgent.toLowerCase().match(new RegExp(smartPhones[i]))) {
+          document.location = '/mIndex';
+       }
+    }
    $('#home').attr('src','images/Button_Home_Orange.jpg');
    $('#mStreet').attr('src','images/Button_Mstreet_Black.jpg');
    $('#sStreet').attr('src','images/Button_Sstreet_Black.jpg');
@@ -89,7 +95,8 @@ script(type='text/javascript')
   room.on('connect', function() {  
      room.emit('drama', {nickName:'text'}); 
   });
-  room.on('dramaed', function(data){
+
+  room.on('dramaed', function(data) {
      var output = '';
      output +="<a>1. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R1").find("K").text()+"'>" + $(data.xData).find("R1").find("K").text() + "</a><br />";
      output +="<a>2. "+"<a href ='http://search.daum.net/search?w=tot&t__nil_searchbox=btn&DA=YZRR&sug=&q="+$(data.xData).find("R2").find("K").text()+"'>" + $(data.xData).find("R2").find("K").text() + "</a><br />";

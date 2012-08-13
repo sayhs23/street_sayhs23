@@ -8,7 +8,7 @@ var repo = require("./repository");
 var mysql = require('mysql')
   , DATABASE = 'sayhs23'
   , client = mysql.createClient({
-      user: 'sayhs23'
+      user: 'sayhs23@localhost'
     , host: '10.0.0.1'
     , password: '9034gustn'
   });

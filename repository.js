@@ -4,7 +4,7 @@ var mysql = require('mysql')
   , DATABASE = 'sayhs23'
   , TABLE = 'members'
   , client = mysql.createClient({
-      user: 'sayhs23@localhost'
+      user: 'sayhs23'
 	, host: '10.0.0.1'
     , password: '9034gustn'
   });
